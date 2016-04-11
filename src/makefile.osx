@@ -1,0 +1,44 @@
+OBJDIR = ../build/osx
+BINDIR = ../lib/osx
+
+CC  = gcc
+CXX = g++
+CFLAGS  = -g -MMD -MP
+LDFLAGS =
+INCLUDE = -I./HIDAPI/hidapi -I../include
+LIBS =
+
+TARGET = $(BINDIR)/libhidcomm.a
+C_SOURCES   = HIDAPI/mac/hid.c
+CPP_SOURCES = $(wildcard *.cpp)
+
+OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
+DEPENDS = $(OBJECTS:.o=.d)
+
+
+# implementation
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	@[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
+	ar r $@ $(OBJECTS)
+	cp -fp ./HIDAPI/hidapi/hidapi.h ../include
+
+$(OBJDIR)/%.o : %.cpp
+	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+
+$(OBJDIR)/%.o : %.c
+	@[ -d $(OBJDIR)/HIDAPI/mac/ ] || mkdir -p $(OBJDIR)/HIDAPI/mac/
+	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+
+clean:
+	$(RM) $(OBJECTS) $(TARGET) $(DEPENDS)
+
+
+-include $(DEPENDS)
+
+.SUFFIXES:      .o .cpp .c
+
+.PHONY: all clean
