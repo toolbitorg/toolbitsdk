@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "getopt.h"
-#include "hidchopper.h"
+#include "chopper.h"
 
 #ifdef _WIN32
 #include <windows.h>

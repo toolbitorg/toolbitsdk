@@ -1,5 +1,5 @@
-#ifndef TOOLBITSDK_ATTP_DEVICE_H_
-#define TOOLBITSDK_ATTP_DEVICE_H_
+#ifndef TOOLBITSDK_TBI_DEVICE_H_
+#define TOOLBITSDK_TBI_DEVICE_H_
 
 #include <stdint.h>
 #include <string>
@@ -20,27 +20,34 @@ using namespace std;
 
 #define DEFAULT_DEALY 10   // Wait response for 10msec
 
-class AttpDevice
+class TbiDevice
 {
 public:
-	AttpDevice();
-	~AttpDevice();
+	TbiDevice();
+	~TbiDevice();
+
+	bool open(uint16_t vid, uint16_t pid);
+	bool open(uint16_t vid, uint16_t pid, wchar_t *serial_num);
+	bool isOpen();
+	bool close();
+
+	bool write(uint8_t *sndbuf, uint8_t num);
+	int read(uint8_t *rcvbuf);
+
+	/*
+	bool open(int num);
 
 	void GetDeviceList(uint16_t vid, uint16_t pid);
 	int GetDeviceNum();
     void ShowDeviceList();
-    bool Open(int num);
-	bool Open(uint16_t vid, uint16_t pid);
-	bool Open(uint16_t vid, uint16_t pid, wchar_t *serial_num);
-    bool IsOpen();
-	bool Close();
 
 	bool GetInfo();
 
-	bool connectAttp();
+	bool connectTbi();
 
 	bool SendPacket(uint8_t *sndbuf, uint8_t num);
 	bool ReceivePacket(uint8_t *rcvbuf);
+	*/
 
 protected:
 
@@ -50,4 +57,4 @@ private:
     hid_device *handle;
 };
 
-#endif /* TOOLBITSDK_ATTP_DEVICE_H_ */
+#endif /* TOOLBITSDK_TBI_DEVICE_H_ */

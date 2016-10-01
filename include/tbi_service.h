@@ -1,9 +1,9 @@
-#ifndef TOOLBITSDK_ATTP_SERVICE_H_
-#define TOOLBITSDK_ATTP_SERVICE_H_
+#ifndef TOOLBITSDK_TBI_SERVICE_H_
+#define TOOLBITSDK_TBI_SERVICE_H_
 
 #include <stdint.h>
 #include <string>
-#include "attp_device.h"
+#include "tbi_device.h"
 #include "attribute.h"
 
 using namespace std;
@@ -21,21 +21,29 @@ typedef enum
 	// Operation Code
 	OP_METADATA_GET = 0x10,
 	OP_CONFIG_SET,
-	OP_VALUE_SET,
-	OP_VALUE_GET,
+	OP_ATTR_VALUE_SET,
+	OP_ATTR_VALUE_GET,
 	// Event Code
 	EVT_NOTIFY = 0xA0
 } OperationCode;
 
+typedef enum
+{
+	// Return Code
+	RC_FAIL = 0x0,
+	RC_OK   = 0x1,
+} ReturnCode;
 
-class AttpService {
+class TbiService {
 public:
-	AttpService(AttpDevice *dev);
-	~AttpService();
+	TbiService(TbiDevice *p);
+	~TbiService();
 
 	bool readAttribute(Attribute att);
 	bool writeAttribute(Attribute att);
+
+private:
+	TbiDevice *tdev;
 };
 
-
-#endif /* TOOLBITSDK_ATTP_SERVICE_H_ */
+#endif /* TOOLBITSDK_TBI_SERVICE_H_ */

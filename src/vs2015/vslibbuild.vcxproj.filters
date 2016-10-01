@@ -18,13 +18,19 @@
     <ClCompile Include="..\HIDAPI\windows\hid.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\hidluke.cpp">
+    <ClCompile Include="..\luke.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\hidpic16f.cpp">
+    <ClCompile Include="..\chopper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\libhidcomm.cpp">
+    <ClCompile Include="..\attribute.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tbi_device.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tbi_service.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,13 +38,19 @@
     <ClInclude Include="..\HIDAPI\hidapi\hidapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\hidluke.h">
+    <ClInclude Include="..\..\include\chopper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\hidpic16f.h">
+    <ClInclude Include="..\..\include\luke.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\libhidcomm.h">
+    <ClInclude Include="..\..\include\attribute.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\tbi_service.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\tbi_device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

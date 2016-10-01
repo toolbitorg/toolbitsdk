@@ -8,7 +8,7 @@ LDFLAGS =
 INCLUDE = -I./HIDAPI/hidapi -I../include
 LIBS = 
 
-TARGET = $(BINDIR)/libhidcomm.a
+TARGET = $(BINDIR)/libtbi.a
 C_SOURCES   = HIDAPI/windows/hid.c
 CPP_SOURCES = $(wildcard *.cpp) 
 

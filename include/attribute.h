@@ -6,8 +6,7 @@
 
 using namespace std;
 
-#define BUF_LEN 65
-#define MAX_STR 255
+#define VALUE_LEN 32
 
 #define PROTOCOL_VERSION 0x00  // 7-6bits is effective
 
@@ -16,22 +15,11 @@ using namespace std;
 
 typedef enum
 {
-	// Operation Code
-	OP_METADATA_GET = 0x10,
-	OP_CONFIG_SET,
-	OP_VALUE_SET,
-	OP_VALUE_GET,
-	// Event Code
-	EVT_NOTIFY = 0xA0
-} OperationCode;
-
-typedef enum
-{
 	// Common attribute ID
-	ATT_PRODUCT_NAME = 0x0000,
+	ATT_PRODUCT_NAME     = 0x0000,
 	ATT_PRODUCT_REVISION = 0x0001,
-	ATT_PRODUCT_SERIAL = 0x0002,
-	ATT_FIRM_VERSION = 0x0003
+	ATT_PRODUCT_SERIAL   = 0x0002,
+	ATT_FIRM_VERSION     = 0x0003
 } AttributionID;
 
 typedef enum
@@ -51,15 +39,56 @@ typedef enum
 	PROPERTY_NOTIFY = 0x04,
 } AttributionProperty;
 
-
-class Attribute {
+class Attvalue
+{
 public:
-	Attribute(ATTID attid, byte prop, byte perm);
+	Attvalue();
+	~Attvalue();
+
+	bool setValue(uint8_t i);
+	bool setValue(int8_t i);
+	bool setValue(uint32_t i);
+	bool setValue(int32_t i);
+	bool setValue(char *str);
+	bool setValue(float f);
+	bool setValue(double d);
+	bool setValue(byte *p, uint8_t len);
+
+	uint8_t  getValueUint8();
+	int8_t   getValueInt8();
+	uint32_t getValueUint32();
+	int32_t  getValueInt32();
+	char     *getValueStr();
+	float    getValueFloat();
+	double   getValueDouble();
+	uint8_t  getValueLength();
+
+private:
+	union {
+		// Byte order must be little endian
+		uint8_t  uint8;
+		int8_t   int8;
+		uint32_t uint32;
+		int32_t  int32;
+		char     str[VALUE_LEN + 1];
+		float    f;
+		double   d;
+	} dat;
+	uint8_t datlen;
+};
+
+class Attribute : public Attvalue
+{
+public:
+	Attribute(ATTID id, byte prop, byte perm);
 	~Attribute();
 
 	ATTID getAttid();
-	bool setValue();
-	byte getValue();
+
+private:
+	ATTID attid;
+	uint8_t property;
+	uint8_t config;
 };
 
 #endif /* TOOLBITSDK_ATTRIBUTE_H_ */

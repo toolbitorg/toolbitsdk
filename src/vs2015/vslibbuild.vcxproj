@@ -75,7 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>../../lib/vs/</OutDir>
-    <TargetName>libhidcomm</TargetName>
+    <TargetName>libtbi</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -121,15 +121,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\tbi_device.cpp" />
+    <ClCompile Include="..\tbi_service.cpp" />
+    <ClCompile Include="..\attribute.cpp" />
+    <ClCompile Include="..\chopper.cpp" />
     <ClCompile Include="..\HIDAPI\windows\hid.c" />
-    <ClCompile Include="..\hidluke.cpp" />
-    <ClCompile Include="..\hidpic16f.cpp" />
-    <ClCompile Include="..\libhidcomm.cpp" />
+    <ClCompile Include="..\luke.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\hidluke.h" />
-    <ClInclude Include="..\..\include\hidpic16f.h" />
-    <ClInclude Include="..\..\include\libhidcomm.h" />
+    <ClInclude Include="..\..\include\tbi_device.h" />
+    <ClInclude Include="..\..\include\tbi_service.h" />
+    <ClInclude Include="..\..\include\attribute.h" />
+    <ClInclude Include="..\..\include\chopper.h" />
+    <ClInclude Include="..\..\include\luke.h" />
     <ClInclude Include="..\HIDAPI\hidapi\hidapi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

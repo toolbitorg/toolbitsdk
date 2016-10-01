@@ -2,9 +2,8 @@
 #define TOOLBITSDK_CHOPPER_H_
 
 #include <stdint.h>
-#include "libhid_dev.h"
-#include "attp_service.h"
-#include "attp_service_callback.h"
+#include "tbi_device.h"
+#include "tbi_service.h"
 #include "attribute.h"
 
 class Chopper
@@ -18,9 +17,8 @@ public:
 protected:
 
 private:
-	HidDev *mAttpDevice;
-	AttpService *mAttpService;
-	AttpServiceCallback *mAttpCallback;
+	TbiDevice *mTbiDevice;
+	TbiService *mTbiService;
 	Attribute mAttProductName;
 	Attribute mAttProductRevision;
 	Attribute mAttProductSerial;

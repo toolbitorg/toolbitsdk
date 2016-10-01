@@ -11,46 +11,39 @@ Chopper::Chopper() :
     mAttFirmVersion(ATT_FIRM_VERSION, 0x00, 0x00),
     mAttCount(0x1000, 0x00, 0x00)
 {
-	ttpDevice *mAttpDevice;
+	mTbiDevice = new TbiDevice();
+	mTbiDevice->open(0x00, 0x00);
+	mTbiService = new TbiService(mTbiDevice);
 
-	HidComm dev;
-
-	AttpService *mAttpService;
-
-	attpService = dev.connected(this, false, attCallback);	
+	// Read product data from device
+	mTbiService->readAttribute(mAttProductName);
+	mTbiService->readAttribute(mAttProductRevision);
+	mTbiService->readAttribute(mAttProductSerial);
+	mTbiService->readAttribute(mAttFirmVersion);
 }
 
 Chopper::~Chopper()
 {
+	delete mTbiService;
+	delete mTbiDevice;
 }
 
 void Chopper::CountUp()
 {
-	uint8_t cnt = mAttCount.getValue + 1;
+	uint8_t cnt = mAttCount.getValueInt8() + 1;
 	mAttCount.setValue(cnt);
-	bool status = mAttpService.writeAttribute(mAttCount);
+	bool status = mTbiService->writeAttribute(mAttCount);
 	if (!status) {
 		// error
 	}
 }
 
-
 uint8_t Chopper::GetCount()
 {
-	
-
-	uint8_t sndbuf[BUF_LEN];
-	uint8_t rcvbuf[BUF_LEN];
-	uint8_t num;
-    
-    sndbuf[0] = 0x81;
-	SendPacket(sndbuf, 1);
-
-    msleep(10);
-    
-	if (!ReceivePacket(rcvbuf, &num))
-		return 0;
-	else
-		return rcvbuf[0];
+	bool status = mTbiService->readAttribute(mAttCount);
+	if (!status) {
+		// error
+	}
+	return mAttCount.getValueInt8();
 }
 

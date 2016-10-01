@@ -2,21 +2,11 @@
 #define TOOLBITSDK_LUKE_H_
 
 #include <stdint.h>
-#include "pic16f.h"
+#include "tbi_device.h"
+#include "tbi_service.h"
+#include "attribute.h"
 
-typedef enum
-{
-    // Prodcut specific commands
-//    CMD_GET_GPIO_CONFIG = 0x20,
-//	CMD_SET_GPIO_CONFIG = 0x21,
-//	CMD_GET_GPIO_IN = 0x22,
-//	CMD_SET_GPIO_OUT = 0x23,
-//	CMD_CONFIG_ADC = 0x24,
-//	CMD_GET_ADC_IN = 0x25,
-} HidCommProductCommands;
-
-
-class Luke : public Pic16f
+class Luke
 {
 public:
 	Luke();
@@ -25,6 +15,12 @@ public:
 protected:
 
 private:
+	TbiDevice *mTbiDevice;
+	TbiService *mTbiService;
+	Attribute mAttProductName;
+	Attribute mAttProductRevision;
+	Attribute mAttProductSerial;
+	Attribute mAttFirmVersion;
 };
 
 #endif /* TOOLBITSDK_LUKE_H_ */
