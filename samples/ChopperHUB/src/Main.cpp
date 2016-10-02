@@ -12,13 +12,9 @@
 
 using namespace std;
 
-#define USB_VID 0x4d8
-#define USB_PID 0x3f
-
 int main(int argc, char* argv[])
 {
-    HidChopper *hidchopper = new HidChopper();
-    hidchopper->GetDeviceList(USB_VID, USB_PID);
+	Chopper *chopper = new Chopper();
 
     getoption go(argc, argv);
 
@@ -28,9 +24,9 @@ int main(int argc, char* argv[])
             break;
         }
 
-        switch (c) {
-            case 'l':
-                hidchopper->ShowDeviceList();
+        switch (c) {			
+			case 'l':
+                //hidchopper->ShowDeviceList();
                 break;
 
             case 'c':
@@ -52,26 +48,29 @@ int main(int argc, char* argv[])
     }
     cout << endl;
 
+	/*
     wchar_t serial_num[] = {'S', 'N', '0', '0', '0', '0', '0', '1', '\0'};
 
     if (hidchopper->Open(USB_VID, USB_PID)) {
         cout << "Open HID Device " << endl;
 	}
-
-	hidchopper->GetInfo();
-	/*
-	int i = hidchopper->GetCount();
-	cout << "Count: " << dec << i << endl;
-	cout << "CountUp" << endl;
-	hidchopper->CountUp();
-    i = hidchopper->GetCount();
-	cout << "Count: " << dec << i << endl;
 	*/
 
-	cout << "Product Name: " << hidchopper->GetProductName() << endl;
-	cout << "Product Revision: " << hidchopper->GetProductRevision() << endl;
-	cout << "Product Serial: " << hidchopper->GetProductSerial() << endl;
-	cout << "Firm Version: " << hidchopper->GetFirmVersion() << endl;
+	//hidchopper->GetInfo();
+
+	int i = chopper->GetCount();
+	cout << "Count: " << dec << i << endl;
+	cout << "CountUp" << endl;
+	chopper->CountUp();
+    i = chopper->GetCount();
+	cout << "Count: " << dec << i << endl;
+
+	/*
+	cout << "Product Name: " << chopper->GetProductName() << endl;
+	cout << "Product Revision: " << chopper->GetProductRevision() << endl;
+	cout << "Product Serial: " << chopper->GetProductSerial() << endl;
+	cout << "Firm Version: " << chopper->GetFirmVersion() << endl;
+	*/
 	/*
 	cout << "ADC ch0: " << hidchopper->GetAdcIn(0) << endl;
 	cout << "GPIO dump: " << hidchopper->GetGpioIn() << endl;

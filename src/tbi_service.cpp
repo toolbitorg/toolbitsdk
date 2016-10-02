@@ -17,13 +17,13 @@ TbiService::~TbiService()
 
 }
 
-bool TbiService::readAttribute(Attribute att)
+bool TbiService::readAttribute(Attribute *att)
 {
 	uint8_t buf[BUF_LEN];
 	buf[0] = PROTOCOL_VERSION + 4;  // The first byte is Version(7-6bit) + Length(5-0bit).
 	buf[1] = OP_ATTR_VALUE_GET;     // Operation Code
-	buf[2] = (att.getAttid() & 0xFF00) >> 8;
-	buf[3] = att.getAttid() & 0xFF;
+	buf[2] = (att->getAttid() & 0xFF00) >> 8;
+	buf[3] = att->getAttid() & 0xFF;
 	tdev->write(buf, 4);
 
 	msleep(10);
@@ -34,8 +34,8 @@ bool TbiService::readAttribute(Attribute att)
 			&& buf[1] == OP_ATTR_VALUE_GET
 			&& buf[2] == RC_OK)
 		{
-			int len = buf[0] & 0x3F - 3;
-			return att.setValue(&buf[3], len);
+			int len = (buf[0] & 0x3F) - 3;
+			return att->setValue(&buf[3], len);
 		}
 	}
 	return false;
@@ -59,7 +59,7 @@ bool TbiService::writeAttribute(Attribute att)
 
 	msleep(10);
 
-	if (tdev->read(buf) == 3) {
+	if (tdev->read(buf) >= 3) {
 		if (buf[0] == PROTOCOL_VERSION + 3  // Check received packet
 			&& buf[1] == OP_ATTR_VALUE_SET
 			&& buf[2] == RC_OK)

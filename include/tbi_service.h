@@ -39,7 +39,7 @@ public:
 	TbiService(TbiDevice *p);
 	~TbiService();
 
-	bool readAttribute(Attribute att);
+	bool readAttribute(Attribute *att);
 	bool writeAttribute(Attribute att);
 
 private:

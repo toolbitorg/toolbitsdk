@@ -1,19 +1,19 @@
 BINDIR = ../bin
 OBJDIR = ../build
 INCDIR = ../../../include
-LIBDIR = ../../../lib/mingw
+LIBDIR = ../../../lib/gcc
 LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
 CFLAGS  = -g -MMD -MP
 LDFLAGS = 
-INCLUDE = -I$(INCDIR)
+INCLUDE = -I$(INCDIR) `pkg-config libusb-1.0 --cflags`
 
-LIBOBJS = $(LIBDIR)/libtbi.a
-LIBS = $(LIBOBJS) -lsetupapi
+LIBOBJS = $(LIBDIR)/libhidcomm.a
+LIBS = $(LIBOBJS) `pkg-config libusb-1.0 libudev --libs` -lrt -lpthread 
 
-TARGET = $(BINDIR)/chopper.exe
+TARGET = $(BINDIR)/chopper
 CPP_SOURCES = $(wildcard *.cpp) 
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
@@ -25,7 +25,7 @@ DEPENDS = $(OBJECTS:.o=.d)
 all: $(TARGET)
 
 $(LIBOBJS): FORCE
-	cd $(LIBSRCDIR); $(MAKE) -f makefile.mingw
+	cd $(LIBSRCDIR); $(MAKE) -f makefile.gcc
 
 FORCE:
 
@@ -38,7 +38,7 @@ $(OBJDIR)/%.o : %.cpp
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 $(OBJDIR)/%.o : %.c
-	@[ -d $(OBJDIR)/HIDAPI/windows/ ] || mkdir -p $(OBJDIR)/HIDAPI/windows
+	@[ -d $(OBJDIR)/HIDAPI/linux/ ] || mkdir -p $(OBJDIR)/HIDAPI/linux
 	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:

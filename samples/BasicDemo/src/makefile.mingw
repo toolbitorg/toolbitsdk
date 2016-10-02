@@ -13,7 +13,7 @@ INCLUDE = -I$(INCDIR)
 LIBOBJS = $(LIBDIR)/libtbi.a
 LIBS = $(LIBOBJS) -lsetupapi
 
-TARGET = $(BINDIR)/chopper.exe
+TARGET = $(BINDIR)/basicdemo.exe
 CPP_SOURCES = $(wildcard *.cpp) 
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))

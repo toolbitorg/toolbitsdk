@@ -2,11 +2,10 @@
 #define TOOLBITSDK_CHOPPER_H_
 
 #include <stdint.h>
-#include "tbi_device.h"
-#include "tbi_service.h"
+#include "tbi_core.h"
 #include "attribute.h"
 
-class Chopper
+class Chopper : public TbiCore
 {
 public:
     Chopper();
@@ -17,12 +16,6 @@ public:
 protected:
 
 private:
-	TbiDevice *mTbiDevice;
-	TbiService *mTbiService;
-	Attribute mAttProductName;
-	Attribute mAttProductRevision;
-	Attribute mAttProductSerial;
-	Attribute mAttFirmVersion;
 	Attribute mAttCount;
 };
 
