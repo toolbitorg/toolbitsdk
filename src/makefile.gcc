@@ -8,7 +8,7 @@ LDFLAGS =
 INCLUDE = -I./HIDAPI/hidapi -I../include `pkg-config libusb-1.0 --cflags`
 LIBS = `pkg-config libusb-1.0 libudev --libs`
 
-TARGET = $(BINDIR)/libhidcomm.a
+TARGET = $(BINDIR)/libtbi.a
 C_SOURCES   = HIDAPI/linux/hid.c
 CPP_SOURCES = $(wildcard *.cpp) 
 

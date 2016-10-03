@@ -10,10 +10,10 @@ CFLAGS  = -g -MMD -MP
 LDFLAGS = 
 INCLUDE = -I$(INCDIR) `pkg-config libusb-1.0 --cflags`
 
-LIBOBJS = $(LIBDIR)/libhidcomm.a
+LIBOBJS = $(LIBDIR)/libtbi.a
 LIBS = $(LIBOBJS) `pkg-config libusb-1.0 libudev --libs` -lrt -lpthread 
 
-TARGET = $(BINDIR)/chopper
+TARGET = $(BINDIR)/basicdemo
 CPP_SOURCES = $(wildcard *.cpp) 
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
