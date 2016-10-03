@@ -1,15 +1,19 @@
-OBJDIR = ../build/osx
-BINDIR = ../lib/osx
+BINDIR = ../bin
+OBJDIR = ../build
+INCDIR = ../../../include
+LIBDIR = ../../../lib/macos
+LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
 CFLAGS  = -g -MMD -MP
 LDFLAGS =
-INCLUDE = -I./HIDAPI/hidapi -I../include
-LIBS =
+INCLUDE = -I$(INCDIR)
 
-TARGET = $(BINDIR)/libhidcomm.a
-C_SOURCES   = HIDAPI/mac/hid.c
+LIBOBJS = $(LIBDIR)/libtbi.a
+LIBS = $(LIBOBJS) -framework IOKit -framework Carbon
+
+TARGET = $(BINDIR)/chopper
 CPP_SOURCES = $(wildcard *.cpp)
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
@@ -20,17 +24,22 @@ DEPENDS = $(OBJECTS:.o=.d)
 
 all: $(TARGET)
 
-$(TARGET): $(OBJECTS)
+$(LIBOBJS): FORCE
+	cd $(LIBSRCDIR); $(MAKE) -f makefile.macos
+
+FORCE:
+
+$(TARGET): $(OBJECTS) $(LIBOBJS)
 	@[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
-	ar r $@ $(OBJECTS)
-	cp -fp ./HIDAPI/hidapi/hidapi.h ../include
+	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBS)
+	SetFile -t APPL $(TARGET)
 
 $(OBJDIR)/%.o : %.cpp
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 $(OBJDIR)/%.o : %.c
-	@[ -d $(OBJDIR)/HIDAPI/mac/ ] || mkdir -p $(OBJDIR)/HIDAPI/mac/
+	@[ -d $(OBJDIR)/HIDAPI/mac/ ] || mkdir -p $(OBJDIR)/HIDAPI/mac
 	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
