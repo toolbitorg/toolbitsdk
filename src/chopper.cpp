@@ -25,7 +25,7 @@ void Chopper::CountUp()
 
 uint8_t Chopper::GetCount()
 {
-	bool status = mTbiService->readAttribute(mAttCount);
+	bool status = mTbiService->readAttribute(&mAttCount);
 	if (!status) {
 		// error
 	}
