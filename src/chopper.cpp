@@ -5,7 +5,7 @@
 #include "chopper.h"
 
 Chopper::Chopper() :
-    mAttCount(0x1000, 0x00, 0x00)
+	mAttCount(0x1000, 0x00, 0x00)
 {
 }
 

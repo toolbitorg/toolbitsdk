@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "getopt.h"
-#include "hidluke.h"
+#include "luke.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -12,32 +12,27 @@
 
 using namespace std;
 
-#define USB_VID 0x4d8
-//#define USB_PID 0x3f
-#define USB_PID 0x54
-
 int main(int argc, char* argv[])
 {
-    HidLuke *hidluke = new HidLuke();
-    hidluke->GetDeviceList(USB_VID, USB_PID);
+    Luke *luke = new Luke();
 
+	cout << "ProductName: " << luke->getProductName() << endl;
+	cout << "ProductRevision: " << luke->getProductRevision() << endl;
+	cout << "ProductSerial: " << luke->getProductSerial() << endl;
+	cout << "ProductVersion: " << luke->getFirmVersion() << endl;
+
+	/*
     getoption go(argc, argv);
 
     while (1) {
-        int c = go.get("fl");
+        int c = go.get("l");
         if ( c == -1 ) {
             break;
         }
 
-        switch (c) {
-            case 'f':
-                cout << "Bootloader mode" << endl;
-                hidluke->Open(0);
-                hidluke->BootloaderMode();
-                return 0;
-
-            case 'l':
-                hidluke->ShowDeviceList();
+        switch (c) {			
+			case 'l':
+                //hidchopper->ShowDeviceList();
                 break;
 
             case 'c':
@@ -58,22 +53,27 @@ int main(int argc, char* argv[])
         cout << argv[i] << " ";
     }
     cout << endl;
+	*/
 
-    wchar_t serial_num[] = {'S', 'N', '0', '0', '0', '0', '0', '1', '\0'};
+	luke->setCurrentRange(CURRENT_RANGE_HIGH);
+	cout << "Set Current Range High" << endl;
+	cout << "Current: " << luke->getCurrent() << "A" << endl;
 
-//    if (hidluke->Open(0)) {
-    if (hidluke->Open(USB_VID, USB_PID)) {
-        cout << "Open HID Device " << endl;
-	}
+	luke->setCurrentRange(CURRENT_RANGE_LOW);
+	cout << "Set Current Range Low" << endl;
+	cout << "Current: " << luke->getCurrent() * 1000.0 << "mA" << endl;
 
-//	hidluke->GetInfo();
-	cout << "Product Name: " << hidluke->GetProductName() << endl;
-	cout << "Product Revision: " << hidluke->GetProductRevision() << endl;
-	cout << "Product Serial: " << hidluke->GetProductSerial() << endl;
-	cout << "Firm Version: " << hidluke->GetFirmVersion() << endl;
-	cout << "ADC ch0: " << hidluke->GetAdcIn(0) << endl;
-	cout << "GPIO dump: " << hidluke->GetGpioIn() << endl;
-	hidluke->Close();
+	luke->setVoltageRange(VOLTAGE_RANGE_HIGH);
+	cout << "Set Voltage Range High" << endl;
+	cout << "Voltage: " << luke->getVoltage() << "V" << endl;
+
+	luke->setVoltageRange(VOLTAGE_RANGE_LOW);
+	cout << "Set Voltage Range Low" << endl;
+	cout << "Voltage: " << luke->getVoltage() << "V" << endl;
+
+	cout << endl;
+	cout << luke->showReg() << endl;
+
 
 #ifdef WIN32
 	system("pause");

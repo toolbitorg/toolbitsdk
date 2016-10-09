@@ -10,7 +10,7 @@ CFLAGS  = -g -MMD -MP
 LDFLAGS = 
 INCLUDE = -I$(INCDIR)
 
-LIBOBJS = $(LIBDIR)/libhidcomm.a
+LIBOBJS = $(LIBDIR)/libtbi.a
 LIBS = $(LIBOBJS) -lsetupapi
 
 TARGET = $(BINDIR)/luke.exe

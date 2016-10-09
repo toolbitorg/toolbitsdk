@@ -25,7 +25,6 @@ int main(int argc, char* argv[])
 
 	cout << "CountUp" << endl;
 	basicdemo->CountUp();
-
 	i = basicdemo->GetCount();
 	cout << "Count: " << dec << i << endl;
 

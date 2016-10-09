@@ -47,6 +47,8 @@ public:
 
 	bool setValue(uint8_t i);
 	bool setValue(int8_t i);
+	bool setValue(uint16_t i);
+	bool setValue(int16_t i);
 	bool setValue(uint32_t i);
 	bool setValue(int32_t i);
 	bool setValue(char *str);
@@ -56,6 +58,8 @@ public:
 
 	uint8_t  getValueUint8();
 	int8_t   getValueInt8();
+	uint16_t  getValueUint16();
+	int16_t   getValueInt16();
 	uint32_t getValueUint32();
 	int32_t  getValueInt32();
 	char     *getValueStr();
@@ -68,6 +72,8 @@ private:
 		// Byte order must be little endian
 		uint8_t  uint8;
 		int8_t   int8;
+		uint16_t uint16;
+		int16_t  int16;
 		uint32_t uint32;
 		int32_t  int32;
 		char     str[VALUE_LEN + 1];

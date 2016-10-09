@@ -114,7 +114,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../../lib/vs</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libhidcomm.lib;setupapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setupapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,12 +154,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\attribute.cpp" />
+    <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c" />
+    <ClCompile Include="..\..\..\src\luke.cpp" />
+    <ClCompile Include="..\..\..\src\tbi_core.cpp" />
+    <ClCompile Include="..\..\..\src\tbi_device.cpp" />
+    <ClCompile Include="..\..\..\src\tbi_service.cpp" />
     <ClCompile Include="..\src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\hidluke.h" />
-    <ClInclude Include="..\..\..\include\hidpic16f.h" />
-    <ClInclude Include="..\..\..\include\libhidcomm.h" />
+    <ClInclude Include="..\..\..\include\attribute.h" />
+    <ClInclude Include="..\..\..\include\hidapi.h" />
+    <ClInclude Include="..\..\..\include\luke.h" />
+    <ClInclude Include="..\..\..\include\tbi_core.h" />
+    <ClInclude Include="..\..\..\include\tbi_device.h" />
+    <ClInclude Include="..\..\..\include\tbi_service.h" />
     <ClInclude Include="..\src\getopt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

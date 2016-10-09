@@ -30,6 +30,20 @@ bool Attvalue::setValue(uint8_t i)
 	return true;
 }
 
+bool Attvalue::setValue(uint16_t i)
+{
+	dat.uint16 = i;
+	datlen = 2;
+	return true;
+}
+
+bool Attvalue::setValue(int16_t i)
+{
+	dat.int16 = i;
+	datlen = 2;
+	return true;
+}
+
 bool Attvalue::setValue(uint32_t i)
 {
 	dat.uint32 = i;
@@ -92,6 +106,16 @@ uint8_t Attvalue::getValueUint8()
 int8_t Attvalue::getValueInt8()
 {
 	return dat.int8;
+}
+
+uint16_t Attvalue::getValueUint16()
+{
+	return dat.uint16;
+}
+
+int16_t Attvalue::getValueInt16()
+{
+	return dat.int16;
 }
 
 uint32_t Attvalue::getValueUint32()
