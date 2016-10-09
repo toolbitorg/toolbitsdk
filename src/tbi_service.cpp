@@ -2,7 +2,6 @@
 #include <wchar.h>
 #include <string.h>
 #include <stdlib.h>
-
 #include "tbi_service.h"
 
 
@@ -29,7 +28,7 @@ bool TbiService::readAttribute(Attribute *att)
 	msleep(10);
 
 	if (tdev->read(buf) >= 4) {
-	
+
 		if ((buf[0] & 0xC0) == PROTOCOL_VERSION
 			&& buf[1] == OP_ATTR_VALUE_GET
 			&& buf[2] == RC_OK)
@@ -53,7 +52,7 @@ bool TbiService::writeAttribute(Attribute att)
 	buf[3] = id & 0xFF;
 	char *p = att.getValueStr();
 	for (int i = 0; i < len; i++) {
-		buf[4 + i] = *p++;                // Set value 
+		buf[4 + i] = *p++;                // Set value
 	}
 	tdev->write(buf, 4 + len);
 
@@ -67,6 +66,3 @@ bool TbiService::writeAttribute(Attribute att)
 	}
 	return false;
 }
-
-
-

@@ -3,6 +3,10 @@
 
 #include <stdint.h>
 #include <string>
+#ifndef _WIN32
+#include <chrono>
+#include <thread>
+#endif
 #include "hidapi.h"
 
 using namespace std;
@@ -12,7 +16,7 @@ using namespace std;
 #include <windows.h>
 #define msleep(X) Sleep(X)
 #else
-#define msleep(X) usleep((X) * 1000)
+#define msleep(X) std::this_thread::sleep_for(std::chrono::milliseconds(X));
 #endif
 
 #define BUF_LEN 65   // The first byte is report number so acutual transfer data size is 64
