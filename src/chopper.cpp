@@ -5,30 +5,71 @@
 #include "chopper.h"
 
 Chopper::Chopper() :
-	mAttCount(0x1000, 0x00, 0x00)
+	mAttUsbPortCtrl(0x1000, 0x00, 0x00)
 {
+	// Get current status
+	mTbiService->readAttribute(&mAttUsbPortCtrl);
 }
 
 Chopper::~Chopper()
 {
 }
 
-void Chopper::CountUp()
+bool Chopper::enableAllUsbPort()
 {
-	uint8_t cnt = mAttCount.getValueInt8() + 1;
-	mAttCount.setValue(cnt);
-	bool status = mTbiService->writeAttribute(mAttCount);
-	if (!status) {
-		// error
-	}
+	uint32_t val = 0xFFFFFFFF;
+	mAttUsbPortCtrl.setValue(val);
+	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
+	if (!status)
+		return false;   // error
+
+	return true;
 }
 
-uint8_t Chopper::GetCount()
+bool Chopper::enableUsbPort(uint32_t p)
 {
-	bool status = mTbiService->readAttribute(&mAttCount);
-	if (!status) {
-		// error
-	}
-	return mAttCount.getValueInt8();
+	if (p == 0 || p > 32)
+		return false;
+
+	uint32_t val = mAttUsbPortCtrl.getValueUint32() | (1 << p - 1);
+	mAttUsbPortCtrl.setValue(val);
+	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
+	if (!status)
+		return false;   // error
+
+	return true;
+}
+
+bool Chopper::disableAllUsbPort()
+{
+	uint32_t val = 0x00000000;
+	mAttUsbPortCtrl.setValue(val);
+	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
+	if (!status)
+		return false;   // error
+
+	return true;
+}
+
+bool Chopper::disableUsbPort(uint32_t p)
+{
+	if (p == 0 || p > 32)
+		return false;
+
+	uint32_t val = mAttUsbPortCtrl.getValueUint32() & ~(1 << p - 1);
+	mAttUsbPortCtrl.setValue(val);
+	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
+	if (!status)
+		return false;   // error
+
+	return true;
+}
+
+uint32_t Chopper::getUsbPortStatus()
+{
+	bool status = mTbiService->readAttribute(&mAttUsbPortCtrl);
+	if (!status)
+		return false;   // error
+	return mAttUsbPortCtrl.getValueUint32();
 }
 

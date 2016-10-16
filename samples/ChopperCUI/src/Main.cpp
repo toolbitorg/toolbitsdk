@@ -12,16 +12,20 @@
 
 using namespace std;
 
+#define ALL_PORTS 0
+
 int main(int argc, char* argv[])
 {
 	Chopper *chopper = new Chopper();
 	if (!chopper->isConnected())
 		return 0;
 
+	uint32_t port = ALL_PORTS;
+	
     getoption go(argc, argv);
 
     while (1) {
-        int c = go.get("l");
+        int c = go.get("ls:p:");
         if ( c == -1 ) {
             break;
         }
@@ -31,9 +35,19 @@ int main(int argc, char* argv[])
                 //hidchopper->ShowDeviceList();
                 break;
 
-            case 'c':
-                cout << "option c with value " << go.argument() << endl;
-                break;
+			case 's':
+//				cout << "option s with value " << go.argument() << endl;
+				break;
+
+			case 'p':
+				if (atoi(go.argument()) <= 0) {
+					cout << "Wrong value: " << go.argument() << endl;
+					return 0;
+				}
+				else {
+					port = atoi(go.argument());
+				}
+				break;
 
             case '?':
               break;
@@ -43,44 +57,54 @@ int main(int argc, char* argv[])
         }
     }
 
-    // optind
-    cout << "non-option ARGV-elements: ";
-    for (int i=go.optind(); i<argc; i++ ) {
-        cout << argv[i] << " ";
-    }
-    cout << endl;
+	int argi = go.optind();  // index of the first non-option ARGV-element
 
-	/*
-    wchar_t serial_num[] = {'S', 'N', '0', '0', '0', '0', '0', '1', '\0'};
-
-    if (hidchopper->Open(USB_VID, USB_PID)) {
-        cout << "Open HID Device " << endl;
+	if (argi==argc || !strcmp(argv[argi], "status")) {
+		uint32_t s = chopper->getUsbPortStatus();
+		for (int i = 0; i < 2; i++) {
+			cout << i + 1 << ": ";
+			if (s & 1 << i) {
+				cout << "on" << endl;
+			}
+			else {
+				cout << "off" << endl;
+			}
+		}
 	}
-	*/
-
-	//hidchopper->GetInfo();
-
-	int i = chopper->GetCount();
-	cout << "Count: " << dec << i << endl;
-	cout << "CountUp" << endl;
-	chopper->CountUp();
-    i = chopper->GetCount();
-	cout << "Count: " << dec << i << endl;
+	else if (!strcmp(argv[argi], "on")) {
+		if (port == ALL_PORTS) {
+			chopper->enableAllUsbPort();
+			cout << "Enable all USB ports " << endl;
+		}
+		else {
+			chopper->enableUsbPort(port);
+			cout << "Enable USB port " << port << endl;
+		}
+	}
+	else if (!strcmp(argv[argi], "off")) {
+		if (port == ALL_PORTS) {
+			chopper->disableAllUsbPort();
+			cout << "Disable all USB ports " << endl;
+		}
+		else {
+			chopper->disableUsbPort(port);
+			cout << "Disable USB port " << port << endl;
+		}
+	}
+	else {
+		cout << "Unknown option: " << argv[argi] << endl;
+	}
 
 	/*
-	cout << "Product Name: " << chopper->GetProductName() << endl;
-	cout << "Product Revision: " << chopper->GetProductRevision() << endl;
-	cout << "Product Serial: " << chopper->GetProductSerial() << endl;
-	cout << "Firm Version: " << chopper->GetFirmVersion() << endl;
+	cout << "Product Name: " << chopper->getProductName() << endl;
+	cout << "Product Revision: " << chopper->getProductRevision() << endl;
+	cout << "Product Serial: " << chopper->getProductSerial() << endl;
+	cout << "Firm Version: " << chopper->getFirmVersion() << endl;
 	*/
-	/*
-	cout << "ADC ch0: " << hidchopper->GetAdcIn(0) << endl;
-	cout << "GPIO dump: " << hidchopper->GetGpioIn() << endl;
-	hidchopper->Close();
-	*/
+
 
 #ifdef WIN32
-	system("pause");
+	//system("pause");
 #endif
 	return 0;
 }

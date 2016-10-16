@@ -11,12 +11,15 @@ public:
     Chopper();
     ~Chopper();
     
-    void CountUp();
-    uint8_t GetCount();
+	bool enableAllUsbPort();
+	bool enableUsbPort(uint32_t p);
+	bool disableAllUsbPort();
+	bool disableUsbPort(uint32_t p);
+	uint32_t getUsbPortStatus();
 protected:
 
 private:
-	Attribute mAttCount;
+	Attribute mAttUsbPortCtrl;    // Enable/Disable USB ports
 };
 
 #endif /* TOOLBITSDK_CHOPPER_H_ */

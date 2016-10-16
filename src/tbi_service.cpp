@@ -61,7 +61,7 @@ bool TbiService::writeAttribute(Attribute att)
 		buf[4 + i] = *p++;                // Set value
 	}
 	if (tdev->isOpen()) {
-		tdev->write(buf, 4);
+		tdev->write(buf, 4+len);
 	}
 	else {
 		return false;
