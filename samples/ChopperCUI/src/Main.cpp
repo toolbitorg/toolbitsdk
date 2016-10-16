@@ -15,6 +15,8 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	Chopper *chopper = new Chopper();
+	if (!chopper->isConnected())
+		return 0;
 
     getoption go(argc, argv);
 

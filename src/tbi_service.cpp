@@ -23,7 +23,13 @@ bool TbiService::readAttribute(Attribute *att)
 	buf[1] = OP_ATTR_VALUE_GET;     // Operation Code
 	buf[2] = (att->getAttid() & 0xFF00) >> 8;
 	buf[3] = att->getAttid() & 0xFF;
-	tdev->write(buf, 4);
+
+	if (tdev->isOpen()) {
+		tdev->write(buf, 4);
+	}
+	else {
+		return false;
+	}
 
 	msleep(10);
 
@@ -54,7 +60,12 @@ bool TbiService::writeAttribute(Attribute att)
 	for (int i = 0; i < len; i++) {
 		buf[4 + i] = *p++;                // Set value
 	}
-	tdev->write(buf, 4 + len);
+	if (tdev->isOpen()) {
+		tdev->write(buf, 4);
+	}
+	else {
+		return false;
+	}
 
 	msleep(10);
 

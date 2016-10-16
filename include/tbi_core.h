@@ -13,6 +13,7 @@ public:
     TbiCore();
     ~TbiCore();
 
+	bool   isConnected();
 	string getProductName();
 	string getProductRevision();
 	string getProductSerial();

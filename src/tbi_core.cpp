@@ -30,6 +30,10 @@ TbiCore::~TbiCore()
 	delete mTbiDevice;
 }
 
+bool TbiCore::isConnected()
+{
+	return mTbiDevice->isOpen();
+}
 
 string TbiCore::getProductName()
 {
