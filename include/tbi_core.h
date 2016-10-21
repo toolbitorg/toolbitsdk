@@ -14,6 +14,7 @@ public:
     ~TbiCore();
 
 	bool   isConnected();
+	void   showDeviceList();     // This is temporary function
 	string getProductName();
 	string getProductRevision();
 	string getProductSerial();

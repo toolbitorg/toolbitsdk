@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
         switch (c) {			
 			case 'l':
-                //hidchopper->ShowDeviceList();
+                chopper->showDeviceList();
                 break;
 
 			case 's':
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
 
 
 #ifdef WIN32
-	//system("pause");
+	system("pause");
 #endif
 	return 0;
 }

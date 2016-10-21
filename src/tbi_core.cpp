@@ -35,6 +35,13 @@ bool TbiCore::isConnected()
 	return mTbiDevice->isOpen();
 }
 
+void TbiCore::showDeviceList()
+{
+	mTbiDevice->close();
+	mTbiDevice->getDeviceList(USB_VID, USB_PID);
+	mTbiDevice->open(USB_VID, USB_PID);
+}
+
 string TbiCore::getProductName()
 {
 	return mAttProductName.getValueStr();

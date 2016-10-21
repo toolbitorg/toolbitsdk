@@ -30,6 +30,7 @@ public:
 	TbiDevice();
 	~TbiDevice();
 
+	void getDeviceList(uint16_t vid, uint16_t pid);
 	bool open(uint16_t vid, uint16_t pid);
 	bool open(uint16_t vid, uint16_t pid, wchar_t *serial_num);
 	bool isOpen();
@@ -41,7 +42,6 @@ public:
 	/*
 	bool open(int num);
 
-	void GetDeviceList(uint16_t vid, uint16_t pid);
 	int GetDeviceNum();
     void ShowDeviceList();
 

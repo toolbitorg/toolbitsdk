@@ -17,6 +17,30 @@ TbiDevice::~TbiDevice()
         hid_free_enumeration(devs);
 }
 
+void TbiDevice::getDeviceList(uint16_t vid, uint16_t pid)
+{
+	if (!devs)
+		hid_free_enumeration(devs);
+
+	// Enumerate and print the HID devices on the system
+	devs = hid_enumerate(vid, pid);
+
+	struct hid_device_info *cur_dev;
+
+	cur_dev = devs;
+	while (cur_dev) {
+		printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls",
+			cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
+		printf("\n");
+		printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
+		printf("  Product:      %ls\n", cur_dev->product_string);
+		printf("\n");
+		cur_dev = cur_dev->next;
+	}
+	handle = hid_open_path(devs->path);
+}
+
+
 bool TbiDevice::open(uint16_t vid, uint16_t pid)
 {
 	// Open the device using the VID, PID
