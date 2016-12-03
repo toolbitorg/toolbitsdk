@@ -60,6 +60,12 @@ int main(int argc, char* argv[])
 	int argi = go.optind();  // index of the first non-option ARGV-element
 
 	if (argi==argc || !strcmp(argv[argi], "status")) {
+
+		cout << "Product Name: " << chopper->getProductName() << endl;
+		cout << "Product Revision: " << chopper->getProductRevision() << endl;
+		cout << "Product Serial: " << chopper->getProductSerial() << endl;
+		cout << "Firm Version: " << chopper->getFirmVersion() << endl;
+
 		uint32_t s = chopper->getUsbPortStatus();
 		for (int i = 0; i < 2; i++) {
 			cout << i + 1 << ": ";
@@ -95,12 +101,6 @@ int main(int argc, char* argv[])
 		cout << "Unknown option: " << argv[argi] << endl;
 	}
 
-	/*
-	cout << "Product Name: " << chopper->getProductName() << endl;
-	cout << "Product Revision: " << chopper->getProductRevision() << endl;
-	cout << "Product Serial: " << chopper->getProductSerial() << endl;
-	cout << "Firm Version: " << chopper->getFirmVersion() << endl;
-	*/
 
 
 #ifdef WIN32
