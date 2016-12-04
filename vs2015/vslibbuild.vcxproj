@@ -18,6 +18,26 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\attribute.h" />
+    <ClInclude Include="..\include\basicdemo.h" />
+    <ClInclude Include="..\include\chopper.h" />
+    <ClInclude Include="..\include\hidapi.h" />
+    <ClInclude Include="..\include\luke.h" />
+    <ClInclude Include="..\include\tbi_core.h" />
+    <ClInclude Include="..\include\tbi_device.h" />
+    <ClInclude Include="..\include\tbi_service.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\attribute.cpp" />
+    <ClCompile Include="..\src\basicdemo.cpp" />
+    <ClCompile Include="..\src\chopper.cpp" />
+    <ClCompile Include="..\src\HIDAPI\windows\hid.c" />
+    <ClCompile Include="..\src\luke.cpp" />
+    <ClCompile Include="..\src\tbi_core.cpp" />
+    <ClCompile Include="..\src\tbi_device.cpp" />
+    <ClCompile Include="..\src\tbi_service.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D795D8AB-F671-40AD-A604-4274677090C6}</ProjectGuid>
     <RootNamespace>vslibbuild</RootNamespace>
@@ -83,7 +103,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../include</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,26 +140,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\basicdemo.cpp" />
-    <ClCompile Include="..\tbi_core.cpp" />
-    <ClCompile Include="..\tbi_device.cpp" />
-    <ClCompile Include="..\tbi_service.cpp" />
-    <ClCompile Include="..\attribute.cpp" />
-    <ClCompile Include="..\chopper.cpp" />
-    <ClCompile Include="..\HIDAPI\windows\hid.c" />
-    <ClCompile Include="..\luke.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\include\basicdemo.h" />
-    <ClInclude Include="..\..\include\tbi_core.h" />
-    <ClInclude Include="..\..\include\tbi_device.h" />
-    <ClInclude Include="..\..\include\tbi_service.h" />
-    <ClInclude Include="..\..\include\attribute.h" />
-    <ClInclude Include="..\..\include\chopper.h" />
-    <ClInclude Include="..\..\include\luke.h" />
-    <ClInclude Include="..\HIDAPI\hidapi\hidapi.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
