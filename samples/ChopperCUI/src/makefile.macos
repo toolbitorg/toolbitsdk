@@ -7,9 +7,7 @@ LIBSRCDIR = ../../../src
 CC  = gcc
 CXX = g++ -mmacosx-version-min=10.7
 CFLAGS  = -g -MMD -MP
-LDFLAGS = -framework IOKit -framework Carbon -framework Cocoa
-# When -framework Cocoa is added, application crashes as follows as
-# libc++abi.dylib: terminating with uncaught exception of type NSException Abort trap: 6
+LDFLAGS = -framework IOKit -framework Carbon
 INCLUDE = -I$(INCDIR)
 
 LIBOBJS = $(LIBDIR)/libtbi.a
