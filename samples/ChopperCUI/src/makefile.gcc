@@ -6,12 +6,11 @@ LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
-CFLAGS  = -g -MMD -MP
+CXXFLAGS  = -g -MMD -MP
 LDFLAGS = 
-INCLUDE = -I$(INCDIR) `pkg-config libusb-1.0 --cflags`
-
-LIBOBJS = $(LIBDIR)/libhidcomm.a
-LIBS = $(LIBOBJS) `pkg-config libusb-1.0 libudev --libs` -lrt -lpthread 
+INCLUDE = -I$(INCDIR) 
+LIBOBJS = $(LIBDIR)/libtbi.a
+LIBS = $(LIBOBJS) `pkg-config libusb-1.0 --libs` -lpthread
 
 TARGET = $(BINDIR)/chopper
 CPP_SOURCES = $(wildcard *.cpp) 
@@ -25,7 +24,7 @@ DEPENDS = $(OBJECTS:.o=.d)
 all: $(TARGET)
 
 $(LIBOBJS): FORCE
-	cd $(LIBSRCDIR); $(MAKE) -f makefile.gcc
+	cd $(LIBSRCDIR); make -f makefile.gcc
 
 FORCE:
 
@@ -35,14 +34,11 @@ $(TARGET): $(OBJECTS) $(LIBOBJS)
 
 $(OBJDIR)/%.o : %.cpp 
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)	
-	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
-
-$(OBJDIR)/%.o : %.c
-	@[ -d $(OBJDIR)/HIDAPI/linux/ ] || mkdir -p $(OBJDIR)/HIDAPI/linux
-	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
 	$(RM) $(OBJECTS) $(TARGET) $(DEPENDS)
+	cd $(LIBSRCDIR); make -f makefile.gcc clean
 
 
 -include $(DEPENDS)

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <cstdlib>  // Add this for linux
 #include "getopt.h"
 #include "chopper.h"
 
