@@ -38,10 +38,6 @@ $(OBJDIR)/%.o : %.cpp
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
-$(OBJDIR)/%.o : %.c
-	@[ -d $(OBJDIR)/HIDAPI/mac/ ] || mkdir -p $(OBJDIR)/HIDAPI/mac
-	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
-
 clean:
 	$(RM) $(OBJECTS) $(TARGET) $(DEPENDS)
 	cd $(LIBSRCDIR); make -f makefile.macos clean
