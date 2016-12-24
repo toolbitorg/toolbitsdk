@@ -5,18 +5,19 @@
 #include "tbi_core.h"
 #include "attribute.h"
 
-
 typedef enum
 {
-	CURRENT_RANGE_LOW = 0,
-	CURRENT_RANGE_HIGH = 1
-} CurrentRange;
-
-typedef enum
-{
-	VOLTAGE_RANGE_LOW = 0,
-	VOLTAGE_RANGE_HIGH = 1
+	VOLTAGE_RANGE_AUTO = 0,
+	VOLTAGE_RANGE_LOW = 1,
+	VOLTAGE_RANGE_HIGH = 2
 } VoltageRange;
+
+typedef enum
+{
+	CURRENT_RANGE_AUTO = 0,
+	CURRENT_RANGE_LOW = 1,
+	CURRENT_RANGE_HIGH = 2
+} CurrentRange;
 
 
 class Luke : public TbiCore
@@ -38,6 +39,10 @@ private:
 	uint16_t readReg(uint8_t addr);
 	bool writeReg(uint8_t addr, uint16_t val);
 	uint16_t getDieID();
+	Attribute mAttVoltageRange;
+	Attribute mAttVoltage;
+	Attribute mAttCurrentRange;
+	Attribute mAttCurrent;
 	Attribute mAttRegAddr;
 	Attribute mAttRegVal;
 	VoltageRange vrange;

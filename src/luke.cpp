@@ -27,11 +27,15 @@
 #define REG_DIE_ID 0xFF
 
 Luke::Luke() :
+	mAttVoltageRange(0x1100, 0x00, 0x00),
+	mAttVoltage(0x1101, 0x00, 0x00),
+	mAttCurrentRange(0x1102, 0x00, 0x00),
+	mAttCurrent(0x1103, 0x00, 0x00),
 	mAttRegAddr(0x2000, 0x00, 0x00),
 	mAttRegVal(0x2001, 0x00, 0x00)
 {
-	setVoltageRange(VOLTAGE_RANGE_HIGH);
-	setCurrentRange(CURRENT_RANGE_HIGH);
+	setVoltageRange(VOLTAGE_RANGE_AUTO);
+	setCurrentRange(CURRENT_RANGE_AUTO);
 }
 
 Luke::~Luke()
@@ -40,6 +44,14 @@ Luke::~Luke()
 
 float Luke::getVoltage()
 {
+	bool status = mTbiService->readAttribute(&mAttVoltage);
+	if (!status) {
+		// error
+		return 0.0;
+	}
+	return mAttVoltage.getValueFloat();
+
+	/*
 	int val = readReg(REG_SHUNTV_3) >> 3;
 	if (val & 0x1000) {
 		val = val - 0x2000;   // In case of negative number
@@ -50,11 +62,19 @@ float Luke::getVoltage()
 	else if (vrange == VOLTAGE_RANGE_LOW) {
 		return 1.498 / 1000.0 * val;
 	}
-	return 0.0;
+	*/
 }
 
 float Luke::getCurrent()
 {
+	bool status = mTbiService->readAttribute(&mAttCurrent);
+	if (!status) {
+		// error
+		return 0.0;
+	}
+	return mAttCurrent.getValueFloat();
+
+	/*
 	if (crange == CURRENT_RANGE_HIGH) {
 		int val = readReg(REG_SHUNTV_2) >> 3;
  		if (val & 0x1000) {
@@ -69,10 +89,19 @@ float Luke::getCurrent()
 		}
  		return 40.0 / 1000000.0 * val;
 	}
+	*/
 }
 
 void Luke::setVoltageRange(VoltageRange r)
 {
+	mAttVoltageRange.setValue(r);
+	bool status = mTbiService->writeAttribute(mAttVoltageRange);
+	if (!status) {
+		// error
+		return;
+	}
+
+	/*
 	if (r == VOLTAGE_RANGE_HIGH) {
 		// Set the lowest limit to assert WARNING pin of INA3221
 		writeReg(REG_WARNING_LIMIT_1, 0x8000);
@@ -83,10 +112,19 @@ void Luke::setVoltageRange(VoltageRange r)
 		writeReg(REG_WARNING_LIMIT_1, 0x7FF8);
 		vrange = r;
 	}
+	*/
 }
 
 void Luke::setCurrentRange(CurrentRange r)
 {
+	mAttCurrentRange.setValue(r);
+	bool status = mTbiService->writeAttribute(mAttCurrentRange);
+	if (!status) {
+		// error
+		return;
+	}
+
+	/*
 	if (r == CURRENT_RANGE_HIGH) {
 		// Set the lowest limit to assert CRITICAL pin of INA3221
 		writeReg(REG_CRITICAL_LIMIT_1, 0x8000);
@@ -97,6 +135,7 @@ void Luke::setCurrentRange(CurrentRange r)
 		writeReg(REG_CRITICAL_LIMIT_1, 0x7FF8);
 		crange = r;
 	}
+	*/
 }
 
 string Luke::showReg()
