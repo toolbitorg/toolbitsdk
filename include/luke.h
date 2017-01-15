@@ -4,6 +4,14 @@
 #include <stdint.h>
 #include "tbi_core.h"
 #include "attribute.h"
+#include "pic16f145x.h"
+
+// Product specific attribute ID
+#define ATT_VOLTAGE_RANGE 0x8100
+#define ATT_VOLTAGE       0x8101
+#define ATT_CURRENT_RANGE 0x8102
+#define ATT_CURRENT       0x8103
+
 
 typedef enum
 {
@@ -39,12 +47,14 @@ private:
 	uint16_t readReg(uint8_t addr);
 	bool writeReg(uint8_t addr, uint16_t val);
 	uint16_t getDieID();
+    // Platform specific attribute ID
+	Attribute mAttI2C0Addr;
+	Attribute mAttI2C0RW2Byte;
+    // Product specific attribute ID
 	Attribute mAttVoltageRange;
 	Attribute mAttVoltage;
 	Attribute mAttCurrentRange;
 	Attribute mAttCurrent;
-	Attribute mAttRegAddr;
-	Attribute mAttRegVal;
 	VoltageRange vrange;
 	CurrentRange crange;
 };

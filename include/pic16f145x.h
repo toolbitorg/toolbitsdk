@@ -1,0 +1,18 @@
+#ifndef TOOLBITSDK_PIC16F145X_H_
+#define TOOLBITSDK_PIC16F145X_H_
+
+typedef enum
+{
+	// Platform specific attribute ID
+	ATT_GPIO_CONFIGA  = 0x1010,
+	ATT_GPIO_CONFIGB  = 0x1011,
+	ATT_GPIO_CONFIGC  = 0x1012,
+	ATT_GPIO_PORTA    = 0x1020,
+	ATT_GPIO_PORTB    = 0x1021,
+	ATT_GPIO_PORTC    = 0x1022,
+	ATT_I2C0_ADDR     = 0x1030,
+	ATT_I2C0_RW_1BYTE = 0x1031,
+	ATT_I2C0_RW_2BYTE = 0x1032
+} PlatformSpecificAttributionID;
+
+#endif /* TOOLBITSDK_PIC16F145X_H_ */

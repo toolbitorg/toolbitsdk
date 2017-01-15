@@ -4,11 +4,16 @@
 #include <stdlib.h>
 #include "chopper.h"
 
+
 Chopper::Chopper() :
-	mAttUsbPortCtrl(0x1000, 0x00, 0x00)
+	mAttUsbPortCtrl(ATT_USB_PORT_CTRL, 0x00, 0x00),
+	mAttGpioInoutMode(GPIO_INOUT_MODE, 0x00, 0x00),
+	mAttGpioRwVal(GPIO_RW_VAL, 0x00, 0x00)
 {
 	// Get current status
 	mTbiService->readAttribute(&mAttUsbPortCtrl);
+	mTbiService->readAttribute(&mAttGpioInoutMode);
+	mTbiService->readAttribute(&mAttGpioRwVal);
 }
 
 Chopper::~Chopper()
@@ -22,7 +27,6 @@ bool Chopper::enableAllUsbPort()
 	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
 	if (!status)
 		return false;   // error
-
 	return true;
 }
 
@@ -36,7 +40,6 @@ bool Chopper::enableUsbPort(uint32_t p)
 	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
 	if (!status)
 		return false;   // error
-
 	return true;
 }
 
@@ -47,7 +50,6 @@ bool Chopper::disableAllUsbPort()
 	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
 	if (!status)
 		return false;   // error
-
 	return true;
 }
 
@@ -61,7 +63,6 @@ bool Chopper::disableUsbPort(uint32_t p)
 	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
 	if (!status)
 		return false;   // error
-
 	return true;
 }
 
@@ -73,3 +74,53 @@ uint32_t Chopper::getUsbPortStatus()
 	return mAttUsbPortCtrl.getValueUint32();
 }
 
+bool Chopper::setGpioPinMode(uint32_t pin, PinMode mode)
+{
+	bool status;
+
+	if (pin > 3)
+		return false;
+
+	if (mode == OUTPUT_PIN) {
+		mAttGpioInoutMode.setValue(mAttGpioInoutMode.getValueUint32() & ~(1 << pin));
+	}
+	else {
+		// comment out because INPUT_PULLUP_PIN is not supported
+		/*
+		if (mode == INPUT_PIN)
+			mAttGpioPullUp.setValue(mAttGpioPullUp.getValueUint32() & ~(1 << pin));
+		else if (mode == INPUT_PULLUP_PIN)
+			mAttGpioPullUp.setValue(mAttGpioPullUp.getValueUint32() | 1 << pin);
+		else
+			return false;  // error because INPUT_PULLDOWN_PIN is not supported
+
+		status = mTbiService->writeAttribute(mAttGpioPullUp);
+		if (!status)
+			return false;  // error
+		*/
+		mAttGpioInoutMode.setValue(mAttGpioInoutMode.getValueUint32() | 1 << pin);
+	}
+
+	status = mTbiService->writeAttribute(mAttGpioInoutMode);
+	if (!status)
+		return false;  // error
+
+	return true;
+}
+
+bool Chopper::writeGpio(uint32_t dat)
+{
+	mAttGpioRwVal.setValue(dat);
+	bool status = mTbiService->writeAttribute(mAttGpioRwVal);
+	if (!status)
+		return false;   // error
+	return true;
+}
+
+uint32_t Chopper::readGpio()
+{
+	bool status = mTbiService->readAttribute(&mAttGpioRwVal);
+	if (!status)
+		return false;   // error
+	return mAttGpioRwVal.getValueUint32();
+}

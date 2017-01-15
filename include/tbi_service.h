@@ -21,8 +21,8 @@ typedef enum
 	// Operation Code
 	OP_METADATA_GET = 0x10,
 	OP_CONFIG_SET,
-	OP_ATTR_VALUE_SET,
-	OP_ATTR_VALUE_GET,
+	OP_ATT_VALUE_SET,
+	OP_ATT_VALUE_GET,
 	// Event Code
 	EVT_NOTIFY = 0xA0
 } OperationCode;

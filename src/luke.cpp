@@ -27,16 +27,17 @@
 #define REG_DIE_ID 0xFF
 
 Luke::Luke() :
-	mAttVoltageRange(0x1100, 0x00, 0x00),
-	mAttVoltage(0x1101, 0x00, 0x00),
-	mAttCurrentRange(0x1102, 0x00, 0x00),
-	mAttCurrent(0x1103, 0x00, 0x00),
-	mAttRegAddr(0x2000, 0x00, 0x00),
-	mAttRegVal(0x2001, 0x00, 0x00)
+	mAttVoltageRange(ATT_VOLTAGE_RANGE, 0x00, 0x00),
+	mAttVoltage(ATT_VOLTAGE, 0x00, 0x00),
+	mAttCurrentRange(ATT_CURRENT_RANGE, 0x00, 0x00),
+	mAttCurrent(ATT_CURRENT, 0x00, 0x00),
+	mAttI2C0Addr(ATT_I2C0_ADDR, 0x00, 0x00),
+	mAttI2C0RW2Byte(ATT_I2C0_RW_2BYTE, 0x00, 0x00)
 {
 	setVoltageRange(VOLTAGE_RANGE_AUTO);
 	setCurrentRange(CURRENT_RANGE_AUTO);
 }
+
 
 Luke::~Luke()
 {
@@ -151,34 +152,34 @@ uint16_t Luke::readReg(uint8_t addr)
 {
 	bool status;
 
-	mAttRegAddr.setValue(addr);
-	status = mTbiService->writeAttribute(mAttRegAddr);
+	mAttI2C0Addr.setValue(addr);
+	status = mTbiService->writeAttribute(mAttI2C0Addr);
 	if (!status) {
 		// error
 		return 0;
 	}
 
-	status = mTbiService->readAttribute(&mAttRegVal);
+	status = mTbiService->readAttribute(&mAttI2C0RW2Byte);
 	if (!status) {
 		// error
 		return 0;
 	}
-	return mAttRegVal.getValueInt16();
+	return mAttI2C0RW2Byte.getValueInt16();
 }
 
 bool Luke::writeReg(uint8_t addr, uint16_t val)
 {
 	bool status;
 
-	mAttRegAddr.setValue(addr);
-	status = mTbiService->writeAttribute(mAttRegAddr);
+	mAttI2C0Addr.setValue(addr);
+	status = mTbiService->writeAttribute(mAttI2C0Addr);
 	if (!status) {
 		// error
 		return false;
 	}
 
-	mAttRegVal.setValue(val);
-	status = mTbiService->writeAttribute(mAttRegVal);
+	mAttI2C0RW2Byte.setValue(val);
+	status = mTbiService->writeAttribute(mAttI2C0RW2Byte);
 	if (!status) {
 		// error
 		return false;

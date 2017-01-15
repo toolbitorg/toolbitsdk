@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 //				cout << "option s with value " << go.argument() << endl;
 				break;
 
-			case 'p':
+			case 'p':  // Select USB port
 				if (atoi(go.argument()) <= 0) {
 					cout << "Wrong value: " << go.argument() << endl;
 					return 0;
@@ -66,6 +66,19 @@ int main(int argc, char* argv[])
 		cout << "Product Revision: " << chopper->getProductRevision() << endl;
 		cout << "Product Serial: " << chopper->getProductSerial() << endl;
 		cout << "Firm Version: " << chopper->getFirmVersion() << endl;
+
+		chopper->setGpioPinMode(0, OUTPUT_PIN);
+		chopper->setGpioPinMode(1, OUTPUT_PIN);
+		chopper->setGpioPinMode(2, OUTPUT_PIN);
+		chopper->writeGpio(0x00);
+		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
+		chopper->writeGpio(0x01);
+		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
+		chopper->writeGpio(0x03);
+		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
+		chopper->writeGpio(0x07);
+		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
+
 
 		uint32_t s = chopper->getUsbPortStatus();
 		for (int i = 0; i < 2; i++) {

@@ -24,6 +24,7 @@
     <ClInclude Include="..\include\chopper.h" />
     <ClInclude Include="..\include\hidapi.h" />
     <ClInclude Include="..\include\luke.h" />
+    <ClInclude Include="..\include\pic16f145x.h" />
     <ClInclude Include="..\include\tbi_core.h" />
     <ClInclude Include="..\include\tbi_device.h" />
     <ClInclude Include="..\include\tbi_service.h" />
