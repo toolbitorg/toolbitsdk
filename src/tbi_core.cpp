@@ -61,4 +61,3 @@ string TbiCore::getFirmVersion()
 {
 	return mAttFirmVersion.getValueStr();
 }
-

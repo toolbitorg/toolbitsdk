@@ -72,12 +72,13 @@ int main(int argc, char* argv[])
 		chopper->setGpioPinMode(2, OUTPUT_PIN);
 		chopper->writeGpio(0x00);
 		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
-		chopper->writeGpio(0x01);
-		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
-		chopper->writeGpio(0x03);
-		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
-		chopper->writeGpio(0x07);
-		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
+		cout << "GPIO status: " << chopper->digitalRead(2) << chopper->digitalRead(1) << chopper->digitalRead(0) << endl;
+		chopper->digitalWrite(0, HIGH);
+		cout << "GPIO status: " << chopper->digitalRead(2) << chopper->digitalRead(1) << chopper->digitalRead(0) << endl;
+		chopper->digitalWrite(1, HIGH);
+		cout << "GPIO status: " << chopper->digitalRead(2) << chopper->digitalRead(1) << chopper->digitalRead(0) << endl;
+		chopper->digitalWrite(2, HIGH);
+		cout << "GPIO status: " << chopper->digitalRead(2) << chopper->digitalRead(1) << chopper->digitalRead(0) << endl;
 
 
 		uint32_t s = chopper->getUsbPortStatus();

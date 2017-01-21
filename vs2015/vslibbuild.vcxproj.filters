@@ -68,5 +68,8 @@
     <ClCompile Include="..\src\HIDAPI\windows\hid.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\pic16f145x.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

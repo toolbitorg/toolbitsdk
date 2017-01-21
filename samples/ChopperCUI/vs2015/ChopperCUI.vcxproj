@@ -157,6 +157,7 @@
     <ClCompile Include="..\..\..\src\attribute.cpp" />
     <ClCompile Include="..\..\..\src\chopper.cpp" />
     <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c" />
+    <ClCompile Include="..\..\..\src\pic16f145x.cpp" />
     <ClCompile Include="..\..\..\src\tbi_core.cpp" />
     <ClCompile Include="..\..\..\src\tbi_device.cpp" />
     <ClCompile Include="..\..\..\src\tbi_service.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="..\..\..\include\attribute.h" />
     <ClInclude Include="..\..\..\include\chopper.h" />
     <ClInclude Include="..\..\..\include\hidapi.h" />
+    <ClInclude Include="..\..\..\include\pic16f145x.h" />
     <ClInclude Include="..\..\..\include\tbi_core.h" />
     <ClInclude Include="..\..\..\include\tbi_device.h" />
     <ClInclude Include="..\..\..\include\tbi_service.h" />

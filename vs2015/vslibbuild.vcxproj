@@ -35,6 +35,7 @@
     <ClCompile Include="..\src\chopper.cpp" />
     <ClCompile Include="..\src\HIDAPI\windows\hid.c" />
     <ClCompile Include="..\src\luke.cpp" />
+    <ClCompile Include="..\src\pic16f145x.cpp" />
     <ClCompile Include="..\src\tbi_core.cpp" />
     <ClCompile Include="..\src\tbi_device.cpp" />
     <ClCompile Include="..\src\tbi_service.cpp" />

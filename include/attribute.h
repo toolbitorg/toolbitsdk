@@ -15,12 +15,12 @@ using namespace std;
 
 typedef enum
 {
-	// Common attribute ID
+	// Toolbit common attribute ID
 	ATT_PRODUCT_NAME     = 0x0000,
 	ATT_PRODUCT_REVISION = 0x0001,
 	ATT_PRODUCT_SERIAL   = 0x0002,
 	ATT_FIRM_VERSION     = 0x0003
-} AttributionID;
+} ToolbitAttributionID;
 
 typedef enum
 {

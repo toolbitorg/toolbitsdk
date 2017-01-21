@@ -157,15 +157,17 @@
     <ClCompile Include="..\..\..\src\attribute.cpp" />
     <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c" />
     <ClCompile Include="..\..\..\src\luke.cpp" />
+    <ClCompile Include="..\..\..\src\pic16f145x.cpp" />
     <ClCompile Include="..\..\..\src\tbi_core.cpp" />
     <ClCompile Include="..\..\..\src\tbi_device.cpp" />
     <ClCompile Include="..\..\..\src\tbi_service.cpp" />
-    <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\attribute.h" />
     <ClInclude Include="..\..\..\include\hidapi.h" />
     <ClInclude Include="..\..\..\include\luke.h" />
+    <ClInclude Include="..\..\..\include\pic16f145x.h" />
     <ClInclude Include="..\..\..\include\tbi_core.h" />
     <ClInclude Include="..\..\..\include\tbi_device.h" />
     <ClInclude Include="..\..\..\include\tbi_service.h" />

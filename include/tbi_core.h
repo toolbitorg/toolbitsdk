@@ -7,6 +7,7 @@
 #include "tbi_service.h"
 #include "attribute.h"
 
+
 class TbiCore
 {
 public:
@@ -23,6 +24,7 @@ public:
 protected:
 	TbiDevice *mTbiDevice;
 	TbiService *mTbiService;
+	// Toolbit common attribute
 	Attribute mAttProductName;
 	Attribute mAttProductRevision;
 	Attribute mAttProductSerial;
