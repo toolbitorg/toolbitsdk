@@ -36,7 +36,6 @@ Luke::Luke() :
 	setCurrentRange(CURRENT_RANGE_AUTO);
 }
 
-
 Luke::~Luke()
 {
 }
@@ -49,19 +48,6 @@ float Luke::getVoltage()
 		return 0.0;
 	}
 	return mAttVoltage.getValueFloat();
-
-	/*
-	int val = readReg(REG_SHUNTV_3) >> 3;
-	if (val & 0x1000) {
-		val = val - 0x2000;   // In case of negative number
-	}
-	if (vrange == VOLTAGE_RANGE_HIGH) {
-		return 14.81 / 1000.0 * val;
-	}
-	else if (vrange == VOLTAGE_RANGE_LOW) {
-		return 1.498 / 1000.0 * val;
-	}
-	*/
 }
 
 float Luke::getCurrent()
@@ -72,23 +58,6 @@ float Luke::getCurrent()
 		return 0.0;
 	}
 	return mAttCurrent.getValueFloat();
-
-	/*
-	if (crange == CURRENT_RANGE_HIGH) {
-		int val = readReg(REG_SHUNTV_2) >> 3;
- 		if (val & 0x1000) {
-			val = val - 0x2000;   // In case of negative number
-		}
-		return 0.8 / 1000.0 * val;
-	}
-	else if (crange == CURRENT_RANGE_LOW) {
-		int val = readReg(REG_SHUNTV_1) >> 3;
-		if (val & 0x1000) {
-			val = val - 0x2000;   // In case of negative number
-		}
- 		return 40.0 / 1000000.0 * val;
-	}
-	*/
 }
 
 void Luke::setVoltageRange(VoltageRange r)
@@ -99,19 +68,6 @@ void Luke::setVoltageRange(VoltageRange r)
 		// error
 		return;
 	}
-
-	/*
-	if (r == VOLTAGE_RANGE_HIGH) {
-		// Set the lowest limit to assert WARNING pin of INA3221
-		writeReg(REG_WARNING_LIMIT_1, 0x8000);
-		vrange = r;
-	}
-	else if (r == VOLTAGE_RANGE_LOW) {
-		// Set the highest limit to deassert WARNING pin of INA3221
-		writeReg(REG_WARNING_LIMIT_1, 0x7FF8);
-		vrange = r;
-	}
-	*/
 }
 
 void Luke::setCurrentRange(CurrentRange r)
@@ -122,19 +78,6 @@ void Luke::setCurrentRange(CurrentRange r)
 		// error
 		return;
 	}
-
-	/*
-	if (r == CURRENT_RANGE_HIGH) {
-		// Set the lowest limit to assert CRITICAL pin of INA3221
-		writeReg(REG_CRITICAL_LIMIT_1, 0x8000);
-		crange = r;
-	}
-	else if (r == CURRENT_RANGE_LOW) {
-		// Set the highest limit to deassert CRITICAL pin of INA3221
-		writeReg(REG_CRITICAL_LIMIT_1, 0x7FF8);
-		crange = r;
-	}
-	*/
 }
 
 string Luke::showReg()

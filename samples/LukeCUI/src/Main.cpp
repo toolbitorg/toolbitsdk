@@ -55,25 +55,17 @@ int main(int argc, char* argv[])
     cout << endl;
 	*/
 
-	luke->setCurrentRange(CURRENT_RANGE_HIGH);
-	cout << "Set Current Range High" << endl;
-	cout << "Current: " << luke->getCurrent() << "A" << endl;
+	//luke->setCurrentRange(CURRENT_RANGE_HIGH);
+	//cout << "Set Current Range High" << endl;
+	cout << "Current: " << luke->getCurrent() * 1000.0  << "mA" << endl;
 
-	luke->setCurrentRange(CURRENT_RANGE_LOW);
-	cout << "Set Current Range Low" << endl;
-	cout << "Current: " << luke->getCurrent() * 1000.0 << "mA" << endl;
-
-	luke->setVoltageRange(VOLTAGE_RANGE_HIGH);
-	cout << "Set Voltage Range High" << endl;
-	cout << "Voltage: " << luke->getVoltage() << "V" << endl;
-
-	luke->setVoltageRange(VOLTAGE_RANGE_LOW);
-	cout << "Set Voltage Range Low" << endl;
+	//luke->setVoltageRange(VOLTAGE_RANGE_HIGH);
+	//cout << "Set Voltage Range High" << endl;
 	cout << "Voltage: " << luke->getVoltage() << "V" << endl;
 
 	cout << endl;
 	cout << luke->showReg() << endl;
-
+	cout << hex << "DieID: 0x" << luke->getDieID() << endl;
 
 #ifdef WIN32
 	system("pause");

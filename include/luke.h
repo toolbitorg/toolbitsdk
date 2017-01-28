@@ -39,11 +39,11 @@ public:
 	void setCurrentRange(CurrentRange r);
 
 	string showReg();
+	uint16_t getDieID();
 
 protected:
 
 private:
-	uint16_t getDieID();
 	// Product specific attribute ID
 	Attribute mAttVoltageRange;
 	Attribute mAttVoltage;
