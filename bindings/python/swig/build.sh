@@ -4,4 +4,4 @@ cp ../../../src/*.cpp ./
 cp ../../../src/HIDAPI/libusb/hid.c ./
 swig -c++ -python libtbi.i
 python setup.py build_ext --inplace
-cp _libtbi.so ../samples/
+cp libtbi.py _libtbi.so ../samples/
