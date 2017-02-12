@@ -1,0 +1,9 @@
+build/
+*.h
+*.cpp
+*.o
+*.cxx
+*.c
+*.so
+libtbi.py
+libtbi.pyc

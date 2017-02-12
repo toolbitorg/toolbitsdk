@@ -2,7 +2,6 @@ rm -fr *.h *.cpp *.so *.o *.cxx *.c
 cp ../../../include/* ./
 cp ../../../src/*.cpp ./
 cp ../../../src/HIDAPI/libusb/hid.c ./
-swig -c++ -ruby libtbi.i
-ruby extconf.rb --with-opt-include=/usr/include/libusb-1.0
-make
-cp ./libtbi.so ../sample
+swig -c++ -python libtbi.i
+python setup.py build_ext --inplace
+cp _libtbi.so ../samples/
