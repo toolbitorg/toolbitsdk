@@ -1,6 +1,6 @@
-import libtbi
+import tbi
 
-chopper = libtbi.Chopper()
+chopper = tbi.Chopper()
 
 chopper.disableAllUsbPort()
 chopper.enableAllUsbPort()

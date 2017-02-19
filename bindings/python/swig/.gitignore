@@ -4,6 +4,7 @@ build/
 *.o
 *.cxx
 *.c
-*.so
-libtbi.py
-libtbi.pyc
+tbi.py
+_tbi.so
+_tbi.pyd
+

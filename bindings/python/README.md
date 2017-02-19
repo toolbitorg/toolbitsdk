@@ -1,10 +1,43 @@
 Python bindings
 ====
 
-## Description
+## Descripton
 
-install python and python-dev
-install swig
-
+Build library of Toolbit Interface for Python.
 
 
+## Require
+
+Python  
+
+swig  
+  http://www.swig.org/  
+
+
+## Build
+
+
+### Linux
+    cd swig
+    ./build.sh
+tbi.so will be created and copied to ../samples folder
+
+
+### Windows
+
+Open command prompt  
+Execute build.bat  
+
+Note:  
+    Please modify the following line according to your VC version  
+    set VS90COMNTOOLS=%VS140COMNTOOLS%  
+
+
+## Test
+
+    cd ../samples
+    python chopper_test.py
+    python luke_test.py
+
+
+## Reference

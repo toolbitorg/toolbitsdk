@@ -1,6 +1,6 @@
-import libtbi
+import tbi
 
-luke = libtbi.Luke()
+luke = tbi.Luke()
 
 print luke.getVoltage()
 print luke.getCurrent()
