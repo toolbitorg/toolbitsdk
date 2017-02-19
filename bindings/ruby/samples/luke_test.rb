@@ -3,9 +3,8 @@
 $:.unshift File.join(File.dirname(__FILE__), ".")
 require 'tbi'
 
-
 luke = Tbi::Luke.new
 
-p luke.getVoltage()
-p luke.getCurrent()
+puts sprintf("%.3f [V]", luke.getVoltage())
+puts sprintf("%.3f [mA]", 1000.0 * luke.getCurrent())
 
