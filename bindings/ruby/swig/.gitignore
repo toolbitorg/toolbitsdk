@@ -4,5 +4,6 @@
 *.cxx
 *.c
 *.so
+*.def
 Makefile
 
