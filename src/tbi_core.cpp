@@ -7,6 +7,9 @@
 #define USB_VID 0x4d8
 #define USB_PID 0x3f
 
+#define USB_VID_RAWHID 0x2341
+#define USB_PID_RAWHID 0x8036
+
 TbiCore::TbiCore() :
 	mAttProductName(ATT_PRODUCT_NAME, 0x00, 0x00),
     mAttProductRevision(ATT_PRODUCT_REVISION, 0x00, 0x00),
@@ -14,7 +17,8 @@ TbiCore::TbiCore() :
     mAttFirmVersion(ATT_FIRM_VERSION, 0x00, 0x00)
 {
 	mTbiDevice = new TbiDevice();
-	mTbiDevice->open(USB_VID, USB_PID);
+	if (!mTbiDevice->open(USB_VID, USB_PID))  // For PIC
+		mTbiDevice->open(USB_VID_RAWHID, USB_PID_RAWHID);  // For Arduino RawHID
 	mTbiService = new TbiService(mTbiDevice);
 
 	// Read product data from device
