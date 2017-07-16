@@ -1,18 +1,25 @@
 #include <stdio.h>
 #include <wchar.h>
-#include <string.h>
+#include <string>
 #include <stdlib.h>
+#include "tbi_device_manager.h"
 #include "basicdemo.h"
 
 BasicDemo::BasicDemo() :
     mAttCount(0x1000, 0x00, 0x00)
 {
-	// Read value from device
-	mTbiService->readAttribute(&mAttCount);
+	TbiDeviceManager devm;
+
+	if (open(devm.getPath("Luke"))) {
+
+		// Read value from device
+		mTbiService->readAttribute(&mAttCount);
+	}
 }
 
 BasicDemo::~BasicDemo()
 {
+	close();
 }
 
 void BasicDemo::CountUp()

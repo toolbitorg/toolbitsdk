@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
         switch (c) {			
 			case 'l':
-                chopper->showDeviceList();
+//              chopper->showDeviceList();
                 break;
 
 			case 's':

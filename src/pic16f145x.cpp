@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include "pic16f145x.h"
 
-#define USB_VID 0x4d8
-#define USB_PID 0x3f
 
 Picbit::Picbit() :
 	mAttGpioInoutMode(ATT_GPIO_INOUT_MODE, 0x00, 0x00),
@@ -16,11 +14,6 @@ Picbit::Picbit() :
 	mAttI2C0RW1Byte(ATT_I2C0_RW_1BYTE, 0x00, 0x00),
 	mAttI2C0RW2Byte(ATT_I2C0_RW_2BYTE, 0x00, 0x00)
 {
-	// Get current status
-	mTbiService->readAttribute(&mAttGpioInoutMode);
-	mTbiService->readAttribute(&mAttGpioPullUp);
-	mTbiService->readAttribute(&mAttGpioPullDown);
-	mTbiService->readAttribute(&mAttGpioRw);
 }
 
 Picbit::~Picbit()

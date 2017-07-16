@@ -32,34 +32,18 @@ public:
 	TbiDevice();
 	~TbiDevice();
 
-	void getDeviceList(uint16_t vid, uint16_t pid);
 	bool open(uint16_t vid, uint16_t pid);
 	bool open(uint16_t vid, uint16_t pid, wchar_t *serial_num);
+	bool open(const char *path);
 	bool isOpen();
 	bool close();
 
 	bool write(uint8_t *sndbuf, uint8_t num);
 	int read(uint8_t *rcvbuf);
 
-	/*
-	bool open(int num);
-
-	int GetDeviceNum();
-    void ShowDeviceList();
-
-	bool GetInfo();
-
-	bool connectTbi();
-
-	bool SendPacket(uint8_t *sndbuf, uint8_t num);
-	bool ReceivePacket(uint8_t *rcvbuf);
-	*/
-
 protected:
 
 private:
-    struct hid_device_info *devs;
-    int deviceNum;
     hid_device *handle;
 };
 

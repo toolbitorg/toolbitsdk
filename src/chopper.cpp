@@ -1,19 +1,31 @@
 #include <stdio.h>
 #include <wchar.h>
-#include <string.h>
+#include <string>
 #include <stdlib.h>
+#include "tbi_device_manager.h"
 #include "chopper.h"
 
 
 Chopper::Chopper() :
 	mAttUsbPortCtrl(ATT_USB_PORT_CTRL, 0x00, 0x00)
 {
-	// Get current status
-	mTbiService->readAttribute(&mAttUsbPortCtrl);
+	TbiDeviceManager devm;
+
+	if (open(devm.getPath("CHOPPER HUB"))) {
+
+		// Get current status
+		mTbiService->readAttribute(&mAttGpioInoutMode);
+		mTbiService->readAttribute(&mAttGpioPullUp);
+		mTbiService->readAttribute(&mAttGpioPullDown);
+		mTbiService->readAttribute(&mAttGpioRw);
+
+		mTbiService->readAttribute(&mAttUsbPortCtrl);
+	}
 }
 
 Chopper::~Chopper()
 {
+	close();
 }
 
 bool Chopper::enableAllUsbPort()

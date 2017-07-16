@@ -15,6 +15,12 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     Luke *luke = new Luke();
+/*
+	if (!luke->isConnected()) {
+		cout << "Fail to connect to Luke " << endl;
+		return 1;
+	}
+	*/
 
 	cout << "ProductName: " << luke->getProductName() << endl;
 	cout << "ProductRevision: " << luke->getProductRevision() << endl;

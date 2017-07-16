@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <stdlib.h>
+#include "tbi_device_manager.h"
 #include "luke.h"
 
 #define REG_CONFIG 0x00
@@ -32,12 +33,24 @@ Luke::Luke() :
 	mAttCurrentRange(ATT_CURRENT_RANGE, 0x00, 0x00),
 	mAttCurrent(ATT_CURRENT, 0x00, 0x00)
 {
-	setVoltageRange(VOLTAGE_RANGE_AUTO);
-	setCurrentRange(CURRENT_RANGE_AUTO);
+	TbiDeviceManager devm;
+
+	if(open(devm.getPath("Luke"))) {
+
+		setVoltageRange(VOLTAGE_RANGE_AUTO);
+		setCurrentRange(CURRENT_RANGE_AUTO);
+
+		// Get current status
+		mTbiService->readAttribute(&mAttGpioInoutMode);
+		mTbiService->readAttribute(&mAttGpioPullUp);
+		mTbiService->readAttribute(&mAttGpioPullDown);
+		mTbiService->readAttribute(&mAttGpioRw);
+	}
 }
 
 Luke::~Luke()
 {
+	close();
 }
 
 float Luke::getVoltage()

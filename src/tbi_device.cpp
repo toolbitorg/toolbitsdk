@@ -7,37 +7,11 @@
 TbiDevice::TbiDevice()
 {
 	handle = NULL;
-	devs = NULL;    // not implement yet
 }
 
 TbiDevice::~TbiDevice()
 {
-    close();
-    if(!devs)
-        hid_free_enumeration(devs);
-}
-
-void TbiDevice::getDeviceList(uint16_t vid, uint16_t pid)
-{
-	if (!devs)
-		hid_free_enumeration(devs);
-
-	// Enumerate and print the HID devices on the system
-	devs = hid_enumerate(vid, pid);
-
-	struct hid_device_info *cur_dev;
-
-	cur_dev = devs;
-	while (cur_dev) {
-		printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls",
-			cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
-		printf("\n");
-		printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
-		printf("  Product:      %ls\n", cur_dev->product_string);
-		printf("\n");
-		cur_dev = cur_dev->next;
-	}
-	handle = hid_open_path(devs->path);
+	close();
 }
 
 
@@ -71,6 +45,21 @@ bool TbiDevice::open(uint16_t vid, uint16_t pid, wchar_t *serial_num)
 	return true;
 }
 
+bool TbiDevice::open(const char *path)
+{
+	// Open the device using path name
+	handle = hid_open_path(path);
+	if (!handle) {
+		fprintf(stderr, "[ERR] Unable to open device\n");
+		return false;
+	}
+
+	// Set the hid_read() function to be non-blocking.
+	hid_set_nonblocking(handle, 1);
+
+	return true;
+}
+
 bool TbiDevice::isOpen()
 {
 	return handle != NULL;
@@ -82,119 +71,11 @@ bool TbiDevice::close()
 		return false;
 
 	hid_close(handle);
+	handle = NULL;
 	hid_exit();          // Free static HIDAPI objects
 
 	return true;
 }
-
-/*
-
-bool TbiDevice::open(int num)
-{
-if (!devs)
-return false;
-
-struct hid_device_info *cur_dev = devs;
-int i = 0;
-while(i<num) {
-i++;
-cur_dev = cur_dev->next;
-if(!cur_dev) break;
-}
-if(!cur_dev)
-return false;
-
-handle = hid_open_path(cur_dev->path);
-
-if (!handle) {
-fprintf(stderr, "[ERR] Unable to open device\n");
-return false;
-}
-
-// Set the hid_read() function to be non-blocking.
-hid_set_nonblocking(handle, 1);
-
-return true;
-}
-
-void TbiDevice::GetDeviceList(uint16_t vid, uint16_t pid)
-{
-if (!devs)
-hid_free_enumeration(devs);
-
-// Enumerate and print the HID devices on the system
-devs = hid_enumerate(vid, pid);
-
-struct hid_device_info *cur_dev;
-
-cur_dev = devs;
-while (cur_dev) {
-printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls",
-cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
-printf("\n");
-printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
-printf("  Product:      %ls\n", cur_dev->product_string);
-printf("\n");
-cur_dev = cur_dev->next;
-}
-handle = hid_open_path(devs->path);
-
-struct hid_device_info *cur_dev = devs;
-int i = 0;
-while (cur_dev) {
-	cur_dev = cur_dev->next;
-	i++;
-}
-deviceNum = i;
-}
-
-int TbiDevice::GetDeviceNum()
-{
-	return deviceNum;
-}
-
-void TbiDevice::ShowDeviceList()
-{
-	struct hid_device_info *cur_dev;
-
-	cur_dev = devs;
-	while (cur_dev) {
-		printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls",
-			cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
-		printf("\n");
-		printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
-		printf("  Product:      %ls\n", cur_dev->product_string);
-		printf("\n");
-		cur_dev = cur_dev->next;
-	}
-}
-
-bool TbiDevice::GetInfo()
-{
-	wchar_t wstr[MAX_STR];
-
-	if (!handle)
-		return false;
-
-	// Read the Manufacturer String
-	int res = hid_get_manufacturer_string(handle, wstr, MAX_STR);
-	wprintf(L"Manufacturer String: %s\n", wstr);
-
-	// Read the Product String
-	res = hid_get_product_string(handle, wstr, MAX_STR);
-	wprintf(L"Product String: %s\n", wstr);
-
-	// Read the Serial Number String
-	res = hid_get_serial_number_string(handle, wstr, MAX_STR);
-	wprintf(L"Serial Number String: (%d) %s\n", wstr[0], wstr);
-
-	// Read Indexed String 1
-	res = hid_get_indexed_string(handle, 1, wstr, MAX_STR);
-	wprintf(L"Indexed String 1: %s\n", wstr);
-
-	return true;
-}
-*/
 
 bool TbiDevice::write(uint8_t *sndbuf, uint8_t num)
 {

@@ -1,4 +1,4 @@
 .vs/
-x64/
-BasicDemo.VC.db
+bin/
+build/
 BasicDemo.vcxproj.user

@@ -11,11 +11,12 @@
 class TbiCore
 {
 public:
-    TbiCore();
-    ~TbiCore();
+	TbiCore();
+	~TbiCore();
 
+	bool   open(const char *path);
+	bool   close();
 	bool   isConnected();
-	void   showDeviceList();     // This is temporary function
 	string getProductName();
 	string getProductRevision();
 	string getProductSerial();
@@ -31,6 +32,7 @@ protected:
 	Attribute mAttFirmVersion;
 
 private:
+	
 };
 
 #endif /* TOOLBITSDK_TBI_CORE_H_ */

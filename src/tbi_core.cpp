@@ -4,11 +4,6 @@
 #include <stdlib.h>
 #include "tbi_core.h"
 
-#define USB_VID 0x4d8
-#define USB_PID 0x3f
-
-#define USB_VID_RAWHID 0x2341
-#define USB_PID_RAWHID 0x8036
 
 TbiCore::TbiCore() :
 	mAttProductName(ATT_PRODUCT_NAME, 0x00, 0x00),
@@ -17,16 +12,9 @@ TbiCore::TbiCore() :
     mAttFirmVersion(ATT_FIRM_VERSION, 0x00, 0x00)
 {
 	mTbiDevice = new TbiDevice();
-	if (!mTbiDevice->open(USB_VID, USB_PID))  // For PIC
-		mTbiDevice->open(USB_VID_RAWHID, USB_PID_RAWHID);  // For Arduino RawHID
 	mTbiService = new TbiService(mTbiDevice);
-
-	// Read product data from device
-	mTbiService->readAttribute(&mAttProductName);
-	mTbiService->readAttribute(&mAttProductRevision);
-	mTbiService->readAttribute(&mAttProductSerial);
-	mTbiService->readAttribute(&mAttFirmVersion);
 }
+
 
 TbiCore::~TbiCore()
 {
@@ -34,16 +22,38 @@ TbiCore::~TbiCore()
 	delete mTbiDevice;
 }
 
-bool TbiCore::isConnected()
+bool TbiCore::open(const char *path)
 {
-	return mTbiDevice->isOpen();
+	if (mTbiDevice->isOpen())
+		return false;
+	
+	if (!mTbiDevice->open(path))
+		return false;
+
+	// Read product data from device
+	mTbiService->readAttribute(&mAttProductName);
+	mTbiService->readAttribute(&mAttProductRevision);
+	mTbiService->readAttribute(&mAttProductSerial);
+	mTbiService->readAttribute(&mAttFirmVersion);
+
+	return true;
 }
 
-void TbiCore::showDeviceList()
+bool TbiCore::close()
 {
+	if (!mTbiDevice->isOpen())
+		return false;
+	
 	mTbiDevice->close();
-	mTbiDevice->getDeviceList(USB_VID, USB_PID);
-	mTbiDevice->open(USB_VID, USB_PID);
+	return true;
+}
+
+bool TbiCore::isConnected()
+{
+	if (!mTbiDevice)
+		return false;
+
+	return mTbiDevice->isOpen();
 }
 
 string TbiCore::getProductName()
