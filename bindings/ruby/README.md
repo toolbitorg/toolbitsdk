@@ -1,34 +1,51 @@
-Ruby bindings
-====
+# ToolbitSDK Ruby Library
 
-## Descripton
+## Introduction
 
-Build library of Toolbit Interface for Ruby.
+ToolbitSDK provide Ruby Library to communicate with a target device.
 
+For example, to read voltage and current values from Luke, just make an object of Luke class defined by tbi.so and use member functions as follows as:
+```
+require 'tbi'
 
-## Require
+luke = Tbi::Luke.new
 
-ruby  
-  32bit version is recommended  
-
-swig  
-  http://www.swig.org/  
-
-
-## Build
-
-    cd swig
-    ./build.sh
-tbi.so will be created and copied to ../samples folder
+puts sprintf("%.3f [V]", luke.getVoltage())
+puts sprintf("%.3f [mA]", 1000.0 * luke.getCurrent())
+```
 
 
-## Test
+## Build Ruby Library
 
-    cd ../samples
-    ruby chopper_test.rb
-    ruby luke_test.rb
+### Windows
 
+- MinGW and MSYS2 environment is needed
+    - http://www.msys2.org/
+- RubyInstaller for windows 32bit version is recommended
+    - Ruby 2.4.1-1 (x86) is verified
+    - 64bit version is not verified
+- Install "MSYS2 and MINGW development toolchain"
 
-## Reference
+Launch MSYS2 and install swig if you don't  have it
+```
+$ pacman -S swig
+```
 
+Clone ToolbitSDK by git or download it from GitHub
+```
+$ git clone https://github.com/toolbitorg/ToolbitSDK.git
+```
 
+Build Ruby library
+```
+$ cd ToolbitSDK/bindings/ruby/src
+$ ./build.sh
+```
+
+tbi.so is built and copied to ../samples. Now you can test it with Luke as follows
+```
+$ cd ../samples
+$ ./luke_test.rb
+0.000 [V]
+0.000 [mA]
+```
