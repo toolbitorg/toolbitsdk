@@ -24,10 +24,10 @@
     <ClInclude Include="..\..\..\include\tbi_service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\pic16f145x.h">
+    <ClInclude Include="..\..\..\include\tbi_device_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\tbi_device_manager.h">
+    <ClInclude Include="..\..\..\include\tbit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,10 +50,10 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\pic16f145x.cpp">
+    <ClCompile Include="..\..\..\src\tbi_device_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_device_manager.cpp">
+    <ClCompile Include="..\..\..\src\tbit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

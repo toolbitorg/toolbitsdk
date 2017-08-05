@@ -97,12 +97,12 @@ string Luke::showReg()
 {
 	stringstream ss;
 	for (int addr = 0; addr <= REG_POWER_VALID_LOWER_LIMIT; addr++) {	
-		ss << hex << addr << ": 0x" << readReg(addr) << endl;
+		ss << hex << addr << ": 0x" << i2ca.read(addr) << endl;
 	}
 	return ss.str();
 }
 
 uint16_t Luke::getDieID()
 {
-	return readReg(REG_DIE_ID);
+	return i2ca.read(REG_DIE_ID);
 }

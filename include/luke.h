@@ -2,7 +2,7 @@
 #define TOOLBITSDK_LUKE_H_
 
 #include <stdint.h>
-#include "pic16f145x.h"
+#include "tbit.h"
 #include "attribute.h"
 
 // Product specific attribute ID
@@ -27,7 +27,7 @@ typedef enum
 } CurrentRange;
 
 
-class Luke : public Picbit
+class Luke : public Tbit
 {
 public:
 	Luke();

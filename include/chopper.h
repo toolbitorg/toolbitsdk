@@ -2,14 +2,14 @@
 #define TOOLBITSDK_CHOPPER_H_
 
 #include <stdint.h>
-#include "pic16f145x.h"
+#include "tbit.h"
 #include "attribute.h"
 
 // Product specific attribute ID
 #define ATT_USB_PORT_CTRL    0x8000
 
 
-class Chopper : public Picbit
+class Chopper : public Tbit
 {
 public:
     Chopper();

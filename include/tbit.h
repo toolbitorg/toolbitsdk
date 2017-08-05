@@ -1,8 +1,11 @@
-#ifndef TOOLBITSDK_PIC16F145X_H_
-#define TOOLBITSDK_PIC16F145X_H_
+#ifndef TOOLBITSDK_TBIT_H_
+#define TOOLBITSDK_TBIT_H_
 
 #include "tbi_core.h"
 
+// Target MCU
+// PIC16F145X
+// ATmega32U4
 
 typedef enum
 {
@@ -11,6 +14,7 @@ typedef enum
 	ATT_GPIO_PULL_UP = 0x1001,
 	ATT_GPIO_PULL_DOWN = 0x1002,
 	ATT_GPIO_RW = 0x1003,
+	ATT_ADC0 = 0x1010,
 	ATT_I2C0_ADDR = 0x1030,
 	ATT_I2C0_RW_1BYTE = 0x1031,
 	ATT_I2C0_RW_2BYTE = 0x1032,
@@ -29,11 +33,27 @@ typedef enum
 #define LOW  0
 
 
-class Picbit : public TbiCore
+class I2c
 {
 public:
-	Picbit();
-	~Picbit();
+	I2c(TbiService *tbisrv);
+	~I2c();
+	bool write(uint8_t addr, uint16_t val);
+	uint16_t I2c::read(uint8_t addr);
+
+protected:
+	TbiService *mTbiSrv;
+	Attribute mAttI2C0Addr;
+	Attribute mAttI2C0RW1Byte;
+	Attribute mAttI2C0RW2Byte;
+};
+
+
+class Tbit : public TbiCore
+{
+public:
+	Tbit();
+	~Tbit();
 
 	// GPIO
 	bool setGpioPinMode(uint8_t pin, PinMode mode);
@@ -41,9 +61,10 @@ public:
 	uint32_t readGpio();
 	bool digitalWrite(uint8_t pin, bool val);
 	bool digitalRead(uint8_t pin);
+	uint32_t analogRead(uint8_t pin);
 	// I2C
-	uint16_t readReg(uint8_t addr);
-	bool writeReg(uint8_t addr, uint16_t val);
+	I2c  i2ca;
+
 
 protected:
 	// Platform commom attribute
@@ -51,12 +72,10 @@ protected:
 	Attribute mAttGpioPullUp;
 	Attribute mAttGpioPullDown;
 	Attribute mAttGpioRw;
-	Attribute mAttI2C0Addr;
-	Attribute mAttI2C0RW1Byte;
-	Attribute mAttI2C0RW2Byte;
+	Attribute mAttAdc0;
 
 
 private:
 };
 
-#endif /* TOOLBITSDK_PIC16F145X_H_ */
+#endif /* TOOLBITSDK_TBIT_H_ */
