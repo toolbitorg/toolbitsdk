@@ -5,12 +5,12 @@ CC  = gcc
 CXX = g++
 CFLAGS  = -g -MMD -MP
 LDFLAGS = 
-INCLUDE = -I./HIDAPI/hidapi -I../include `pkg-config libusb-1.0 --cflags`
+INCLUDE = -I./HIDAPI/hidapi -I../include -I../include/module `pkg-config libusb-1.0 --cflags`
 LIBS = `pkg-config libusb-1.0 libudev --libs`
 
 TARGET = $(BINDIR)/libtbi.a
 C_SOURCES   = HIDAPI/linux/hid.c
-CPP_SOURCES = $(wildcard *.cpp) 
+CPP_SOURCES = $(wildcard *.cpp) $(wildcard module/*.cpp)
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
 DEPENDS = $(OBJECTS:.o=.d)
@@ -27,6 +27,7 @@ $(TARGET): $(OBJECTS)
 
 $(OBJDIR)/%.o : %.cpp 
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)	
+	@[ -d $(OBJDIR)/module ] || mkdir -p $(OBJDIR)/module	
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 $(OBJDIR)/%.o : %.c
