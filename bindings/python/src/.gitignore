@@ -1,6 +1,7 @@
-*.h
-*.cpp
-*.o
-*.cxx
-*.c
-*.py
+/*.h
+/*.cpp
+/*.o
+/*.cxx
+/*.c
+tbi.py
+_tbi.pyd

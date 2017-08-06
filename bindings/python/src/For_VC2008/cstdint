@@ -1,0 +1,9 @@
+/*
+ *  cstdint
+ *  (for Visual C++)
+ *
+ *  Copyright (C) 2007 by Kijineko Inc.
+ *  Copyright (C) 2007 by TAKAGI Nobuhisa
+ */
+#pragma once
+#include <xstdint.h>

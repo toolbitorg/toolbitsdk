@@ -1,7 +1,10 @@
 import tbi
 import time
 
-tbit = tbit.Luke()
+tbit = tbi.Tbit()
 
-print str('%b' % tbit.read())
+print tbit.gpio.read()
+print tbit.gpio.digitalWrite(15, True)
 time.sleep(0.5)
+print tbit.gpio.digitalWrite(15, False)
+
