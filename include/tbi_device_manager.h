@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string>
 #include "hidapi.h"
 
 using namespace std;
@@ -7,11 +8,11 @@ using namespace std;
 #define TOOLBITSDK_TBI_DEVICE_MANAGER_H_
 
 
-#define USB_VID_PICBIT 0x4d8
-#define USB_PID_PICBIT 0x3f
+#define USB_VID_TBIT_PIC 0x4d8
+#define USB_PID_TBIT_PIC 0x3f
 
-#define USB_VID_ARDUBIT 0x2341
-#define USB_PID_ARDUBIT 0x8036
+#define USB_VID_TBIT_ARDUINO 0x2341
+#define USB_PID_TBIT_ARDUINO 0x8036
 
 
 class TbiDeviceManager

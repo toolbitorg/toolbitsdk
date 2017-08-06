@@ -2,9 +2,13 @@
 #define TOOLBITSDK_LUKE_H_
 
 #include <stdint.h>
-#include "tbit.h"
+#include "i2c.h"
 #include "attribute.h"
 
+// Platform commom attribute ID
+#define ATT_GPIO0_BASE 0x1200
+#define ATT_ADC_BASE   0x1300
+#define ATT_IC20_BASE  0x1400
 // Product specific attribute ID
 #define ATT_VOLTAGE_RANGE 0x8100
 #define ATT_VOLTAGE       0x8101
@@ -27,11 +31,14 @@ typedef enum
 } CurrentRange;
 
 
-class Luke : public Tbit
+class Luke : public TbiCore
 {
 public:
 	Luke();
 	~Luke();
+
+	// Hardware module
+	I2c  i2c;
 
 	float getVoltage();
 	float getCurrent();
@@ -45,10 +52,10 @@ protected:
 
 private:
 	// Product specific attribute ID
-	Attribute mAttVoltageRange;
-	Attribute mAttVoltage;
-	Attribute mAttCurrentRange;
-	Attribute mAttCurrent;
+	Attribute *mAttVoltageRange;
+	Attribute *mAttVoltage;
+	Attribute *mAttCurrentRange;
+	Attribute *mAttCurrent;
 	VoltageRange vrange;
 	CurrentRange crange;
 };

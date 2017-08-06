@@ -14,10 +14,12 @@ Chopper::Chopper() :
 	if (open(devm.getPath("CHOPPER HUB"))) {
 
 		// Get current status
+		/*
 		mTbiService->readAttribute(&mAttGpioInoutMode);
 		mTbiService->readAttribute(&mAttGpioPullUp);
 		mTbiService->readAttribute(&mAttGpioPullDown);
 		mTbiService->readAttribute(&mAttGpioRw);
+		*/
 
 		mTbiService->readAttribute(&mAttUsbPortCtrl);
 	}

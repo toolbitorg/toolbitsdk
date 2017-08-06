@@ -2,7 +2,9 @@
 
 rm -fr *.h *.cpp *.so *.o *.cxx *.c
 cp ../../../include/* ./
+cp ../../../include/module/* ./
 cp ../../../src/*.cpp ./
+cp ../../../src/module/*.cpp ./
 
 
 if [ "$(uname)" == 'Darwin' ]; then

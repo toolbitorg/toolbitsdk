@@ -1,16 +1,20 @@
-OBJDIR = ../build/mingw
-BINDIR = ../lib/mingw
+BINDIR = ../bin
+OBJDIR = ../build
+INCDIR = ../../../include
+LIBDIR = ../../../lib/gcc
+LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
 CFLAGS  = -g -MMD -MP
 LDFLAGS = 
-INCLUDE = -I./HIDAPI/hidapi -I../include -I../include/module
-LIBS = 
+INCLUDE = -I$(INCDIR) `pkg-config libusb-1.0 --cflags`
 
-TARGET = $(BINDIR)/libtbi.a
-C_SOURCES   = HIDAPI/windows/hid.c
-CPP_SOURCES = $(wildcard *.cpp) $(wildcard module/*.cpp) 
+LIBOBJS = $(LIBDIR)/libhidcomm.a
+LIBS = $(LIBOBJS) `pkg-config libusb-1.0 libudev --libs` -lrt -lpthread 
+
+TARGET = $(BINDIR)/luke
+CPP_SOURCES = $(wildcard *.cpp) 
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
 DEPENDS = $(OBJECTS:.o=.d)
@@ -20,18 +24,21 @@ DEPENDS = $(OBJECTS:.o=.d)
 
 all: $(TARGET)
 
-$(TARGET): $(OBJECTS)
+$(LIBOBJS): FORCE
+	cd $(LIBSRCDIR); $(MAKE) -f makefile.gcc
+
+FORCE:
+
+$(TARGET): $(OBJECTS) $(LIBOBJS)
 	@[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
-	ar r $@ $(OBJECTS)
-	cp -fp ./HIDAPI/hidapi/hidapi.h ../include
+	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBS)
 
 $(OBJDIR)/%.o : %.cpp 
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)	
-	@[ -d $(OBJDIR)/module ] || mkdir -p $(OBJDIR)/module	
 	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 $(OBJDIR)/%.o : %.c
-	@[ -d $(OBJDIR)/HIDAPI/windows/ ] || mkdir -p $(OBJDIR)/HIDAPI/windows
+	@[ -d $(OBJDIR)/HIDAPI/linux/ ] || mkdir -p $(OBJDIR)/HIDAPI/linux
 	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:

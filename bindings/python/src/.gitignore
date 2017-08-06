@@ -1,10 +1,6 @@
-build/
 *.h
 *.cpp
 *.o
 *.cxx
 *.c
-tbi.py
-_tbi.so
-_tbi.pyd
-
+*.py

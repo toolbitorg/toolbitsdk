@@ -92,7 +92,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../include;../../../src/HIDAPI/hidapi</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../../src/HIDAPI/hidapi;../../../include/module</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +109,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../../include;../../../src/HIDAPI/hidapi</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../include;../../../src/HIDAPI/hidapi;../../../include/module</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,6 +157,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\attribute.cpp" />
     <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c" />
+    <ClCompile Include="..\..\..\src\module\adc.cpp" />
+    <ClCompile Include="..\..\..\src\module\gpio.cpp" />
+    <ClCompile Include="..\..\..\src\module\i2c.cpp" />
     <ClCompile Include="..\..\..\src\tbit.cpp" />
     <ClCompile Include="..\..\..\src\tbi_core.cpp" />
     <ClCompile Include="..\..\..\src\tbi_device.cpp" />
@@ -167,6 +170,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\attribute.h" />
     <ClInclude Include="..\..\..\include\hidapi.h" />
+    <ClInclude Include="..\..\..\include\module\adc.h" />
+    <ClInclude Include="..\..\..\include\module\gpio.h" />
+    <ClInclude Include="..\..\..\include\module\i2c.h" />
     <ClInclude Include="..\..\..\include\tbit.h" />
     <ClInclude Include="..\..\..\include\tbi_core.h" />
     <ClInclude Include="..\..\..\include\tbi_device.h" />

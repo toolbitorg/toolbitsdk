@@ -2,14 +2,15 @@
 
 rm -fr *.h *.cpp *.so *.o *.cxx *.c tbi.py _tbi.so
 cp ../../../include/* ./
+cp ../../../include/module/* ./
 cp ../../../src/*.cpp ./
+cp ../../../src/module/*.cpp ./
 
 
 if [ "$(uname)" == 'Darwin' ]; then
 
   cp ../../../src/HIDAPI/mac/hid.c ./
   swig -c++ -python tbi.i
-  ruby extconf.rb
   python setup.py build_ext --inplace
 
 elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then

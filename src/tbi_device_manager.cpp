@@ -22,7 +22,8 @@ void TbiDeviceManager::updateDeviceList()
 		hid_free_enumeration(devs);
 
 	// Enumerate and print the HID devices on the system
-	devs = hid_enumerate(USB_VID_PICBIT, USB_PID_PICBIT);
+//	devs = hid_enumerate(USB_VID_TBIT_PIC, USB_PID_TBIT_PIC);
+	devs = hid_enumerate(USB_VID_TBIT_ARDUINO, USB_PID_TBIT_ARDUINO);
 
 }
 

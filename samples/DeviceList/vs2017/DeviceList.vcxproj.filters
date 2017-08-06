@@ -7,6 +7,12 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{777678eb-6a67-4459-8dfa-c034f5ddf48e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\module">
+      <UniqueIdentifier>{5b9ac90c-4e66-43b0-84c8-4a3e4ef3410b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\module">
+      <UniqueIdentifier>{93356d22-28e6-4497-999c-e0bffbb46b62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\attribute.h">
@@ -29,6 +35,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\tbit.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\adc.h">
+      <Filter>Header Files\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\gpio.h">
+      <Filter>Header Files\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\i2c.h">
+      <Filter>Header Files\module</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +70,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\tbit.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\adc.cpp">
+      <Filter>Source Files\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\gpio.cpp">
+      <Filter>Source Files\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\i2c.cpp">
+      <Filter>Source Files\module</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

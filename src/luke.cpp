@@ -28,11 +28,13 @@
 #define REG_DIE_ID 0xFF
 
 Luke::Luke() :
-	mAttVoltageRange(ATT_VOLTAGE_RANGE, 0x00, 0x00),
-	mAttVoltage(ATT_VOLTAGE, 0x00, 0x00),
-	mAttCurrentRange(ATT_CURRENT_RANGE, 0x00, 0x00),
-	mAttCurrent(ATT_CURRENT, 0x00, 0x00)
+	i2c(mTbiService, ATT_IC20_BASE)
 {
+	mAttVoltageRange = new Attribute(ATT_VOLTAGE_RANGE, 0x00, 0x00);
+	mAttVoltage = new Attribute(ATT_VOLTAGE, 0x00, 0x00);
+	mAttCurrentRange = new Attribute(ATT_CURRENT_RANGE, 0x00, 0x00);
+	mAttCurrent = new Attribute(ATT_CURRENT, 0x00, 0x00);
+
 	TbiDeviceManager devm;
 
 	if(open(devm.getPath("Luke"))) {
@@ -40,43 +42,43 @@ Luke::Luke() :
 		setVoltageRange(VOLTAGE_RANGE_AUTO);
 		setCurrentRange(CURRENT_RANGE_AUTO);
 
-		// Get current status
-		mTbiService->readAttribute(&mAttGpioInoutMode);
-		mTbiService->readAttribute(&mAttGpioPullUp);
-		mTbiService->readAttribute(&mAttGpioPullDown);
-		mTbiService->readAttribute(&mAttGpioRw);
 	}
 }
 
 Luke::~Luke()
 {
 	close();
+
+	delete mAttVoltageRange;
+	delete mAttVoltage;
+	delete mAttCurrentRange;
+	delete mAttCurrent;
 }
 
 float Luke::getVoltage()
 {
-	bool status = mTbiService->readAttribute(&mAttVoltage);
+	bool status = mTbiService->readAttribute(mAttVoltage);
 	if (!status) {
 		// error
 		return 0.0;
 	}
-	return mAttVoltage.getValueFloat();
+	return mAttVoltage->getValueFloat();
 }
 
 float Luke::getCurrent()
 {
-	bool status = mTbiService->readAttribute(&mAttCurrent);
+	bool status = mTbiService->readAttribute(mAttCurrent);
 	if (!status) {
 		// error
 		return 0.0;
 	}
-	return mAttCurrent.getValueFloat();
+	return mAttCurrent->getValueFloat();
 }
 
 void Luke::setVoltageRange(VoltageRange r)
 {
-	mAttVoltageRange.setValue(r);
-	bool status = mTbiService->writeAttribute(mAttVoltageRange);
+	mAttVoltageRange->setValue(r);
+	bool status = mTbiService->writeAttribute(*mAttVoltageRange);
 	if (!status) {
 		// error
 		return;
@@ -85,8 +87,8 @@ void Luke::setVoltageRange(VoltageRange r)
 
 void Luke::setCurrentRange(CurrentRange r)
 {
-	mAttCurrentRange.setValue(r);
-	bool status = mTbiService->writeAttribute(mAttCurrentRange);
+	mAttCurrentRange->setValue(r);
+	bool status = mTbiService->writeAttribute(*mAttCurrentRange);
 	if (!status) {
 		// error
 		return;
@@ -97,12 +99,12 @@ string Luke::showReg()
 {
 	stringstream ss;
 	for (int addr = 0; addr <= REG_POWER_VALID_LOWER_LIMIT; addr++) {	
-		ss << hex << addr << ": 0x" << i2ca.read(addr) << endl;
+		ss << hex << addr << ": 0x" << i2c.read(addr) << endl;
 	}
 	return ss.str();
 }
 
 uint16_t Luke::getDieID()
 {
-	return i2ca.read(REG_DIE_ID);
+	return i2c.read(REG_DIE_ID);
 }
