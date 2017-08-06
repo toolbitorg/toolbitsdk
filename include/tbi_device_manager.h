@@ -8,12 +8,13 @@ using namespace std;
 #define TOOLBITSDK_TBI_DEVICE_MANAGER_H_
 
 
-#define USB_VID_TBIT_PIC 0x4d8
-#define USB_PID_TBIT_PIC 0x3f
+#define USB_VID_PIC 0x4d8
+#define USB_PID_PIC 0x3f
 
-#define USB_VID_TBIT_ARDUINO 0x2341
-#define USB_PID_TBIT_ARDUINO 0x8036
+#define USB_VID_ARDUINO 0x2341
+#define USB_PID_ARDUINO 0x8036
 
+#define USB_VID_NUM_MAX 2
 
 class TbiDeviceManager
 {
@@ -29,7 +30,7 @@ public:
 protected:
 
 private:
-    struct hid_device_info *devs;
+    struct hid_device_info *devs[USB_VID_NUM_MAX];
 };
 
 #endif /* TOOLBITSDK_TBI_DEVICE_MANAGER_H_ */
