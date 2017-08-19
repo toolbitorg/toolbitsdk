@@ -33,6 +33,7 @@ public:
 	bool pinMode(uint8_t pin, PinMode mode);
 	bool write(uint32_t dat);
 	uint32_t read();
+
 	bool digitalWrite(uint8_t pin, bool val);
 	bool digitalRead(uint8_t pin);
 

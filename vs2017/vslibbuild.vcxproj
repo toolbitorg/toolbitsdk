@@ -19,6 +19,7 @@
     <ClInclude Include="..\include\module\adc.h" />
     <ClInclude Include="..\include\module\gpio.h" />
     <ClInclude Include="..\include\module\i2c.h" />
+    <ClInclude Include="..\include\module\pin.h" />
     <ClInclude Include="..\include\tbit.h" />
     <ClInclude Include="..\include\tbi_core.h" />
     <ClInclude Include="..\include\tbi_device.h" />
@@ -34,6 +35,7 @@
     <ClCompile Include="..\src\module\adc.cpp" />
     <ClCompile Include="..\src\module\gpio.cpp" />
     <ClCompile Include="..\src\module\i2c.cpp" />
+    <ClCompile Include="..\src\module\pin.cpp" />
     <ClCompile Include="..\src\tbit.cpp" />
     <ClCompile Include="..\src\tbi_core.cpp" />
     <ClCompile Include="..\src\tbi_device.cpp" />

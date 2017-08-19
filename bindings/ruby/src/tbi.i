@@ -12,6 +12,7 @@
 #include "../../../include/module/adc.h"
 #include "../../../include/module/gpio.h"
 #include "../../../include/module/i2c.h"
+#include "../../../include/module/pin.h"
 %}
 %include <stdint.i>
 %include "../../../include/tbi_core.h"
@@ -26,4 +27,5 @@
 %include "../../../include/module/adc.h"
 %include "../../../include/module/gpio.h"
 %include "../../../include/module/i2c.h"
+%include "../../../include/module/pin.h"
 

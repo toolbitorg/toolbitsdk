@@ -3,6 +3,7 @@
 #include <string>
 #include "getopt.h"
 #include "tbit.h"
+#include "pin.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -33,6 +34,17 @@ int main(int argc, char* argv[])
 	cout << "GPIO: " << tbit->gpio.read() << endl;
 
 	cout << "GPIO: " << tbit->gpio.write(0x12345678) << endl;
+
+	cout << "GPIO: " << tbit->gpio.write(0xFFFFFFFF) << endl;
+
+
+	Pin led(&tbit->gpio, 15);
+
+	led.off();
+	cout << "LED: " << led.value() << endl;
+
+	led.on();
+	cout << "LED: " << led.value() << endl;
 
 
 #ifdef WIN32

@@ -1,10 +1,10 @@
 #ifndef TOOLBITSDK_TBIT_H_
 #define TOOLBITSDK_TBIT_H_
 
+#include "tbi_core.h"
 #include "gpio.h"
 #include "adc.h"
 #include "i2c.h"
-#include "tbi_core.h"
 
 // Target MCU
 // PIC16F145X
@@ -29,7 +29,6 @@ public:
 	I2c  i2c;
 
 protected:
-
 private:
 };
 

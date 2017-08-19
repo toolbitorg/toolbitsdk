@@ -13,3 +13,11 @@ puts sprintf("%.32b ", tbit.gpio.read())
 
 puts sprintf("%.32b ", tbit.adc.analogRead(0))
 
+led = Tbi::Pin.new(tbit.gpio, 15)
+
+sleep(0.5)
+led.on()
+sleep(0.5)
+led.off()
+
+

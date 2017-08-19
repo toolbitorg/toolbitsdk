@@ -19,3 +19,4 @@ Tbit::~Tbit()
 {
 	close();
 }
+
