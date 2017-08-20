@@ -42,16 +42,19 @@
     <ClInclude Include="..\..\..\include\tbit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\module\i2c.h">
-      <Filter>Header Files\module</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\module\gpio.h">
-      <Filter>Header Files\module</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\module\adc.h">
       <Filter>Header Files\module</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\module\pin.h">
+      <Filter>Header Files\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\adc_hw.h">
+      <Filter>Header Files\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\gpio_hw.h">
+      <Filter>Header Files\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\i2c_hw.h">
       <Filter>Header Files\module</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,16 +86,19 @@
     <ClCompile Include="..\..\..\src\tbit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\module\i2c.cpp">
-      <Filter>Source Files\module</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\module\gpio.cpp">
-      <Filter>Source Files\module</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\module\adc.cpp">
       <Filter>Source Files\module</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\module\pin.cpp">
+      <Filter>Source Files\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\adc_hw.cpp">
+      <Filter>Source Files\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\gpio_hw.cpp">
+      <Filter>Source Files\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\i2c_hw.cpp">
       <Filter>Source Files\module</Filter>
     </ClCompile>
   </ItemGroup>

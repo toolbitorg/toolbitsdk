@@ -1,7 +1,7 @@
-#include "gpio.h"
+#include "gpio_hw.h"
 
 
-Gpio::Gpio(TbiService *tbisrv, ToolbitAttributionID base)
+GpioHw::GpioHw(TbiService *tbisrv, ToolbitAttributionID base)
 {
 	mTbiSrv = tbisrv;
 	mAttGpioInoutMode = new Attribute(base + ATT_GPIO_INOUT_MODE, 0x00, 0x00);
@@ -10,7 +10,7 @@ Gpio::Gpio(TbiService *tbisrv, ToolbitAttributionID base)
 	mAttGpioRw = new Attribute(base + ATT_GPIO_RW, 0x00, 0x00);
 }
 
-Gpio::~Gpio()
+GpioHw::~GpioHw()
 {
 	delete mAttGpioInoutMode;
 	delete mAttGpioPullUp;
@@ -18,7 +18,7 @@ Gpio::~Gpio()
 	delete mAttGpioRw;	
 }
 
-bool Gpio::pinMode(uint8_t pin, PinMode mode)
+bool GpioHw::pinMode(uint8_t pin, PinMode mode)
 {
 	bool status;
 
@@ -50,7 +50,7 @@ bool Gpio::pinMode(uint8_t pin, PinMode mode)
 	return true;
 }
 
-bool Gpio::write(uint32_t dat)
+bool GpioHw::write(uint32_t dat)
 {
 	mAttGpioRw->setValue(dat);
 	bool status = mTbiSrv->writeAttribute(*mAttGpioRw);
@@ -59,7 +59,7 @@ bool Gpio::write(uint32_t dat)
 	return true;
 }
 
-uint32_t Gpio::read()
+uint32_t GpioHw::read()
 {
 	bool status = mTbiSrv->readAttribute(mAttGpioRw);
 	if (!status)
@@ -67,7 +67,7 @@ uint32_t Gpio::read()
 	return mAttGpioRw->getValueUint32();
 }
 
-bool Gpio::digitalWrite(uint8_t pin, bool val)
+bool GpioHw::digitalWrite(uint8_t pin, bool val)
 {
 	read();
 	if (val)
@@ -81,7 +81,7 @@ bool Gpio::digitalWrite(uint8_t pin, bool val)
 	return true;
 }
 
-bool Gpio::digitalRead(uint8_t pin)
+bool GpioHw::digitalRead(uint8_t pin)
 {
 	return read() & 1 << pin;
 }

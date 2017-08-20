@@ -1,18 +1,20 @@
 #ifndef TOOLBITSDK_ADC_H_
 #define TOOLBITSDK_ADC_H_
 
-#include "tbi_core.h"
+#include "tbit.h"
 
 class Adc
 {
 public:
-	Adc(TbiService *tbisrv, ToolbitAttributionID base);
+	Adc(Tbit *p, uint8_t pinnum);
 	~Adc();
-	uint32_t analogRead(uint8_t pin);
+
+	int value();
 
 protected:
-	TbiService *mTbiSrv;
-	Attribute *mAttAdcR[8];
+	Tbit *mTbit;
+	uint8_t mPinNum;
+	int val;
 };
 
 #endif /* TOOLBITSDK_ADC_H_ */

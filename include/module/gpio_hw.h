@@ -1,5 +1,5 @@
-#ifndef TOOLBITSDK_GPIO_H_
-#define TOOLBITSDK_GPIO_H_
+#ifndef TOOLBITSDK_GPIO_HW_H_
+#define TOOLBITSDK_GPIO_HW_H_
 
 #include "tbi_core.h"
 
@@ -9,7 +9,7 @@ typedef enum
 	ATT_GPIO_PULL_UP    = 0x01,
 	ATT_GPIO_PULL_DOWN  = 0x02,
 	ATT_GPIO_RW         = 0x03
-} AttGpio;
+} AttGpioHw;
 
 typedef enum
 {
@@ -24,11 +24,11 @@ typedef enum
 #define LOW  0
 
 
-class Gpio
+class GpioHw
 {
 public:
-	Gpio(TbiService *tbisrv, ToolbitAttributionID base);
-	~Gpio();
+	GpioHw(TbiService *tbisrv, ToolbitAttributionID base);
+	~GpioHw();
 	// GPIO
 	bool pinMode(uint8_t pin, PinMode mode);
 	bool write(uint32_t dat);
@@ -45,4 +45,4 @@ protected:
 	Attribute *mAttGpioRw;
 };
 
-#endif /* TOOLBITSDK_GPIO_H_ */
+#endif /* TOOLBITSDK_GPIO_HW_H_ */

@@ -10,8 +10,9 @@
 #include "../../../include/chopper.h"
 #include "../../../include/luke.h"
 #include "../../../include/module/adc.h"
-#include "../../../include/module/gpio.h"
-#include "../../../include/module/i2c.h"
+#include "../../../include/module/adc_hw.h"
+#include "../../../include/module/gpio_hw.h"
+#include "../../../include/module/i2c_hw.h"
 #include "../../../include/module/pin.h"
 %}
 %include <stdint.i>
@@ -25,7 +26,8 @@
 %include "../../../include/chopper.h"
 %include "../../../include/luke.h"
 %include "../../../include/module/adc.h"
-%include "../../../include/module/gpio.h"
-%include "../../../include/module/i2c.h"
+%include "../../../include/module/adc_hw.h"
+%include "../../../include/module/gpio_hw.h"
+%include "../../../include/module/i2c_hw.h"
 %include "../../../include/module/pin.h"
 

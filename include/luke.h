@@ -2,7 +2,7 @@
 #define TOOLBITSDK_LUKE_H_
 
 #include <stdint.h>
-#include "i2c.h"
+#include "i2c_hw.h"
 #include "attribute.h"
 
 // Platform commom attribute ID
@@ -38,7 +38,7 @@ public:
 	~Luke();
 
 	// Hardware module
-	I2c  i2c;
+	I2cHw  i2chw;
 
 	float getVoltage();
 	float getCurrent();

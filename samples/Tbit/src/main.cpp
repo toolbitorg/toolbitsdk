@@ -4,6 +4,8 @@
 #include "getopt.h"
 #include "tbit.h"
 #include "pin.h"
+#include "adc.h"
+
 
 #ifdef _WIN32
 #include <windows.h>
@@ -31,26 +33,30 @@ int main(int argc, char* argv[])
 	cout << "ProductVersion: " << tbit->getFirmVersion() << endl;
 
 
-	cout << "GPIO: " << "0x" << std::hex << tbit->gpio.read() << endl;
+	cout << "GPIO: " << "0x" << std::hex << tbit->gpiohw.read() << endl;
+	cout << "ADC: " << tbit->adchw.analogRead(4) << endl;
 
-	Pin led(&tbit->gpio, 15);                   // PC7 
-	Pin out(&tbit->gpio, 6, OUTPUT_PIN);        // PB6
-	Pin in(&tbit->gpio, 5, INPUT_PULLUP_PIN);   // PB5
+                                            // Atmega32U4
+	Pin led(tbit, 15);                      // PC7 
+	Pin outpin(tbit, 6, OUTPUT_PIN);        // PB6
+	Pin inpin(tbit, 5, INPUT_PULLUP_PIN);   // PB5
+	Adc adcpin(tbit, 4);                    // PB4
 
 
 	led.off();
 	cout << "LED: " << led.value() << endl;
-	out.off();
-	cout << "IN: " << in.value() << endl;
-	cout << "GPIO: " << "0x" << std::hex << tbit->gpio.read() << endl;
+	outpin.off();
+	cout << "IN: " << inpin.value() << endl;
+	cout << "GPIO: " << "0x" << std::hex << tbit->gpiohw.read() << endl;
+	cout << "ADC: " << adcpin.value() << endl;
+
 
 	led.on();
 	cout << "LED: " << led.value() << endl;
-	out.on();
-	cout << "IN: " << in.value() << endl;
-	cout << "GPIO: " << "0x" << std::hex << tbit->gpio.read() << endl;
-
-	//	cout << "ADC: " << tbit->adc.analogRead() << endl;
+	outpin.on();
+	cout << "IN: " << inpin.value() << endl;
+	cout << "GPIO: " << "0x" << std::hex << tbit->gpiohw.read() << endl;
+	cout << "ADC: " << adcpin.value() << endl;
 
 
 #ifdef WIN32

@@ -1,5 +1,5 @@
-#ifndef TOOLBITSDK_I2C_H_
-#define TOOLBITSDK_I2C_H_
+#ifndef TOOLBITSDK_I2C_HW_H_
+#define TOOLBITSDK_I2C_HW_H_
 
 #include "tbi_core.h"
 
@@ -11,14 +11,14 @@ typedef enum
 	ATT_I2C_RW_2BYTE = 0x03,
 	ATT_I2C_RW_3BYTE = 0x04,
 	ATT_I2C_RW_4BYTE = 0x05
-} AttI2c;
+} AttI2cHw;
 
 
-class I2c
+class I2cHw
 {
 public:
-	I2c(TbiService *tbisrv, ToolbitAttributionID base);
-	~I2c();
+	I2cHw(TbiService *tbisrv, ToolbitAttributionID base);
+	~I2cHw();
 	bool write(uint8_t addr, uint16_t val);
 	uint16_t read(uint8_t addr);
 
@@ -32,4 +32,4 @@ protected:
 	Attribute *mAttI2cRw4Byte;
 };
 
-#endif /* TOOLBITSDK_I2C_H_ */
+#endif /* TOOLBITSDK_I2C_HW_H_ */

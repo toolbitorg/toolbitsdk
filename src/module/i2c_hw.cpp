@@ -1,7 +1,7 @@
-#include "i2c.h"
+#include "i2c_hw.h"
 
 
-I2c::I2c(TbiService *tbisrv, int base)
+I2cHw::I2cHw(TbiService *tbisrv, int base)
 {
 	mTbiSrv = tbisrv;
 	mAttI2cDeviceAddr = new Attribute(base + ATT_I2C_DEVICE_ADDR, 0x00, 0x00);
@@ -12,7 +12,7 @@ I2c::I2c(TbiService *tbisrv, int base)
 	mAttI2cRw4Byte = new Attribute(base + ATT_I2C_RW_2BYTE, 0x00, 0x00);
 }
 
-I2c::~I2c()
+I2cHw::~I2cHw()
 {
 	delete mAttI2cDeviceAddr;
 	delete mAttI2cRegAddr;
@@ -22,7 +22,7 @@ I2c::~I2c()
 	delete mAttI2cRw4Byte;
 }
 
-bool I2c::write(uint8_t reg_addr, uint16_t val)
+bool I2cHw::write(uint8_t reg_addr, uint16_t val)
 {
 	bool status;
 
@@ -43,7 +43,7 @@ bool I2c::write(uint8_t reg_addr, uint16_t val)
 	return true;
 }
 
-uint16_t I2c::read(uint8_t reg_addr)
+uint16_t I2cHw::read(uint8_t reg_addr)
 {
 	bool status;
 

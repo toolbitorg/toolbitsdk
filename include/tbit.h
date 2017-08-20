@@ -2,9 +2,9 @@
 #define TOOLBITSDK_TBIT_H_
 
 #include "tbi_core.h"
-#include "gpio.h"
-#include "adc.h"
-#include "i2c.h"
+#include "gpio_hw.h"
+#include "adc_hw.h"
+#include "i2c_hw.h"
 
 // Target MCU
 // PIC16F145X
@@ -24,9 +24,9 @@ public:
 	~Tbit();
 
 	// Hardware module
-	Gpio gpio;
-	Adc  adc;
-	I2c  i2c;
+	GpioHw gpiohw;
+	AdcHw  adchw;
+	I2cHw  i2chw;
 
 protected:
 private:

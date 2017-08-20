@@ -28,7 +28,7 @@
 #define REG_DIE_ID 0xFF
 
 Luke::Luke() :
-	i2c(mTbiService, ATT_IC20_BASE)
+	i2chw(mTbiService, ATT_IC20_BASE)
 {
 	mAttVoltageRange = new Attribute(ATT_VOLTAGE_RANGE, 0x00, 0x00);
 	mAttVoltage = new Attribute(ATT_VOLTAGE, 0x00, 0x00);
@@ -99,12 +99,12 @@ string Luke::showReg()
 {
 	stringstream ss;
 	for (int addr = 0; addr <= REG_POWER_VALID_LOWER_LIMIT; addr++) {	
-		ss << hex << addr << ": 0x" << i2c.read(addr) << endl;
+		ss << hex << addr << ": 0x" << i2chw.read(addr) << endl;
 	}
 	return ss.str();
 }
 
 uint16_t Luke::getDieID()
 {
-	return i2c.read(REG_DIE_ID);
+	return i2chw.read(REG_DIE_ID);
 }
