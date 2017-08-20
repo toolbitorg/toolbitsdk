@@ -1,5 +1,5 @@
 del *.h *.cpp *.so *.o *.cxx *.c tbi.py _tbi.pyd
-copy ..\..\..\include\* .\
+copy ..\..\..\include\*.h .\
 copy ..\..\..\include\module\* .\
 copy ..\..\..\src\*.cpp .\
 copy ..\..\..\src\module\*.cpp .\

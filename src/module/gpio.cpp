@@ -22,17 +22,17 @@ bool Gpio::pinMode(uint8_t pin, PinMode mode)
 {
 	bool status;
 
-	if (pin > 3)
+	if (pin > 32)
 		return false;
 
 	if (mode == OUTPUT_PIN) {
-		mAttGpioInoutMode->setValue(mAttGpioInoutMode->getValueUint32() & ~(1 << pin));
+		mAttGpioInoutMode->setValue(mAttGpioInoutMode->getValueUint32() | (1 << pin));
 	}
 	else {
 		if (mode == INPUT_PIN)
 			mAttGpioPullUp->setValue(mAttGpioPullUp->getValueUint32() & ~(1 << pin));
 		else if (mode == INPUT_PULLUP_PIN)
-			mAttGpioPullUp->setValue(mAttGpioPullUp->getValueUint32() | 1 << pin);
+			mAttGpioPullUp->setValue(mAttGpioPullUp->getValueUint32() | (1 << pin));
 		else
 			return false;  // error because INPUT_PULLDOWN_PIN is not supported yet
 
@@ -40,7 +40,7 @@ bool Gpio::pinMode(uint8_t pin, PinMode mode)
 		if (!status)
 			return false;  // error
 
-		mAttGpioInoutMode->setValue(mAttGpioInoutMode->getValueUint32() | 1 << pin);
+		mAttGpioPullUp->setValue(mAttGpioInoutMode->getValueUint32() & ~(1 << pin));
 	}
 
 	status = mTbiSrv->writeAttribute(*mAttGpioInoutMode);

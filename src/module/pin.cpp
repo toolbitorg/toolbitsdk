@@ -8,8 +8,22 @@ Pin::Pin(Gpio *gpio, uint8_t pinnum)
 	val = false;
 }
 
+Pin::Pin(Gpio *gpio, uint8_t pinnum, PinMode m)
+{
+	mGpio = gpio;
+	mPinNum = pinnum;
+	val = false;
+	mode(m);
+}
+
 Pin::~Pin()
 {
+}
+
+bool Pin::mode(PinMode m)
+{
+	mPinMode = m;
+	return mGpio->pinMode(mPinNum, mPinMode);
 }
 
 bool Pin::value()

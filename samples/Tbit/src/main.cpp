@@ -31,20 +31,26 @@ int main(int argc, char* argv[])
 	cout << "ProductVersion: " << tbit->getFirmVersion() << endl;
 
 
-	cout << "GPIO: " << tbit->gpio.read() << endl;
+	cout << "GPIO: " << "0x" << std::hex << tbit->gpio.read() << endl;
 
-	cout << "GPIO: " << tbit->gpio.write(0x12345678) << endl;
+	Pin led(&tbit->gpio, 15);                   // PC7 
+	Pin out(&tbit->gpio, 6, OUTPUT_PIN);        // PB6
+	Pin in(&tbit->gpio, 5, INPUT_PULLUP_PIN);   // PB5
 
-	cout << "GPIO: " << tbit->gpio.write(0xFFFFFFFF) << endl;
-
-
-	Pin led(&tbit->gpio, 15);
 
 	led.off();
 	cout << "LED: " << led.value() << endl;
+	out.off();
+	cout << "IN: " << in.value() << endl;
+	cout << "GPIO: " << "0x" << std::hex << tbit->gpio.read() << endl;
 
 	led.on();
 	cout << "LED: " << led.value() << endl;
+	out.on();
+	cout << "IN: " << in.value() << endl;
+	cout << "GPIO: " << "0x" << std::hex << tbit->gpio.read() << endl;
+
+	//	cout << "ADC: " << tbit->adc.analogRead() << endl;
 
 
 #ifdef WIN32
