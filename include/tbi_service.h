@@ -3,8 +3,14 @@
 
 #include <stdint.h>
 #include <string>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <deque>
+#include <atomic>
 #include "tbi_device.h"
 #include "attribute.h"
+
 
 using namespace std;
 
@@ -15,6 +21,11 @@ using namespace std;
 
 #define byte uint8_t
 #define ATTID uint16_t
+
+typedef struct
+{
+	uint8_t dat[BUF_LEN];
+} tbiPacket;
 
 typedef enum
 {
@@ -34,6 +45,37 @@ typedef enum
 	RC_OK   = 0x1,
 } ReturnCode;
 
+
+template <class T>
+struct LockedQueue {
+	explicit LockedQueue(int capacity)
+		: capacity(capacity)
+	{}
+
+	void enqueue(const T& x) {
+		unique_lock<mutex> lock(m);
+		c_enq.wait(lock, [this] { return data.size() != capacity; });
+		data.push_back(x);
+		c_deq.notify_one();
+	}
+
+	T dequeue() {
+		unique_lock<mutex> lock(m);
+		c_deq.wait(lock, [this] { return !data.empty(); });
+		T ret = data.front();
+		data.pop_front();
+		c_enq.notify_one();
+		return ret;
+	}
+
+private:
+	mutex m;
+	deque<T> data;
+	size_t capacity;
+	condition_variable c_enq;
+	condition_variable c_deq;
+};
+
 class TbiService {
 public:
 	TbiService(TbiDevice *p);
@@ -44,6 +86,10 @@ public:
 
 private:
 	TbiDevice *tdev;
+	thread *th;
+	std::atomic<bool> thAbort;
+	LockedQueue<tbiPacket> resque;
+	LockedQueue<tbiPacket> intque;
 };
 
 #endif /* TOOLBITSDK_TBI_SERVICE_H_ */
