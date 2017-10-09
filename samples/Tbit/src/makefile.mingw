@@ -1,14 +1,13 @@
 BINDIR = ../bin
 OBJDIR = ../build
-INCDIR = ../../../include
 LIBDIR = ../../../lib/mingw
 LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
-CFLAGS  = -g -MMD -MP
+CFLAGS  = -g -MMD -MP -std=c++11
 LDFLAGS = 
-INCLUDE = -I$(INCDIR)
+INCLUDE = -I../../../include -I../../../include/module
 
 LIBOBJS = $(LIBDIR)/libtbi.a
 LIBS = $(LIBOBJS) -lsetupapi
