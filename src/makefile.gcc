@@ -3,7 +3,7 @@ BINDIR = ../lib/gcc
 
 CC  = gcc
 CXX = g++
-CFLAGS  = -g -MMD -MP
+CFLAGS  = -g -MMD -MP -std=c++11
 LDFLAGS = 
 INCLUDE = -I./HIDAPI/hidapi -I../include -I../include/module `pkg-config libusb-1.0 --cflags`
 LIBS = `pkg-config libusb-1.0 libudev --libs`

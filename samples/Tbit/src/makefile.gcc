@@ -1,16 +1,15 @@
 BINDIR = ../bin
 OBJDIR = ../build
-INCDIR = ../../../include
 LIBDIR = ../../../lib/gcc
 LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
-CFLAGS  = -g -MMD -MP
+CFLAGS  = -g -MMD -MP -std=c++11
 LDFLAGS = 
-INCLUDE = -I$(INCDIR) `pkg-config libusb-1.0 --cflags`
+INCLUDE = -I../../../include -I../../../include/module `pkg-config libusb-1.0 --cflags`
 
-LIBOBJS = $(LIBDIR)/libhidcomm.a
+LIBOBJS = $(LIBDIR)/libtbi.a
 LIBS = $(LIBOBJS) `pkg-config libusb-1.0 libudev --libs` -lrt -lpthread 
 
 TARGET = $(BINDIR)/luke
