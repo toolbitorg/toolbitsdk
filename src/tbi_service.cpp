@@ -5,37 +5,12 @@
 #include "tbi_service.h"
 
 
-struct thread_aborted {};
-
-void worker(TbiDevice *tdev, LockedQueue<tbiPacket> &resq, LockedQueue<tbiPacket> &intq, std::atomic<bool> &flag)
-{
-	tbiPacket pckt;
-
-	try {
-		while (1) {
-					
-			if (tdev->isOpen()) {
-
-				if (tdev->read(pckt.dat) > 0)
-					resq.enqueue(pckt);
-
-			}
-			this_thread::sleep_for(chrono::milliseconds(1));
-			if (flag)
-				throw thread_aborted{};
-		}
-	}
-	catch (thread_aborted& e) {
-		// nothing to do just exit
-	}
-}
-
 TbiService::TbiService(TbiDevice *p) :
-	resque(4), intque(4)
+	resque(4)
 {
 	tdev = p;
 	thAbort = false;
-	th = new thread(worker, p, std::ref(resque), std::ref(intque), std::ref(thAbort));
+	th = new thread(&TbiService::worker, this);
 }
 
 TbiService::~TbiService()
@@ -100,4 +75,37 @@ bool TbiService::writeAttribute(Attribute att)
 		return true;
 
 	return false;
+}
+
+struct thread_aborted {};
+void TbiService::worker()
+{
+	tbiPacket pckt;
+
+	try {
+		while (1) {
+
+			if (tdev->isOpen()) {
+
+				if (tdev->read(pckt.dat) > 0)
+					if (pckt.dat[1] == EVT_NOTIFY) {
+						eventHandler(pckt);
+					}
+					else {
+						resque.enqueue(pckt);
+					}
+			}
+			this_thread::sleep_for(chrono::milliseconds(1));
+			if (thAbort)
+				throw thread_aborted{};
+		}
+	}
+	catch (thread_aborted& e) {
+		// nothing to do just exit
+	}
+}
+
+void TbiService::eventHandler(tbiPacket pckt)
+{
+
 }

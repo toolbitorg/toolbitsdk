@@ -85,11 +85,12 @@ public:
 	bool writeAttribute(Attribute att);
 
 private:
+	void worker();
+	void eventHandler(tbiPacket pckt);
 	TbiDevice *tdev;
 	thread *th;
 	std::atomic<bool> thAbort;
 	LockedQueue<tbiPacket> resque;
-	LockedQueue<tbiPacket> intque;
 };
 
 #endif /* TOOLBITSDK_TBI_SERVICE_H_ */
