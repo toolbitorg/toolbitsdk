@@ -3,7 +3,7 @@ BINDIR = ../lib/mingw
 
 CC  = gcc
 CXX = g++
-CFLAGS  = -g -MMD -MP -std=c++11 -lpthread
+CFLAGS  = -g -MMD -MP -std=c++11
 LDFLAGS = 
 INCLUDE = -I./HIDAPI/hidapi -I../include -I../include/module
 LIBS = 

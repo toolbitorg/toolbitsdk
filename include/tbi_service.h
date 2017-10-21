@@ -11,6 +11,11 @@
 #include "tbi_device.h"
 #include "attribute.h"
 
+#ifdef __MINGW32__
+#include <mingw.condition_variable.h>
+#include <mingw.mutex.h>
+#include <mingw.thread.h>
+#endif
 
 using namespace std;
 
