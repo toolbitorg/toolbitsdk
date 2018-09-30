@@ -67,9 +67,10 @@ int main(int argc, char* argv[])
 		cout << "Product Serial: " << chopper->getProductSerial() << endl;
 		cout << "Firm Version: " << chopper->getFirmVersion() << endl;
 
-		chopper->setGpioPinMode(0, OUTPUT_PIN);
-		chopper->setGpioPinMode(1, OUTPUT_PIN);
-		chopper->setGpioPinMode(2, OUTPUT_PIN);
+		/*
+		chopper->gpiohw->pinMode(0, OUTPUT_PIN);
+		chopper->pinMode(1, OUTPUT_PIN);
+		chopper->pinMode(2, OUTPUT_PIN);
 		chopper->writeGpio(0x00);
 		cout << "GPIO status: " << std::hex << chopper->readGpio() << endl;
 		cout << "GPIO status: " << chopper->digitalRead(2) << chopper->digitalRead(1) << chopper->digitalRead(0) << endl;
@@ -79,8 +80,8 @@ int main(int argc, char* argv[])
 		cout << "GPIO status: " << chopper->digitalRead(2) << chopper->digitalRead(1) << chopper->digitalRead(0) << endl;
 		chopper->digitalWrite(2, HIGH);
 		cout << "GPIO status: " << chopper->digitalRead(2) << chopper->digitalRead(1) << chopper->digitalRead(0) << endl;
-
-
+*/
+		
 		uint32_t s = chopper->getUsbPortStatus();
 		for (int i = 0; i < 2; i++) {
 			cout << i + 1 << ": ";

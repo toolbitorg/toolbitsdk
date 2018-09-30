@@ -1,19 +1,20 @@
 BINDIR = ../bin
 OBJDIR = ../build
+INCDIR = -I../../../include -I../../../include/module
 LIBDIR = ../../../lib/gcc
 LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
-CFLAGS  = -g -MMD -MP -std=c++11
-LDFLAGS = 
-INCLUDE = -I../../../include -I../../../include/module `pkg-config libusb-1.0 --cflags`
+CXXFLAGS  = -g -MMD -MP -std=c++11
+LDFLAGS =
+INCLUDE = $(INCDIR)
 
 LIBOBJS = $(LIBDIR)/libtbi.a
-LIBS = $(LIBOBJS) `pkg-config libusb-1.0 libudev --libs` -lrt -lpthread 
+LIBS = $(LIBOBJS) `pkg-config libusb-1.0 libudev --libs` -lpthread
 
-TARGET = $(BINDIR)/luke
-CPP_SOURCES = $(wildcard *.cpp) 
+TARGET = $(BINDIR)/tbit
+CPP_SOURCES = $(wildcard *.cpp)
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
 DEPENDS = $(OBJECTS:.o=.d)
@@ -24,7 +25,7 @@ DEPENDS = $(OBJECTS:.o=.d)
 all: $(TARGET)
 
 $(LIBOBJS): FORCE
-	cd $(LIBSRCDIR); $(MAKE) -f makefile.gcc
+	cd $(LIBSRCDIR); make -f makefile.gcc
 
 FORCE:
 
@@ -33,15 +34,12 @@ $(TARGET): $(OBJECTS) $(LIBOBJS)
 	$(CXX) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBS)
 
 $(OBJDIR)/%.o : %.cpp 
-	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)	
-	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
-
-$(OBJDIR)/%.o : %.c
-	@[ -d $(OBJDIR)/HIDAPI/linux/ ] || mkdir -p $(OBJDIR)/HIDAPI/linux
-	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
 	$(RM) $(OBJECTS) $(TARGET) $(DEPENDS)
+	cd $(LIBSRCDIR); make -f makefile.gcc clean
 
 
 -include $(DEPENDS)
@@ -49,4 +47,3 @@ clean:
 .SUFFIXES:      .o .cpp .c
 
 .PHONY: all clean
-
