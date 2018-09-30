@@ -13,51 +13,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\libtbi">
+      <UniqueIdentifier>{34abc87a-8d30-4558-8aec-67f59c0101ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\libtbi">
+      <UniqueIdentifier>{d9018077-64a2-4480-b233-e2c1aa10ec4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\attribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_device.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_service.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\libtbi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\basicdemo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c">
+      <Filter>Source Files\libtbi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\tbi_core.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\libtbi</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_device_manager.cpp">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="..\..\..\src\tbi_device.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tbi_service.cpp">
+      <Filter>Source Files\libtbi</Filter>
     </ClCompile>
     <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\tbi_device_manager.cpp">
+      <Filter>Header Files\libtbi</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\attribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\hidapi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\tbi_device.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\tbi_service.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\attribute.h">
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\basicdemo.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\hidapi.h">
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\tbi_core.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\tbi_device.h">
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

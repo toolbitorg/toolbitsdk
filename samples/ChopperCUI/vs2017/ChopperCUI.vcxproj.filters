@@ -13,62 +13,98 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\libtbi">
+      <UniqueIdentifier>{b8b5ba60-3c12-458d-a3e2-cb6f1103bf93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libtbi\module">
+      <UniqueIdentifier>{e7f5c727-80f4-491e-a559-994d2798ecda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\libtbi">
+      <UniqueIdentifier>{b8d9c467-2316-4e96-a818-d987ead30775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\libtbi\modlue">
+      <UniqueIdentifier>{c2363848-0580-4ca5-9713-19713a7995e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\attribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\chopper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_device.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_service.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\module\i2c_hw.cpp">
+      <Filter>Source Files\libtbi\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\adc.cpp">
+      <Filter>Source Files\libtbi\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\adc_hw.cpp">
+      <Filter>Source Files\libtbi\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\gpio_hw.cpp">
+      <Filter>Source Files\libtbi\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\attribute.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\chopper.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tbi_core.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tbi_device.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\tbi_device_manager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tbi_service.cpp">
+      <Filter>Source Files\libtbi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\tbit.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\libtbi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\getopt.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\..\include\module\adc.h">
+      <Filter>Header Files\libtbi\modlue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\adc_hw.h">
+      <Filter>Header Files\libtbi\modlue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\gpio_hw.h">
+      <Filter>Header Files\libtbi\modlue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\i2c_hw.h">
+      <Filter>Header Files\libtbi\modlue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\pin.h">
+      <Filter>Header Files\libtbi\modlue</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\attribute.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\chopper.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\hidapi.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\tbi_core.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\tbi_device.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\tbi_service.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\tbi_device_manager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\tbit.h">
+    <ClInclude Include="..\..\..\include\tbi_service.h">
+      <Filter>Header Files\libtbi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\getopt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

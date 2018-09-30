@@ -1,4 +1,5 @@
 .vs/
 bin/
 build/
+x64/
 ChopperCUI.vcxproj.user

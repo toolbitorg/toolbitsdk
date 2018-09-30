@@ -1,4 +1,6 @@
 .vs/
 bin/
 build/
+Release/
+x64/
 BasicDemo.vcxproj.user

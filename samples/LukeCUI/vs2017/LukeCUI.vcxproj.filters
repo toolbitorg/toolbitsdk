@@ -7,11 +7,17 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{777678eb-6a67-4459-8dfa-c034f5ddf48e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\module">
-      <UniqueIdentifier>{66e7edf9-bcce-4d3a-8e6d-bd8310d33ac3}</UniqueIdentifier>
+    <Filter Include="Header Files\libtbi">
+      <UniqueIdentifier>{977b9983-c250-4e04-a4b3-3c73eb53724c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\module">
+    <Filter Include="Header Files\libtbi\module">
       <UniqueIdentifier>{6a01d0c2-4109-4e58-9aec-d01b9e2da546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libtbi">
+      <UniqueIdentifier>{4c229e25-9daf-455f-9392-151ab284eceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\libtbi\module">
+      <UniqueIdentifier>{66e7edf9-bcce-4d3a-8e6d-bd8310d33ac3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -19,75 +25,87 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\attribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\hidapi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\luke.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\tbi_core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\tbi_device.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\tbi_service.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\tbi_device_manager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\tbit.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\module\i2c.h">
-      <Filter>Header Files\module</Filter>
+    <ClInclude Include="..\..\..\include\tbi_service.h">
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\module\gpio.h">
-      <Filter>Header Files\module</Filter>
+    <ClInclude Include="..\..\..\include\tbi_device_manager.h">
+      <Filter>Header Files\libtbi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\tbi_device.h">
+      <Filter>Header Files\libtbi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\tbi_core.h">
+      <Filter>Header Files\libtbi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\luke.h">
+      <Filter>Header Files\libtbi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\hidapi.h">
+      <Filter>Header Files\libtbi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\module\adc.h">
-      <Filter>Header Files\module</Filter>
+      <Filter>Header Files\libtbi\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\adc_hw.h">
+      <Filter>Header Files\libtbi\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\gpio_hw.h">
+      <Filter>Header Files\libtbi\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\i2c_hw.h">
+      <Filter>Header Files\libtbi\module</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\module\pin.h">
+      <Filter>Header Files\libtbi\module</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\attribute.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\luke.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_device.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tbi_service.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\attribute.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\luke.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tbi_core.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tbi_device.cpp">
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\tbi_device_manager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\libtbi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tbi_service.cpp">
+      <Filter>Source Files\libtbi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\tbit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\module\i2c.cpp">
-      <Filter>Source Files\module</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\module\gpio.cpp">
-      <Filter>Source Files\module</Filter>
+      <Filter>Source Files\libtbi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\module\adc.cpp">
-      <Filter>Source Files\module</Filter>
+      <Filter>Source Files\libtbi\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\adc_hw.cpp">
+      <Filter>Source Files\libtbi\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\gpio_hw.cpp">
+      <Filter>Source Files\libtbi\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\i2c_hw.cpp">
+      <Filter>Source Files\libtbi\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\module\pin.cpp">
+      <Filter>Source Files\libtbi\module</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
