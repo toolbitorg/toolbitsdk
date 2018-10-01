@@ -21,9 +21,11 @@ puts sprintf("%.3f [mA]", 1000.0 * luke.getCurrent())
 
 - MinGW and MSYS2 environment is needed
     - http://www.msys2.org/
-- RubyInstaller for windows 32bit version is recommended
-    - Ruby 2.4.1-1 (x86) is verified
-    - 64bit version is not verified
+- The following ruby is recommended
+    - mingw-w64-x86_64-ruby
+    - RubyInstaller for windows 32bit version
+       - Ruby 2.4.1-1 (x86) is verified
+       - 64bit version is not verified
 - Install "MSYS2 and MINGW development toolchain"
 
 Launch MSYS2 and install swig if you don't  have it

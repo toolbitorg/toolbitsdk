@@ -19,11 +19,19 @@ elif [ "$(expr substr $(uname -s) 1 5)" == 'Linux' ]; then
   swig -c++ -ruby tbi.i
   ruby extconf.rb --with-opt-include=/usr/include/libusb-1.0
 
-elif [ "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then                                                                                           
+elif [ "$(expr substr $(uname -s) 1 10)" == 'MINGW32_NT' ]; then
 
   cp ../../../src/HIDAPI/windows/hid.c ./
   swig -c++ -ruby tbi.i
   ruby extconf.rb
+
+elif [ "$(expr substr $(uname -s) 1 10)" == 'MINGW64_NT' ]; then
+
+  # Need to install the following version of ruby
+  # pacman -S mingw-w64-x86_64-ruby
+  cp ../../../src/HIDAPI/windows/hid.c ./
+  swig -c++ -ruby tbi.i
+  /mingw64/bin/ruby extconf.rb
 
 else
 
