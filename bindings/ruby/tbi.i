@@ -30,4 +30,3 @@
 %include "../../../include/module/gpio_hw.h"
 %include "../../../include/module/i2c_hw.h"
 %include "../../../include/module/pin.h"
-

@@ -1,9 +1,0 @@
-*.h
-*.cpp
-*.o
-*.cxx
-*.c
-*.so
-*.def
-Makefile
-

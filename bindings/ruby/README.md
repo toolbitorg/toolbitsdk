@@ -40,8 +40,8 @@ $ git clone https://github.com/toolbitorg/ToolbitSDK.git
 
 Build Ruby library
 ```
-$ cd ToolbitSDK/bindings/ruby/src
-$ ./build.sh
+$ cd ToolbitSDK/bindings/ruby
+$ make
 ```
 
 tbi.so is built and copied to ../samples. Now you can test it with Luke as follows

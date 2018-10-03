@@ -1,0 +1,29 @@
+OBJDIR = build
+
+TARGET = samples/tbi.so
+
+# implementation
+
+all: $(TARGET)
+
+FORCE:
+
+$(TARGET):
+	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	cp ../../include/*.h build
+	cp ../../include/module/*.h build
+	cp ../../src/*.cpp build
+	cp ../../src/module/*.cpp build
+	cp ../../src/HIDAPI/windows/hid.c build
+	cp tbi.i build
+	cp extconf.rb build
+	cd build; swig -c++ -ruby tbi.i
+	cd build; /mingw64/bin/ruby extconf.rb
+	cd build; make
+	cp build/tbi.so samples
+
+clean:
+	rm -fr build
+
+
+.PHONY: all clean
