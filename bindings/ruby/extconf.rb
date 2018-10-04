@@ -8,9 +8,8 @@ if RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|cygwin|bccwin/
 
 else
   puts "Linux"
-  $CXXFLAGS = " -g -std=c++11 "
-  $libs += " -lusb-1.0 -ludev"
-  #  $libs += " -lstdc++ -lusb-1.0 -ludev"
+  $CXXFLAGS = " -g -MMD -MP  -std=c++11 "
+  $libs += " -lstdc++ -lusb-1.0 -ludev"
 end
 
 create_makefile("tbi")
