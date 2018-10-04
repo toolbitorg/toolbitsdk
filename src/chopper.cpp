@@ -11,18 +11,8 @@ Chopper::Chopper() :
 {
 	TbiDeviceManager devm;
 
-	if (open(devm.getPath("CHOPPER HUB"))) {
-
-		// Get current status
-		/*
-		mTbiService->readAttribute(&mAttGpioInoutMode);
-		mTbiService->readAttribute(&mAttGpioPullUp);
-		mTbiService->readAttribute(&mAttGpioPullDown);
-		mTbiService->readAttribute(&mAttGpioRw);
-		*/
-
+	if (open(devm.getPath("CHOPPER HUB")))
 		mTbiService->readAttribute(&mAttUsbPortCtrl);
-	}
 }
 
 Chopper::~Chopper()

@@ -26,7 +26,9 @@ bool TbiCore::open(const char *path)
 {
 	if (mTbiDevice->isOpen())
 		return false;
-	
+  	if (!path)
+		return false;
+  	
 	if (!mTbiDevice->open(path))
 		return false;
 
