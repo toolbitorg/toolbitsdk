@@ -1,6 +1,4 @@
-OBJDIR = build
-
-TARGET = samples/tbi.so
+TARGET = build/tbi.so
 
 # implementation
 
@@ -9,7 +7,7 @@ all: $(TARGET)
 FORCE:
 
 $(TARGET):
-	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	@[ -d build ] || mkdir -p build
 	cp ../../include/*.h build
 	cp ../../include/module/*.h build
 	cp ../../src/*.cpp build

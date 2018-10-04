@@ -1,6 +1,4 @@
-OBJDIR = build
-
-TARGET = samples/tbi.so
+TARGET = build/tbi.so
 
 # implementation
 
@@ -9,16 +7,16 @@ all: $(TARGET)
 FORCE:
 
 $(TARGET):
-	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+	@[ -d build ] || mkdir -p build
 	cp ../../include/*.h build
 	cp ../../include/module/*.h build
 	cp ../../src/*.cpp build
 	cp ../../src/module/*.cpp build
-	cp ../../src/HIDAPI/windows/hid.c build
+	cp ../../src/HIDAPI/libusb/hid.c build
 	cp tbi.i build
 	cp extconf.rb build
 	cd build; swig -c++ -ruby tbi.i
-	cd build; ruby extconf.rb
+	cd build; ruby extconf.rb --with-opt-include=/usr/include/libusb-1.0
 	cd build; make
 	cp build/tbi.so samples
 
