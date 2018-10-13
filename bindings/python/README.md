@@ -18,9 +18,8 @@ swig
 
 
 ### Linux
-    cd swig
-    ./build.sh
-tbi.so will be created and copied to ../samples folder
+    make
+tbi.py and _tbi.so will be created and copied to samples folder
 
 
 ### Windows
