@@ -82,7 +82,7 @@ void TbiService::worker()
 {
 	tbiPacket pckt;
 
-	try {
+//	try {
 		while (1) {
 
 			if (tdev->isOpen()) {
@@ -97,12 +97,13 @@ void TbiService::worker()
 			}
 			this_thread::sleep_for(chrono::milliseconds(1));
 			if (thAbort)
-				throw thread_aborted{};
+				break;
+//				throw thread_aborted{};
 		}
-	}
-	catch (thread_aborted& e) {
+//	}
+//	catch (thread_aborted& e) {
 		// nothing to do just exit
-	}
+//	}
 }
 
 void TbiService::eventHandler(tbiPacket pckt)
