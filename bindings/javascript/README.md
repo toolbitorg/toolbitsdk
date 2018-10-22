@@ -20,11 +20,17 @@ swig
 
 
 ### Linux
+
     make
 tbi.node will be created and copied to samples folder
 
 
 ### Windows
+
+Install swig version 4.0.0 or later
+    make
+Execute "node-gyp configure build" on command prompt
+Copy build/build/Release/tbi.node to samples
 
 
 ## Test
