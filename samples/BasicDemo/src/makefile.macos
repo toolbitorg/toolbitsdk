@@ -1,17 +1,18 @@
 BINDIR = ../bin
 OBJDIR = ../build
-INCDIR = ../../../include
+INCDIR = -I../../../include -I../../../include/module
 LIBDIR = ../../../lib/macos
 LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
 CFLAGS  = -g -MMD -MP
-LDFLAGS =
-INCLUDE = -I$(INCDIR)
+CXXFLAGS  = -g -MMD -MP -std=c++11
+LDFLAGS = -framework IOKit -framework Carbon
+INCLUDE = $(INCDIR)
 
 LIBOBJS = $(LIBDIR)/libtbi.a
-LIBS = $(LIBOBJS) -framework IOKit -framework Carbon
+LIBS = $(LIBOBJS)
 
 TARGET = $(BINDIR)/basicdemo
 CPP_SOURCES = $(wildcard *.cpp)
@@ -36,7 +37,7 @@ $(TARGET): $(OBJECTS) $(LIBOBJS)
 
 $(OBJDIR)/%.o : %.cpp
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
-	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 $(OBJDIR)/%.o : %.c
 	@[ -d $(OBJDIR)/HIDAPI/mac/ ] || mkdir -p $(OBJDIR)/HIDAPI/mac
@@ -44,6 +45,7 @@ $(OBJDIR)/%.o : %.c
 
 clean:
 	$(RM) $(OBJECTS) $(TARGET) $(DEPENDS)
+	cd $(LIBSRCDIR); make -f makefile.macos clean
 
 
 -include $(DEPENDS)

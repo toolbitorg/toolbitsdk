@@ -2,15 +2,16 @@ OBJDIR = ../build/macos
 BINDIR = ../lib/macos
 
 CC  = gcc
-CXX = g++ -mmacosx-version-min=10.7
+CXX = g++ -mmacosx-version-min=10.12
 CFLAGS  = -g -MMD -MP
+CXXFLAGS = -g -MMD -MP -std=c++11
 LDFLAGS =
-INCLUDE = -I./HIDAPI/hidapi -I../include
+INCLUDE = -I./HIDAPI/hidapi -I../include -I../include/module
 LIBS =
 
 TARGET = $(BINDIR)/libtbi.a
 C_SOURCES   = HIDAPI/mac/hid.c
-CPP_SOURCES = $(wildcard *.cpp)
+CPP_SOURCES = $(wildcard *.cpp) $(wildcard module/*.cpp)
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
 DEPENDS = $(OBJECTS:.o=.d)
@@ -27,7 +28,8 @@ $(TARGET): $(OBJECTS)
 
 $(OBJDIR)/%.o : %.cpp
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
-	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	@[ -d $(OBJDIR)/module ] || mkdir -p $(OBJDIR)/module	
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 $(OBJDIR)/%.o : %.c
 	@[ -d $(OBJDIR)/HIDAPI/mac/ ] || mkdir -p $(OBJDIR)/HIDAPI/mac/
