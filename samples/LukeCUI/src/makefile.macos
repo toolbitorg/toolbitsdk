@@ -45,7 +45,7 @@ $(OBJDIR)/%.o : %.c
 
 clean:
 	$(RM) $(OBJECTS) $(TARGET) $(DEPENDS)
-	cd $(LIBSRCDIR); make -f makefile.gcc clean
+	cd $(LIBSRCDIR); make -f makefile.macos clean
 
 
 -include $(DEPENDS)

@@ -1,4 +1,4 @@
-TARGET = build/tbi.so
+TARGET = build/tbi.bundle
 
 # implementation
 
@@ -12,13 +12,13 @@ $(TARGET):
 	cp ../../include/module/*.h build
 	cp ../../src/*.cpp build
 	cp ../../src/module/*.cpp build
-	cp ../../src/HIDAPI/windows/hid.c build
+	cp ../../src/HIDAPI/mac/hid.c build
 	cp tbi.i build
 	cp extconf.rb build
 	cd build; swig -c++ -ruby tbi.i
-	cd build; /mingw64/bin/ruby extconf.rb
+	cd build; ruby extconf.rb
 	cd build; make
-	cp build/tbi.so samples
+	cp build/tbi.bundle samples
 
 clean:
 	rm -fr build

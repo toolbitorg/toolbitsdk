@@ -14,7 +14,7 @@ $(TARGET):
 	cp ../../src/module/*.cpp build
 	cp ../../src/HIDAPI/linux/hid.c build
 	cp tbi.i build
-	cp binding.gyp build
+	cp binding_linux.gyp build/binding.gyp
 	cd build; swig -c++ -javascript -node tbi.i
 	cd build; HOME=~/.electron-gyp node-gyp rebuild --target=v4.0.0-beta.3 --arch=x64 --dist-url=https://atom.io/download/electron
 	cp build/build/Release/tbi.node samples
