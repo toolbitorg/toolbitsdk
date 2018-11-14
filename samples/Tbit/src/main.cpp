@@ -17,7 +17,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    Tbit *tbit = new Tbit();
+	Tbit *tbit = new Tbit();
 
 	if (!tbit->isConnected()) {
 		cout << "Fail to connect to Tbit device" << endl;
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 	cout << "ADC: " << tbit->adchw.analogRead(4) << endl;
 
                                             // Atmega32U4
-	Pin led(tbit, 15);                      // PC7 
+	Pin led(tbit, 15);                      // PC7
 	Pin outpin(tbit, 6, OUTPUT_PIN);        // PB6
 	Pin inpin(tbit, 5, INPUT_PULLUP_PIN);   // PB5
 	Adc adcpin(tbit, 4);                    // PB4

@@ -156,7 +156,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\attribute.cpp" />
     <ClCompile Include="..\..\..\src\HIDAPI\windows\hid.c" />
-    <ClCompile Include="..\..\..\src\luke.cpp" />
     <ClCompile Include="..\..\..\src\module\adc.cpp" />
     <ClCompile Include="..\..\..\src\module\adc_hw.cpp" />
     <ClCompile Include="..\..\..\src\module\gpio_hw.cpp" />
@@ -172,7 +171,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\attribute.h" />
     <ClInclude Include="..\..\..\include\hidapi.h" />
-    <ClInclude Include="..\..\..\include\luke.h" />
     <ClInclude Include="..\..\..\include\module\adc.h" />
     <ClInclude Include="..\..\..\include\module\adc_hw.h" />
     <ClInclude Include="..\..\..\include\module\gpio_hw.h" />

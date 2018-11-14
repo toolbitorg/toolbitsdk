@@ -2,7 +2,15 @@
 #include <wchar.h>
 #include <string.h>
 #include <stdlib.h>
+#include <mutex>
 #include "tbi_service.h"
+
+std::mutex mtx;
+
+void emptyEventHandler(tbiPacket pckt)
+{
+	;
+}
 
 
 TbiService::TbiService(TbiDevice *p) :
@@ -11,6 +19,7 @@ TbiService::TbiService(TbiDevice *p) :
 	tdev = p;
 	thAbort = false;
 	th = new thread(&TbiService::worker, this);
+	eventHandler = emptyEventHandler;
 }
 
 TbiService::~TbiService()
@@ -29,12 +38,14 @@ bool TbiService::readAttribute(Attribute *att)
 	pckt.dat[2] = (att->getAttid() & 0xFF00) >> 8;
 	pckt.dat[3] = att->getAttid() & 0xFF;
 
+	mtx.lock();
 	if (tdev->isOpen()) {
 		tdev->write(pckt.dat, 4);
 	}
 	else {
 		return false;
 	}
+	mtx.unlock();
 
 	pckt = resque.dequeue();
 	if ((pckt.dat[0] & 0xC0) == PROTOCOL_VERSION  // Check received packet
@@ -61,12 +72,14 @@ bool TbiService::writeAttribute(Attribute att)
 	for (int i = 0; i < len; i++) {
 		pckt.dat[4 + i] = *p++;                // Set value
 	}
+	mtx.lock();
 	if (tdev->isOpen()) {
 		tdev->write(pckt.dat, 4+len);
 	}
 	else {
 		return false;
 	}
+	mtx.unlock();
 
 	tbiPacket rcvp = resque.dequeue();
 	if (rcvp.dat[0] == PROTOCOL_VERSION + 3  // Check received packet
@@ -77,36 +90,32 @@ bool TbiService::writeAttribute(Attribute att)
 	return false;
 }
 
+void TbiService::bindEventHandler(std::function<void(tbiPacket pckt)> handler)
+{
+	eventHandler = handler;
+}
+
 struct thread_aborted {};
 void TbiService::worker()
 {
 	tbiPacket pckt;
 
-//	try {
-		while (1) {
+	while (1) {
 
-			if (tdev->isOpen()) {
+		mtx.lock();
+		if (tdev->isOpen()) {
 
-				if (tdev->read(pckt.dat) > 0)
-					if (pckt.dat[1] == EVT_NOTIFY) {
-						eventHandler(pckt);
-					}
-					else {
-						resque.enqueue(pckt);
-					}
-			}
-			this_thread::sleep_for(chrono::milliseconds(1));
-			if (thAbort)
-				break;
-//				throw thread_aborted{};
+			if (tdev->read(pckt.dat) > 0)
+				if (pckt.dat[1] == EVT_NOTIFY) {
+					eventHandler(pckt);
+				}
+				else {
+					resque.enqueue(pckt);
+				}
 		}
-//	}
-//	catch (thread_aborted& e) {
-		// nothing to do just exit
-//	}
-}
-
-void TbiService::eventHandler(tbiPacket pckt)
-{
-
+		mtx.unlock();
+		this_thread::sleep_for(chrono::milliseconds(1));
+		if (thAbort)
+			break;
+	}
 }
