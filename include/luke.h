@@ -40,6 +40,7 @@ public:
 	// Hardware module
 	I2cHw  i2chw;
 
+	bool open();
 	float getVoltage();
 	float getCurrent();
 	void setVoltageRange(VoltageRange r);

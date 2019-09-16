@@ -8,8 +8,12 @@ using namespace std;
 #define TOOLBITSDK_TBI_DEVICE_MANAGER_H_
 
 
-#define USB_VID_PIC 0x4d8
+// This code is provided by Microchip based on sublicense of USB VID/PID
+#define USB_VID_PIC 0x4D8
 #define USB_PID_PIC 0x3f
+//#define USB_PID_PIC 0xEC0
+
+
 
 #define USB_VID_ARDUINO 0x2341
 #define USB_PID_ARDUINO 0x8036

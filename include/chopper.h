@@ -15,6 +15,7 @@ public:
     Chopper();
     ~Chopper();
     
+	bool open();
 	bool enableAllUsbPort();
 	bool enableUsbPort(uint32_t p);
 	bool disableAllUsbPort();

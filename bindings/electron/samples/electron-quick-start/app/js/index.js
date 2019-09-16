@@ -4,8 +4,13 @@
 const Chopper=require('./tbi.node').Chopper
 var chopper = new Chopper();
 */
+const TbiDeviceManager=require('./tbi.node').TbiDeviceManager
 const Luke=require('./tbi.node').Luke
+var tbiDeviceManager = new TbiDeviceManager();
+console.log(tbiDeviceManager.getDeviceNum());
 var luke = new Luke();
+luke.open();
+
 
 var dmmMode;
 var timeInterval;
@@ -109,8 +114,8 @@ function acquisition() {
   };
 
   if(graphChecked) {
-    //plotdata.push({x: counter,y: val})
-    plotdata.push({x: counter,y: counter})
+    plotdata.push({x: counter,y: val})
+    //plotdata.push({x: counter,y: counter})
     counter++;
   }
 

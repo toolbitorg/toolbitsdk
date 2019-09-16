@@ -22,7 +22,7 @@ TbiCore::~TbiCore()
 	delete mTbiDevice;
 }
 
-bool TbiCore::open(const char *path)
+bool TbiCore::openPath(const char *path)
 {
 	if (mTbiDevice->isOpen())
 		return false;

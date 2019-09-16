@@ -9,16 +9,27 @@
 Chopper::Chopper() :
 	mAttUsbPortCtrl(ATT_USB_PORT_CTRL, 0x00, 0x00)
 {
-	TbiDeviceManager devm;
-
-	if (open(devm.getPath("CHOPPER HUB")))
-		mTbiService->readAttribute(&mAttUsbPortCtrl);
 }
 
 Chopper::~Chopper()
 {
 	close();
 }
+
+bool Chopper::open()
+{
+	TbiDeviceManager devm;
+
+	if (openPath(devm.getPath("CHOPPER HUB"))) {
+		mTbiService->readAttribute(&mAttUsbPortCtrl);
+	}
+	else {
+		return false;
+	}
+
+	return true;
+}
+
 
 bool Chopper::enableAllUsbPort()
 {

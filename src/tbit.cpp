@@ -7,12 +7,6 @@ Tbit::Tbit() :
 	adchw(mTbiService, ATT_ADC_BASE),
 	i2chw(mTbiService, ATT_IC20_BASE)
 {
-	TbiDeviceManager devm;
-
-	if (open(devm.getPath("Tbit"))) {
-
-	}
-
 }
 
 Tbit::~Tbit()
@@ -20,3 +14,9 @@ Tbit::~Tbit()
 	close();
 }
 
+bool Tbit::open()
+{
+	TbiDeviceManager devm;
+
+	return (openPath(devm.getPath("Tbit"))); 
+}

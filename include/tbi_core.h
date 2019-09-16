@@ -14,7 +14,7 @@ public:
 	TbiCore();
 	~TbiCore();
 
-	bool   open(const char *path);
+	bool   openPath(const char *path);
 	bool   close();
 	bool   isConnected();
 	string getProductName();

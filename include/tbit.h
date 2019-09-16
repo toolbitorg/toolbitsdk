@@ -23,6 +23,8 @@ public:
 	Tbit();
 	~Tbit();
 
+	bool open();
+
 	// Hardware module
 	GpioHw gpiohw;
 	AdcHw  adchw;

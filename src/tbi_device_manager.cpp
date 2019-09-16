@@ -42,7 +42,7 @@ void TbiDeviceManager::showDeviceList()
 			printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
 			printf("  Product:      %ls\n", cur_dev->product_string);
 
-			if (cur_obj.open(cur_dev->path)) {
+			if (cur_obj.openPath(cur_dev->path)) {
 				cout << "  Attribute " << endl;
 				cout << "    Product Name: " << cur_obj.getProductName() << endl;
 				cout << "    Product Revision: " << cur_obj.getProductRevision() << endl;
@@ -76,7 +76,7 @@ const char* TbiDeviceManager::getPath(string name)
 			printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
 			printf("  Product:      %ls\n", cur_dev->product_string);
 
-			if (cur_obj.open(cur_dev->path)) {
+			if (cur_obj.openPath(cur_dev->path)) {
 				if (!name.compare(cur_obj.getProductName()))
 					path = cur_dev->path;
 				cur_obj.close();

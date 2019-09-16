@@ -34,15 +34,6 @@ Luke::Luke() :
 	mAttVoltage = new Attribute(ATT_VOLTAGE, 0x00, 0x00);
 	mAttCurrentRange = new Attribute(ATT_CURRENT_RANGE, 0x00, 0x00);
 	mAttCurrent = new Attribute(ATT_CURRENT, 0x00, 0x00);
-
-	TbiDeviceManager devm;
-
-	if(open(devm.getPath("Luke"))) {
-
-		setVoltageRange(VOLTAGE_RANGE_AUTO);
-		setCurrentRange(CURRENT_RANGE_AUTO);
-
-	}
 }
 
 Luke::~Luke()
@@ -53,6 +44,21 @@ Luke::~Luke()
 	delete mAttVoltage;
 	delete mAttCurrentRange;
 	delete mAttCurrent;
+}
+
+bool Luke::open()
+{
+	TbiDeviceManager devm;
+
+	if (openPath(devm.getPath("Luke"))) {
+		setVoltageRange(VOLTAGE_RANGE_AUTO);
+		setCurrentRange(CURRENT_RANGE_AUTO);
+	}
+	else {
+		return false;
+	}
+
+	return true;
 }
 
 float Luke::getVoltage()
