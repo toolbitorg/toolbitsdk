@@ -1,12 +1,55 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Chopper Ctrl</title>
+  <meta charset="UTF-8">
+  <title>Toolbit DMM</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="onport">[ON] </div>
-  <div class="offport">[OFF] </div>
-  <script src="js/index.js"></script>
-</body>
-</html>
+
+  <div>
+    <p>
+      <input id="disp" type="text" name="value" size="40" maxlength="20">
+    </p>
+  </div>
+
+  <fieldset>
+    <input id="rdbx-mode-v" class="radio-inline__input" type="radio" name="rdbx-mode" value="voltage" checked>
+    <label for="rdbx-mode-v" class="radio-inline__label">Voltage</label>
+    <input id="rdbx-mode-c" class="radio-inline__input" type="radio" name="rdbx-mode" value="current">
+    <label for="rdbx-mode-c" class="radio-inline__label">Current</label>
+  </fieldset>
+
+  <fieldset>
+    <input id="rdbx-interval-high" class="radio-inline__input" type="radio" name="rdbx-interval" value="high">
+    <label for="rdbx-interval-high" class="radio-inline__label">High</label>
+    <input id="rdbx-interval-mid" class="radio-inline__input" type="radio" name="rdbx-interval" value="mid" checked>
+    <label  for="rdbx-interval-mid" class="radio-inline__label">Mid</label>
+    <input id="rdbx-interval-low" class="radio-inline__input" type="radio" name="rdbx-interval" value="low">
+    <label  for="rdbx-interval-low" class="radio-inline__label">Low</label>
+
+  <fieldset>
+    <input id="chkbx-hold" type="checkbox" name="chkbx-hold">HOLD
+    <input id="chkbx-graph" type="checkbox" name="chkbx-graph">GRAPH
+  </fieldset>
+
+  <div id="chart-container"></div>
+
+<!--
+  <div class="wrap">
+    <div class="block">
+    <span>Port 1</span>
+      <input id="checkbox1" type="checkbox" name="myCheckbox1" />
+      <label for="checkbox1" class="checkbox-label"></label>
+    </div>
+    <div class="block">
+      <span>Port 2</span>
+      <input id="checkbox2" type="checkbox" name="myCheckbox2" />
+      <label for="checkbox2" class="checkbox-label"></label>
+    </div>
+  </div>
+-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+    <script src="js/index.js"></script>
+  </body>
