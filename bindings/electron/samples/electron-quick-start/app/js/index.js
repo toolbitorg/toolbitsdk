@@ -1,25 +1,27 @@
 'use strict';
 
-/*
-const Chopper=require('./tbi.node').Chopper
-var chopper = new Chopper();
-*/
+//console.debug = function(){/* NOP */};
+//console.info = function(){/* NOP */};
+//console.log = function(){/* NOP */};
+//console.warn = function(){/* NOP */};
+//console.error = function(){/* NOP */};
+
 const TbiDeviceManager=require('./tbi.node').TbiDeviceManager
 const Luke=require('./tbi.node').Luke
 var tbiDeviceManager = new TbiDeviceManager();
-console.log(tbiDeviceManager.getDeviceNum());
+console.log('The number of connected USB device: ' + tbiDeviceManager.getDeviceNum());
 var luke = new Luke();
-luke.open();
-
 
 var dmmMode;
+var dmmRange;
 var timeInterval;
 var holdChecked = false;
-var graphChecked = false;
+var graphChecked = true;
+var clearPlotdata = false;
 var plotdata = [{x: 0, y: 0}];
 var counter = 0;
 
-
+/*
 var getRadioValue = function(name) {
   var result = '';
   var elems = document.getElementsByName(name);
@@ -33,33 +35,35 @@ var getRadioValue = function(name) {
   }
   return result;
 };
-
+*/
 
 var setDmmMode = function(mode) {
   dmmMode = mode;
   console.log('dmmMode:' + mode);
-  plotdata.length = 0;
 };
 
+var setDmmRange = function(range) {
+  dmmRange = range;
+  console.log('dmmRange:' + range);
+};
 
 var setTimeInterval = function(t) {
-  if(t=='high') {
+  if(t=='Fast') {
     timeInterval = 100;
-  } else if(t=='mid') {
+  } else if(t=='Mid') {
     timeInterval = 1000;
-  } else if(t=='low') {
+  } else if(t=='Slow') {
     timeInterval = 3000;
   };
   console.log('timeInterval:' + t);
 };
-
 
 var chartContainer = document.getElementById('chart-container');
 var chart = new CanvasJS.Chart(chartContainer, {
   animationEnabled: true,
   zoomEnabled: true,
   title: {
-    text: "Graph"
+//    text: "Graph"
   },
   data: [{
     type: 'line',
@@ -67,116 +71,116 @@ var chart = new CanvasJS.Chart(chartContainer, {
   }]
 });
 
+function initialize() {
 
-function setupDmm() {
+  if(!luke.open()) {
+    // Polling connection of device
+    window.setTimeout(initialize, 3000);
+    return;
+  }
+  clearPlotdata = true;
 
-  setDmmMode(getRadioValue('rdbx-mode'));
-  setTimeInterval(getRadioValue('rdbx-interval'));
+  setDmmMode(document.getElementById('mode').value);
+  setTimeInterval(document.getElementById('interval').value);
 
-  document.getElementById('rdbx-mode-v').addEventListener('change', function() {
-    setDmmMode(getRadioValue('rdbx-mode'));
+  document.getElementById('mode').addEventListener('change', (event) => {
+    setDmmMode(event.target.value);
+    clearPlotdata = true;
   });
-  document.getElementById('rdbx-mode-c').addEventListener('change', function() {
-    setDmmMode(getRadioValue('rdbx-mode'));
+  document.getElementById('range').addEventListener('change', (event) => {
+    setDmmRange(event.target.value);
   });
-
-  document.getElementById('rdbx-interval-high').addEventListener('change', function() {
-    setTimeInterval(getRadioValue('rdbx-interval'));
+  document.getElementById('interval').addEventListener('change', (event) => {
+    setTimeInterval(event.target.value);
+    clearPlotdata = true;
   });
-  document.getElementById('rdbx-interval-mid').addEventListener('change', function() {
-    setTimeInterval(getRadioValue('rdbx-interval'));
-  });
-  document.getElementById('rdbx-interval-low').addEventListener('change', function() {
-    setTimeInterval(getRadioValue('rdbx-interval'));
-  });
-
-  document.getElementById('chkbx-hold').addEventListener('change', function() {
+  document.getElementById('hold').addEventListener('change', function() {
     holdChecked = this.checked;
     console.log('holdChecked:' + holdChecked);
   });
-  document.getElementById('chkbx-graph').addEventListener('change', function() {
+  /*
+  document.getElementById('graph').addEventListener('change', function() {
     graphChecked = this.checked;
+    if(graphChecked) {
+      clearPlotdata = true;
+    }
     console.log('graphChecked:' + graphChecked);
   });
-};
+  */
+  document.getElementById('clear').addEventListener('click', function() {
+    clearPlotdata = true;
+    console.log('clearPlotdata: ' + clearPlotdata);
+  });
 
+  window.setTimeout(acquisition, timeInterval);
+};
 
 function acquisition() {
   window.setTimeout(acquisition, timeInterval);
 
   var val;
-  var disp = document.getElementById('disp');
+  var unit = '';
+  var dispVal = document.getElementById('disp-val');
+  var dispUnit = document.getElementById('disp-unit');
 
-  if(dmmMode=='voltage') {
+  if(dmmMode=='V') {
     val = luke.getVoltage();
-  } else if(dmmMode=='current') {
+  } else if(dmmMode=='A') {
     val = luke.getCurrent();
   };
 
+  if(clearPlotdata) {
+    plotdata.length = 0;
+    counter = 0;
+    clearPlotdata = false;
+  }
+
   if(graphChecked) {
-    plotdata.push({x: counter,y: val})
+    plotdata.push({x: counter,y: val});
     //plotdata.push({x: counter,y: counter})
     counter++;
   }
 
   if(!holdChecked) {
-    disp.value = val;
-    console.log('value:' + disp.value);
+
+    if(dmmRange=='u') {
+      val = val*1000000.0;
+      unit = 'u';
+    } else if(dmmRange=='m') {
+      val = val*1000.0;
+      unit = 'm';
+    } else if(dmmRange=='Auto') {
+      if(Math.abs(val)<0.001) {
+        val = val*1000000.0;
+        unit = 'u';
+      }
+      else if(Math.abs(val)<1.0) {
+        val = val*1000.0;
+        unit = 'm';
+      }
+    }
+
+    var splitVal = String(Math.abs(val)).split('.');
+    if(!splitVal[1]) {
+      dispVal.value = val.toFixed(3);
+    } else {
+      var len = splitVal[0].length;
+      if(len>4) {
+        dispVal.value = Math.round(val);
+      } else {
+        dispVal.value = val.toFixed(4-len);
+      }
+    }
+
+    dispUnit.value = unit + dmmMode;
+
+    console.log('value:' + dispVal.value);
     if(graphChecked) {
       chart.render();
     }
   }
 };
 
-
 document.addEventListener("DOMContentLoaded", function() {
-  setupDmm();
-  window.setTimeout(acquisition, timeInterval);
+  initialize();
 });
-
-
-
-
-/*
-function setupChopper() {
-
-  var _mychkbox1 = document.querySelector('input[name=myCheckbox1]');
-  var _mychkbox2 = document.querySelector('input[name=myCheckbox2]');
-
-  if(chopper.isConnected()) {
-
-    _mychkbox1.disabled = false;
-    _mychkbox2.disabled = false;
-
-    _mychkbox1.checked = chopper.getUsbPortStatus() & 0x01;
-    _mychkbox1.addEventListener('change', function() {
-      if (_mychkbox1.checked) {
-          chopper.enableUsbPort(1);
-      } else {
-          chopper.disableUsbPort(1);
-      }
-    });
-
-    _mychkbox2.checked = chopper.getUsbPortStatus() & 0x02;
-    _mychkbox2.addEventListener('change', function() {
-      if (_mychkbox2.checked) {
-          chopper.enableUsbPort(2);
-      } else {
-          chopper.disableUsbPort(2);
-      }
-    });
-
-  } else {
-
-    _mychkbox1.disabled = true;
-    _mychkbox2.disabled = true;
-    var timer = window.setTimeout(function() {
-      chopper = new Chopper();
-      setupChopper();
-    }, 5000);
-
-  }
-}
-
-document.addEventListener("DOMContentLoaded", setupChopper);
-*/
