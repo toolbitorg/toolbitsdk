@@ -18,7 +18,7 @@ $(TARGET):
 	cd build; swig -c++ -javascript -node tbi.i
 	cd build; HOME=~/.electron-gyp node-gyp rebuild --target=v4.0.0-beta.3 --arch=x64 --dist-url=https://atom.io/download/electron
 	cp build/build/Release/tbi.node samples
-	cp build/build/Release/tbi.node samples/electron-quick-start/app
+	cp build/build/Release/tbi.node samples/ToolbitDMM/app
 
 clean:
 	rm -fr build
