@@ -1,4 +1,4 @@
-TARGET =
+TARGET = ToolbitDMM-darwin-x64/ToolbitDMM
 
 # implementation
 
