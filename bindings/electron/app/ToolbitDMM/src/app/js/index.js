@@ -81,6 +81,7 @@ function initialize() {
   clearPlotdata = true;
 
   setDmmMode(document.getElementById('mode').value);
+  setDmmRange(event.target.value);
   setTimeInterval(document.getElementById('interval').value);
 
   document.getElementById('mode').addEventListener('change', (event) => {
