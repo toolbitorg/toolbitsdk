@@ -8,6 +8,7 @@ FORCE:
 
 $(TARGET):
 	electron-packager ./src ToolbitDMM --platform=win32 --arch=x64 --electronVersion=4.2.12
+	cp -r ToolbitDMM-win32-x64 ./binary-release
 
 clean:
 	rm -fr ToolbitDMM-win32-x64
