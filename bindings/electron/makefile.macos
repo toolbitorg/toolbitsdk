@@ -1,4 +1,4 @@
-TARGET = build/tbi.so
+TARGET = build/build/Release/tbi.node
 
 # implementation
 
@@ -16,9 +16,8 @@ $(TARGET):
 	cp tbi.i build
 	cp binding_macos.gyp build/binding.gyp
 	cd build; swig -c++ -javascript -node tbi.i
-	cd build; HOME=~/.electron-gyp node-gyp rebuild --target=v4.0.0-beta.3 --arch=x64 --dist-url=https://atom.io/download/electron
-	cp build/build/Release/tbi.node samples
-	cp build/build/Release/tbi.node samples/ToolbitDMM/app
+	cd build; HOME=~/.electron-gyp node-gyp rebuild --target=4.2.12 --arch=x64 --dist-url=https://atom.io/download/electron
+	cp build/build/Release/tbi.node app/ToolbitDMM/src/app
 
 clean:
 	rm -fr build

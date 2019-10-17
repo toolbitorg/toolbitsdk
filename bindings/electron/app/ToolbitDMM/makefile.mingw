@@ -1,0 +1,16 @@
+TARGET = ToolbitDMM-win32-x64/ToolbitDMM.exe
+
+# implementation
+
+all: $(TARGET)
+
+FORCE:
+
+$(TARGET):
+	electron-packager ./src ToolbitDMM --platform=win32 --arch=x64 --electronVersion=4.2.12
+
+clean:
+	rm -fr ToolbitDMM-win32-x64
+
+
+.PHONY: all clean

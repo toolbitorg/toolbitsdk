@@ -1,0 +1,16 @@
+TARGET =
+
+# implementation
+
+all: $(TARGET)
+
+FORCE:
+
+$(TARGET):
+electron-packager ./src ToolbitDMM --arch=x64 --electronVersion=4.2.12
+
+
+clean:
+
+
+.PHONY: all clean
