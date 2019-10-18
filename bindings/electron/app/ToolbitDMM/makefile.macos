@@ -1,4 +1,4 @@
-TARGET = ToolbitDMM-darwin-x64/ToolbitDMM
+TARGET = ToolbitDMM-darwin-x64/ToolbitDMM.app
 
 # implementation
 
@@ -8,7 +8,7 @@ FORCE:
 
 $(TARGET):
 	electron-packager ./src ToolbitDMM --platform=darwin --arch=x64 --electronVersion=4.2.12
-	cp -r ToolbitDMM-darwin-x64 ./binary-release
+	cp -r ToolbitDMM-darwin-x64 ./binary-releases/
 
 clean:
 	rm -fr ToolbitDMM-darwin-x64
