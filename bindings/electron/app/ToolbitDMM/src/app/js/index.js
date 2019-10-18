@@ -16,7 +16,7 @@ var dmmMode;
 var dmmRange;
 var timeInterval;
 var holdChecked = false;
-var graphChecked = true;
+var graphChecked = false;
 var clearPlotdata = false;
 var plotdata = [{x: 0, y: 0}];
 var counter = 0;
@@ -99,15 +99,20 @@ function initialize() {
     holdChecked = this.checked;
     console.log('holdChecked:' + holdChecked);
   });
-  /*
   document.getElementById('graph').addEventListener('change', function() {
     graphChecked = this.checked;
     if(graphChecked) {
       clearPlotdata = true;
+      document.getElementById('chart-container').style.display = 'block';
+      document.getElementById('graph-menu').style.display = 'block';
+      window.resizeBy(0, 436);
+    } else {
+      document.getElementById('chart-container').style.display = 'none';
+      document.getElementById('graph-menu').style.display = 'none';
+      window.resizeBy(0, -436);
     }
     console.log('graphChecked:' + graphChecked);
   });
-  */
   document.getElementById('clear').addEventListener('click', function() {
     clearPlotdata = true;
     console.log('clearPlotdata: ' + clearPlotdata);
