@@ -9,6 +9,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 340, height: 195, minWidth: 340, minHeight: 195, maxHeight: 631,
+    width: 840, height: 600, minWidth: 340, minHeight: 600, maxHeight: 631,
 //    width: 640, height: 630, minWidth: 340, minHeight: 142,
     autoHideMenuBar: true
   })
@@ -19,7 +20,7 @@ function createWindow () {
   mainWindow.loadFile('app/index.html')
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -37,11 +38,14 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
+  app.quit();
+  /*
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit()
   }
+  */
 })
 
 app.on('activate', function () {
