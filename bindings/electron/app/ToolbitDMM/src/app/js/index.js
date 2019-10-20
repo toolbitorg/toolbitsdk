@@ -17,9 +17,10 @@ var dmmRange;
 var timeInterval;
 var holdChecked = false;
 var graphChecked = false;
-var clearPlotdata = false;
+var clearGraph = false;
+var runChecked = false;
 var plotdata = [{x: 0, y: 0}];
-var counter = 0;
+var plotStart = new Date();
 
 /*
 var getRadioValue = function(name) {
@@ -49,22 +50,17 @@ var setDmmRange = function(range) {
 
 var setTimeInterval = function(t) {
   if(t=='Fast') {
-    timeInterval = 100;
+    timeInterval = 99;
   } else if(t=='Mid') {
-    timeInterval = 1000;
+    timeInterval = 999;
   } else if(t=='Slow') {
-    timeInterval = 3000;
+    timeInterval = 2999;
   };
   console.log('timeInterval:' + t);
 };
 
 var chartContainer = document.getElementById('chart-container');
 var chart = new CanvasJS.Chart(chartContainer, {
-  animationEnabled: true,
-  zoomEnabled: true,
-  title: {
-//    text: "Graph"
-  },
   data: [{
     type: 'line',
     dataPoints: plotdata
@@ -78,7 +74,7 @@ function initialize() {
     window.setTimeout(initialize, 3000);
     return;
   }
-  clearPlotdata = true;
+  clearGraph = true;
 
   setDmmMode(document.getElementById('mode').value);
   setDmmRange(document.getElementById('range').value);
@@ -86,14 +82,14 @@ function initialize() {
 
   document.getElementById('mode').addEventListener('change', (event) => {
     setDmmMode(event.target.value);
-    clearPlotdata = true;
+    clearGraph = true;
   });
   document.getElementById('range').addEventListener('change', (event) => {
     setDmmRange(event.target.value);
   });
   document.getElementById('interval').addEventListener('change', (event) => {
     setTimeInterval(event.target.value);
-    clearPlotdata = true;
+    clearGraph = true;
   });
   document.getElementById('hold').addEventListener('change', function() {
     holdChecked = this.checked;
@@ -102,20 +98,28 @@ function initialize() {
   document.getElementById('graph').addEventListener('change', function() {
     graphChecked = this.checked;
     if(graphChecked) {
-      clearPlotdata = true;
-      document.getElementById('chart-container').style.display = 'block';
-      document.getElementById('graph-menu').style.display = 'block';
+      clearGraph = true;
+      runChecked = true;
+      document.getElementById('chart-container').className = '';
+      document.getElementById('graph-menu').className = '';
+      document.getElementById('run').checked = true;
       window.resizeBy(0, 436);
     } else {
-      document.getElementById('chart-container').style.display = 'none';
-      document.getElementById('graph-menu').style.display = 'none';
+      runChecked = false;
+      document.getElementById('chart-container').className = 'hide';
+      document.getElementById('graph-menu').className = 'hide';
+      document.getElementById('run').checked = false;
       window.resizeBy(0, -436);
     }
     console.log('graphChecked:' + graphChecked);
+    console.log('runChecked:' + runChecked);
   });
-  document.getElementById('clear').addEventListener('click', function() {
-    clearPlotdata = true;
-    console.log('clearPlotdata: ' + clearPlotdata);
+  document.getElementById('run').addEventListener('change', function() {
+    runChecked = this.checked;
+    if(runChecked) {
+      clearGraph = true;
+    }
+    console.log('runChecked:' + runChecked);
   });
 
   window.setTimeout(acquisition, timeInterval);
@@ -134,17 +138,38 @@ function acquisition() {
   } else if(dmmMode=='A') {
     val = luke.getCurrent();
   };
+  var t = new Date();
 
-  if(clearPlotdata) {
+  if(clearGraph) {
     plotdata.length = 0;
-    counter = 0;
-    clearPlotdata = false;
+    plotStart.setTime(t.getTime());
+    clearGraph = false;
+    // how to handle garbage??
+    chart = new CanvasJS.Chart(chartContainer, {
+      animationEnabled: true,
+      zoomEnabled: true,
+      title: {
+    //    text: "Graph"
+      },
+      axisX: {
+        valueFormatString: "s.f", labelAngle: 0
+      },
+      data: [{
+        type: 'line',
+        dataPoints: plotdata
+      }]
+    });
+    chart.render();
   }
 
-  if(graphChecked) {
-    plotdata.push({x: counter,y: val});
-    //plotdata.push({x: counter,y: counter})
-    counter++;
+  if(runChecked) {
+    t.setTime(t.getTime() - plotStart.getTime() + plotStart.getTimezoneOffset()*1000*60);
+    plotdata.push({x: t, y: val});
+    if(t.getHours()>0) {
+        chart.options.axisX.valueFormatString = "H:m:ss.f";
+    } else if(t.getMinutes()>0) {
+      chart.options.axisX.valueFormatString = "m:ss.f";
+    }
   }
 
   if(!holdChecked) {
@@ -180,10 +205,10 @@ function acquisition() {
 
     dispUnit.value = unit + dmmMode;
 
-    console.log('value:' + dispVal.value);
-    if(graphChecked) {
-      chart.render();
-    }
+    console.log('value(' + t.toJSON() + '):' + dispVal.value);
+  }
+  if(runChecked) {
+    chart.render();
   }
 };
 

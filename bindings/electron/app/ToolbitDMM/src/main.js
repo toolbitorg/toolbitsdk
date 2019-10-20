@@ -9,8 +9,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 340, height: 195, minWidth: 340, minHeight: 195, maxHeight: 631,
-    width: 840, height: 600, minWidth: 340, minHeight: 600, maxHeight: 631,
-//    width: 640, height: 630, minWidth: 340, minHeight: 142,
+//    width: 840, height: 600, minWidth: 340, minHeight: 195, maxHeight: 931,
     autoHideMenuBar: true
   })
   //mainWindow = new BrowserWindow({width: 270, height: 250,
@@ -20,7 +19,7 @@ function createWindow () {
   mainWindow.loadFile('app/index.html')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
