@@ -19,5 +19,10 @@
   "devDependencies": {
     "electron": "^4.2.12",
     "electron-rebuild": "^1.8.5"
+  },
+  "dependencies": {
+    "chartist": "^0.11.4",
+    "chartist-plugin-zoom": "^0.5.1",
+    "moment": "^2.24.0"
   }
 }

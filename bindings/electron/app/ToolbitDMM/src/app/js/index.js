@@ -6,8 +6,12 @@
 //console.warn = function(){/* NOP */};
 //console.error = function(){/* NOP */};
 
-const TbiDeviceManager=require('./tbi.node').TbiDeviceManager
-const Luke=require('./tbi.node').Luke
+var moment=require('moment');
+var Chartist=require('chartist');
+require('chartist-plugin-zoom');
+
+const TbiDeviceManager=require('./tbi.node').TbiDeviceManager;
+const Luke=require('./tbi.node').Luke;
 var tbiDeviceManager = new TbiDeviceManager();
 console.log('The number of connected USB device: ' + tbiDeviceManager.getDeviceNum());
 var luke = new Luke();
@@ -19,24 +23,8 @@ var holdChecked = false;
 var graphChecked = false;
 var clearGraph = false;
 var runChecked = false;
-var plotdata = [{x: 0, y: 0}];
+var plotData = [];
 var plotStart = new Date();
-
-/*
-var getRadioValue = function(name) {
-  var result = '';
-  var elems = document.getElementsByName(name);
-
-  for(var i=0, len=elems.length; i<len; i++) {
-    var elem = elems.item(i);
-    if(elem.checked) {
-      result = elem.value;
-      break;
-    }
-  }
-  return result;
-};
-*/
 
 var setDmmMode = function(mode) {
   dmmMode = mode;
@@ -60,12 +48,7 @@ var setTimeInterval = function(t) {
 };
 
 var chartContainer = document.getElementById('chart-container');
-var chart = new CanvasJS.Chart(chartContainer, {
-  data: [{
-    type: 'line',
-    dataPoints: plotdata
-  }]
-});
+var chart = new Chartist.Line(chartContainer, {}, {});
 
 function initialize() {
 
@@ -141,35 +124,15 @@ function acquisition() {
   var t = new Date();
 
   if(clearGraph) {
-    plotdata.length = 0;
-    plotStart.setTime(t.getTime());
+    plotData.length = 0;
+    plotData = [];
     clearGraph = false;
-    // how to handle garbage??
-    chart = new CanvasJS.Chart(chartContainer, {
-      animationEnabled: true,
-      zoomEnabled: true,
-      title: {
-    //    text: "Graph"
-      },
-      axisX: {
-        valueFormatString: "s.f", labelAngle: 0
-      },
-      data: [{
-        type: 'line',
-        dataPoints: plotdata
-      }]
-    });
-    chart.render();
+    plotStart = t;
   }
 
-  if(runChecked) {
-    t.setTime(t.getTime() - plotStart.getTime() + plotStart.getTimezoneOffset()*1000*60);
-    plotdata.push({x: t, y: val});
-    if(t.getHours()>0) {
-        chart.options.axisX.valueFormatString = "H:m:ss.f";
-    } else if(t.getMinutes()>0) {
-      chart.options.axisX.valueFormatString = "m:ss.f";
-    }
+   if(runChecked) {
+    var tdiff = t.getTime() - plotStart.getTime() + plotStart.getTimezoneOffset()*1000*60;
+    plotData.push({x: tdiff, y: val});
   }
 
   if(!holdChecked) {
@@ -202,16 +165,54 @@ function acquisition() {
         dispVal.value = val.toFixed(4-len);
       }
     }
-
     dispUnit.value = unit + dmmMode;
+    console.log('value[' + t.toJSON() + ']:' + dispVal.value);
+  }
 
-    console.log('value(' + t.toJSON() + '):' + dispVal.value);
-  }
   if(runChecked) {
-    chart.render();
-  }
+    var chart = new Chartist.Line(chartContainer,
+      {  // data
+        series: [
+          {
+            name: 'series-1',
+            data: plotData
+          }
+        ]
+      }, {  // options
+        lineSmooth: false,
+        showPoint: false,
+        axisX: {
+          type: Chartist.FixedScaleAxis,
+          divisor: 5,
+          labelInterpolationFnc: function(value) {
+            if(moment(value).format("H")!=0) {
+              return moment(value).format("H:m:ss.S");
+            } else if(moment(value).format("m")!=0) {
+              return moment(value).format("m:ss.S");
+            }
+            return moment(value).format("s.S");
+          }
+        },
+        low: 0,
+        plugins: [
+          Chartist.plugins.zoom({
+            onZoom: function(chart, reset) { storeReset(reset); }
+          })
+        ]
+      }  // end of options
+    );
+  }  // end of if(runChecked)
+
 };
 
 document.addEventListener("DOMContentLoaded", function() {
   initialize();
 });
+
+/*
+var tdiff = t.getTime() - plotStart.getTime() + plotStart.getTimezoneOffset()*1000*60;
+for(var i=0; i<10000; i++) {
+  plotData.push({x: tdiff-i*100, y: val*0.95});
+}
+plotStart.setTime(t.getTime());
+*/
