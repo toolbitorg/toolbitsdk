@@ -50,11 +50,35 @@ var setTimeInterval = function(t) {
 var chartContainer = document.getElementById('chart-container');
 var chart = new Chartist.Line(chartContainer, {}, {});
 
-function initialize() {
+function exportData(records) {
+   let data = JSON.stringify(records);
+   let bom  = new Uint8Array([0xEF, 0xBB, 0xBF]);
+   let blob = new Blob([bom, data], {type: 'text'});
+   let url = (window.URL || window.webkitURL).createObjectURL(blob);
+   let link = document.createElement('a');
+   link.download = 'log-' + moment(plotStart).format('YYYYMMDD-HHmm') + '.json';
+   link.href = url;
+   document.body.appendChild(link);
+   link.click();
+   document.body.removeChild(link);
+};
 
+function disableElements(elems) {
+  for(var i=0; i<elems.length; i++) {
+    elems[i].disabled = true;
+  }
+}
+
+function enableElements(elems) {
+  for(var i=0; i<elems.length; i++) {
+    elems[i].disabled = false;
+  }
+}
+
+function openDevice() {
   if(!luke.open()) {
     // Polling connection of device
-    window.setTimeout(initialize, 3000);
+    window.setTimeout(openDevice, 3000);
     return;
   }
   clearGraph = true;
@@ -78,35 +102,116 @@ function initialize() {
     holdChecked = this.checked;
     console.log('holdChecked:' + holdChecked);
   });
-  document.getElementById('graph').addEventListener('change', function() {
-    graphChecked = this.checked;
-    if(graphChecked) {
-      clearGraph = true;
-      runChecked = true;
-      document.getElementById('chart-container').className = '';
-      document.getElementById('graph-menu').className = '';
-      document.getElementById('run').checked = true;
-      window.resizeBy(0, 436);
-    } else {
-      runChecked = false;
-      document.getElementById('chart-container').className = 'hide';
-      document.getElementById('graph-menu').className = 'hide';
-      document.getElementById('run').checked = false;
-      window.resizeBy(0, -436);
-    }
-    console.log('graphChecked:' + graphChecked);
-    console.log('runChecked:' + runChecked);
-  });
+
   document.getElementById('run').addEventListener('change', function() {
     runChecked = this.checked;
     if(runChecked) {
       clearGraph = true;
+      document.getElementById('save').disabled = false;
     }
     console.log('runChecked:' + runChecked);
   });
+  document.getElementById('save').addEventListener('click', function() {
+    exportData(plotData);
+  });
+
+  enableElements(document.getElementById('main').getElementsByTagName('input'));
+  enableElements(document.getElementById('main').getElementsByTagName('select'));
+  enableElements(document.getElementById('main').getElementsByTagName('button'));
+  document.getElementById('save').disabled = true;
 
   window.setTimeout(acquisition, timeInterval);
+}
+
+function initialize() {
+  disableElements(document.getElementById('main').getElementsByTagName('input'));
+  document.getElementById('graph').disabled = false;
+  disableElements(document.getElementById('main').getElementsByTagName('select'));
+  disableElements(document.getElementById('main').getElementsByTagName('button'));
+  document.getElementById('load').disabled = false;
+
+  document.getElementById('graph').addEventListener('change', function() {
+    graphChecked = this.checked;
+    if(graphChecked) {
+      document.getElementById('chart-container').className = '';
+      document.getElementById('graph-menu').className = '';
+      document.getElementById('run').click();
+      window.resizeBy(0, 436);
+    } else {
+      document.getElementById('chart-container').className = 'hide';
+      document.getElementById('graph-menu').className = 'hide';
+      if(document.getElementById('run').checked) {
+        document.getElementById('run').click();
+      }
+      window.resizeBy(0, -436);
+    }
+    console.log('graphChecked:' + graphChecked);
+  });
+
+  document.getElementById('load').addEventListener('click', function() {
+    if(runChecked) {
+      if(window.confirm("Is it OK to stop recording?")) {
+        document.getElementById('run').click();
+      } else {
+        return;
+      }
+    }
+
+    let fin = document.createElement('input');
+    fin.type = 'file';
+    fin.accept = '.json';
+    fin.addEventListener('change', function(e) {
+      var file = e.target.files[0];
+      if(file.type.match('application/json')) {
+        var reader = new FileReader();
+        reader.addEventListener('load', function() {
+          plotData = JSON.parse(this.result);
+          console.log('Loaded plot data');
+          drawGraph();
+        })
+      reader.readAsText(file);
+      document.getElementById('save').disabled = true;
+      }
+    });
+    fin.click();
+  });
+
+  openDevice();
 };
+
+function drawGraph() {
+  var chart = new Chartist.Line(chartContainer,
+  {  // data
+    series: [
+      {
+        name: 'series-1',
+        data: plotData
+      }
+    ]
+  }, {  // options
+    lineSmooth: false,
+    showPoint: false,
+    axisX: {
+      type: Chartist.FixedScaleAxis,
+      divisor: 5,
+      labelInterpolationFnc: function(value) {
+        if(moment(value).format("H")!=0) {
+          return moment(value).format("H:m:ss.S");
+        } else if(moment(value).format("m")!=0) {
+          return moment(value).format("m:ss.S");
+        }
+        return moment(value).format("s.S");
+      }
+    },
+    low: 0,
+    plugins: [
+      Chartist.plugins.zoom({
+        resetOnRightMouseBtn: true,
+//        onZoom: function(chart, reset) { storeReset(reset); }
+      })
+    ]
+  });  // end of options
+}
 
 function acquisition() {
   window.setTimeout(acquisition, timeInterval);
@@ -170,49 +275,10 @@ function acquisition() {
   }
 
   if(runChecked) {
-    var chart = new Chartist.Line(chartContainer,
-      {  // data
-        series: [
-          {
-            name: 'series-1',
-            data: plotData
-          }
-        ]
-      }, {  // options
-        lineSmooth: false,
-        showPoint: false,
-        axisX: {
-          type: Chartist.FixedScaleAxis,
-          divisor: 5,
-          labelInterpolationFnc: function(value) {
-            if(moment(value).format("H")!=0) {
-              return moment(value).format("H:m:ss.S");
-            } else if(moment(value).format("m")!=0) {
-              return moment(value).format("m:ss.S");
-            }
-            return moment(value).format("s.S");
-          }
-        },
-        low: 0,
-        plugins: [
-          Chartist.plugins.zoom({
-            onZoom: function(chart, reset) { storeReset(reset); }
-          })
-        ]
-      }  // end of options
-    );
-  }  // end of if(runChecked)
-
+    drawGraph();
+  }
 };
 
 document.addEventListener("DOMContentLoaded", function() {
   initialize();
 });
-
-/*
-var tdiff = t.getTime() - plotStart.getTime() + plotStart.getTimezoneOffset()*1000*60;
-for(var i=0; i<10000; i++) {
-  plotData.push({x: tdiff-i*100, y: val*0.95});
-}
-plotStart.setTime(t.getTime());
-*/
