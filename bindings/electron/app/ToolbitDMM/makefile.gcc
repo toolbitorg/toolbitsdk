@@ -1,4 +1,4 @@
-TARGET =
+TARGET = ToolbitDMM-linux-x64/ToolbitDMM
 
 # implementation
 
@@ -7,10 +7,11 @@ all: $(TARGET)
 FORCE:
 
 $(TARGET):
-electron-packager ./src ToolbitDMM --arch=x64 --electronVersion=4.2.12
+	electron-packager ./src ToolbitDMM --platform=linux --arch=x64 --electronVersion=4.2.12
 
 
 clean:
+	rm -fr ToolbitDMM-linux-x64
 
 
 .PHONY: all clean
