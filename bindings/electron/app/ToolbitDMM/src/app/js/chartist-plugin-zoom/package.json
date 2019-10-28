@@ -1,0 +1,91 @@
+{
+  "_from": "chartist-plugin-zoom@^0.5.1",
+  "_id": "chartist-plugin-zoom@0.5.1",
+  "_inBundle": false,
+  "_integrity": "sha512-JKM5du5EkHqP5wnDTkiZiInbfuQ2ei2FFdo9LfwNdJJfAARRbHGPLsKvaCsFlYKbdfpbArPDflDMVGzFn9niWg==",
+  "_location": "/chartist-plugin-zoom",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "chartist-plugin-zoom@^0.5.1",
+    "name": "chartist-plugin-zoom",
+    "escapedName": "chartist-plugin-zoom",
+    "rawSpec": "^0.5.1",
+    "saveSpec": null,
+    "fetchSpec": "^0.5.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/chartist-plugin-zoom/-/chartist-plugin-zoom-0.5.1.tgz",
+  "_shasum": "912a8ec128ec710d4e3a7aa19263addd3f76ca50",
+  "_spec": "chartist-plugin-zoom@^0.5.1",
+  "_where": "C:\\msys64\\home\\ohama\\Toolbit\\software\\ToolbitSDK\\bindings\\electron\\app\\ToolbitDMM\\src",
+  "author": {
+    "name": "Hannes Kamecke"
+  },
+  "browser": "dist/chartist-plugin-zoom.js",
+  "bugs": {
+    "url": "https://github.com/hansmaad/chartist-plugin-zoom/issues"
+  },
+  "bundleDependencies": false,
+  "config": {
+    "src": "src",
+    "dist": "dist",
+    "tmp": ".tmp",
+    "test": "test"
+  },
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Zoom Plugin for Chartist.js",
+  "devDependencies": {
+    "chartist": "~0.9.7",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^1.3.2",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-jasmine": "~0.8.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-newer": "^0.8.0",
+    "grunt-umd": "~2.2.1",
+    "jasmine-jquery": "~2.0.6",
+    "jshint-stylish": "~1.0.0",
+    "load-grunt-config": "^0.16.0",
+    "time-grunt": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
+  "homepage": "https://gionkunz.github.io/chartist-js/plugins.html",
+  "keywords": [
+    "chartist",
+    "plugin"
+  ],
+  "licenses": [
+    {
+      "type": "WTFPL",
+      "url": "https://github.com/gionkunz/chartist-plugin-pointlabels/blob/master/LICENSE"
+    }
+  ],
+  "main": "dist/chartist-plugin-zoom.js",
+  "name": "chartist-plugin-zoom",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hansmaad/chartist-plugin-zoom.git"
+  },
+  "scripts": {
+    "build": "grunt build",
+    "start": "http-server",
+    "test": "grunt test"
+  },
+  "version": "0.5.1"
+}

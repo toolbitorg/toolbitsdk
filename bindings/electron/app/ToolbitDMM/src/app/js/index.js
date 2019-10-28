@@ -8,7 +8,7 @@
 
 var moment=require('moment');
 var Chartist=require('chartist');
-require('chartist-plugin-zoom');
+require('./js/chartist-plugin-zoom/dist/chartist-plugin-zoom');
 
 const TbiDeviceManager=require('./tbi.node').TbiDeviceManager;
 const Luke=require('./tbi.node').Luke;
@@ -25,6 +25,7 @@ var clearGraph = false;
 var runChecked = false;
 var plotData = [];
 var plotStart = new Date();
+var chart;
 
 var setDmmMode = function(mode) {
   dmmMode = mode;
@@ -167,7 +168,7 @@ function initialize() {
         reader.addEventListener('load', function() {
           plotData = JSON.parse(this.result);
           console.log('Loaded plot data');
-          drawGraph();
+          initializeGraph();
         })
       reader.readAsText(file);
       document.getElementById('save').disabled = true;
@@ -179,13 +180,17 @@ function initialize() {
   openDevice();
 };
 
-function drawGraph() {
-  var chart = new Chartist.Line(chartContainer,
+function initializeGraph() {
+  chart = new Chartist.Line(chartContainer,
   {  // data
     series: [
       {
         name: 'series-1',
         data: plotData
+      },
+      {
+        name: 'to-show-zero-point',
+        data: [{x: 0, y: 0}]
       }
     ]
   }, {  // options
@@ -195,15 +200,15 @@ function drawGraph() {
       type: Chartist.FixedScaleAxis,
       divisor: 5,
       labelInterpolationFnc: function(value) {
-        if(moment(value).format("H")!=0) {
-          return moment(value).format("H:m:ss.S");
-        } else if(moment(value).format("m")!=0) {
-          return moment(value).format("m:ss.S");
+        var val = value + plotStart.getTimezoneOffset()*1000*60;
+        if(moment(val).format("H")!=0) {
+          return moment(val).format("H:m:ss.S");
+        } else if(moment(val).format("m")!=0) {
+          return moment(val).format("m:ss.S");
         }
-        return moment(value).format("s.S");
+        return moment(val).format("s.S");
       }
     },
-    low: 0,
     plugins: [
       Chartist.plugins.zoom({
         resetOnRightMouseBtn: true,
@@ -233,10 +238,11 @@ function acquisition() {
     plotData = [];
     clearGraph = false;
     plotStart = t;
+    initializeGraph();
   }
 
    if(runChecked) {
-    var tdiff = t.getTime() - plotStart.getTime() + plotStart.getTimezoneOffset()*1000*60;
+    var tdiff = t.getTime() - plotStart.getTime();
     plotData.push({x: tdiff, y: val});
   }
 
@@ -275,7 +281,7 @@ function acquisition() {
   }
 
   if(runChecked) {
-    drawGraph();
+    chart.update();
   }
 };
 
