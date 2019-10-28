@@ -167,6 +167,7 @@ function initialize() {
         var reader = new FileReader();
         reader.addEventListener('load', function() {
           plotData = JSON.parse(this.result);
+          plotStart = new Date(0);
           console.log('Loaded plot data');
           initializeGraph();
         })
@@ -200,13 +201,16 @@ function initializeGraph() {
       type: Chartist.FixedScaleAxis,
       divisor: 5,
       labelInterpolationFnc: function(value) {
-        var val = value + plotStart.getTimezoneOffset()*1000*60;
-        if(moment(val).format("H")!=0) {
-          return moment(val).format("H:m:ss.S");
-        } else if(moment(val).format("m")!=0) {
-          return moment(val).format("m:ss.S");
+        var mom = moment(value + plotStart.getTimezoneOffset()*1000*60);
+        if(moment(plotStart).isDST()) {
+          mom.add(1, 'hours');
         }
-        return moment(val).format("s.S");
+        if(mom.format("H")!=0) {
+          return mom.format("H:m:ss.S");
+        } else if(mom.format("m")!=0) {
+          return mom.format("m:ss.S");
+        }
+        return mom.format("s.S");
       }
     },
     plugins: [
