@@ -28,6 +28,12 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+}
+
+// Second-instance is not allowed for now
+if(!app.requestSingleInstanceLock()) {
+  app.quit();
 }
 
 // This method will be called when Electron has finished
