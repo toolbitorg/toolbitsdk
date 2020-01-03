@@ -1,0 +1,11 @@
+{
+  "name": "toolbit-lib",
+  "version": "0.0.1",
+  "description": "Toolbit library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Junji Ohama <junji.ohama@toolbit.org> (https://github.com/ohamax)",
+  "license": "GPLv2"
+}
