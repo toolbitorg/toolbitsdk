@@ -57,7 +57,7 @@ jobs:
         
     - name: Add swig path for windows
       if: matrix.os == 'windows-latest'      
-      run: echo "::add-path::D:\a\StudyActions\StudyActions\swigwin-4.0.1"
+      run: echo "::add-path::D:\a\ToolbitSDK\ToolbitSDK\swigwin-4.0.1"
       
     - uses: actions/setup-node@v1
       with:
