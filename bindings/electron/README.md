@@ -18,13 +18,11 @@ swig
 
 ## Build
 
+make
 
-### Linux
-    make
-tbi.node will be created and copied to samples folder
+Toolbit library for nodejs will be created and copied to toolbit-lib/lib folder
 
 
-### Windows
 
 
 ## Test
