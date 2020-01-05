@@ -1,0 +1,79 @@
+name: Toolbit SDK CI
+
+on: [push]
+
+jobs:
+  build:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - uses: actions/checkout@v1
+            
+    - name: Install dependencies for ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt install libudev-dev
+        sudo apt install libusb-1.0-0-dev
+        
+    - name: Install dependencies for macos
+      if: matrix.os == 'macos-latest'
+      run: brew install pcre           # for swig
+
+    - name: Build core library
+      run: |
+        cd src
+        make
+
+    - name: Check cache for swig
+      if: "matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'"
+      uses: actions/cache@v1.0.3
+      with:
+        path: swig-4.0.1
+        key: ${{ runner.os }}-swig-4.0.1-bin
+
+    - name: Install swig for ubuntu/macos
+      if: "matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'"
+      run: |
+        if [[ ! -f swig-4.0.1/swig ]]; then
+          wget http://prdownloads.sourceforge.net/swig/swig-4.0.1.tar.gz
+          tar xvzf swig-4.0.1.tar.gz
+          cd swig-4.0.1
+          ./configure
+          make
+          # make check
+        else
+          cd swig-4.0.1
+        fi
+        sudo make install
+
+    - name: Install swig for windows
+      if: matrix.os == 'windows-latest'
+      run: |
+        curl -LO "http://prdownloads.sourceforge.net/swig/swigwin-4.0.1.zip"
+        unzip swigwin-4.0.1.zip
+        
+    - name: Add swig path for windows
+      if: matrix.os == 'windows-latest'      
+      run: echo "::add-path::D:\a\StudyActions\StudyActions\swigwin-4.0.1"
+      
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '8.x'
+
+    - name: Build node.js binding
+      run: |
+        npm install -g node-gyp
+        cd bindings/electron
+        make
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v1
+      with:
+       name: toolbit-lib
+       path: bindings/electron/toolbit-lib
