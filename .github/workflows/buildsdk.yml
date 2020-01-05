@@ -4,9 +4,6 @@ on: [push]
 
 jobs:
   build:
-
-jobs:
-  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
