@@ -3,3 +3,6 @@ x64/
 vslibbuild.VC.db
 vslibbuild.VC.VC.opendb
 vslibbuild.vcxproj.user
+vslibbuild.aps
+vslibbuild.rc
+resource.h

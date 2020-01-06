@@ -4,14 +4,14 @@
 
 ToolbitSDK provide Ruby Library to communicate with a target device.
 
-For example, to read voltage and current values from Luke, just make an object of Luke class defined by tbi.so and use member functions as follows as:
+For example, to read voltage and current values from DMM, just make an object of Dmm class defined by tbi.so and use member functions as follows as:
 ```
 require 'tbi'
 
-luke = Tbi::Luke.new
+dmm = Tbi::Dmm.new
 
-puts sprintf("%.3f [V]", luke.getVoltage())
-puts sprintf("%.3f [mA]", 1000.0 * luke.getCurrent())
+puts sprintf("%.3f [V]", dmm.getVoltage())
+puts sprintf("%.3f [mA]", 1000.0 * dmm.getCurrent())
 ```
 
 
@@ -44,10 +44,10 @@ $ cd ToolbitSDK/bindings/ruby
 $ make
 ```
 
-tbi.so is built and copied to ../samples. Now you can test it with Luke as follows
+tbi.so is built and copied to ../samples. Now you can test it with DMM as follows
 ```
 $ cd ../samples
-$ ./luke_test.rb
+$ ./dmm_test.rb
 0.000 [V]
 0.000 [mA]
 ```

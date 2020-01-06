@@ -1,7 +1,7 @@
 from distutils.core import setup, Extension
 
 tbi_module = Extension('_tbi',
-                    sources = ['tbi_wrap.cxx', 'tbi_core.cpp', 'tbi_device.cpp', 'tbi_device_manager.cpp', 'tbi_service.cpp', 'attribute.cpp', 'tbit.cpp', 'hid.c', 'basicdemo.cpp', 'chopper.cpp', 'luke.cpp', 'adc.cpp', 'adc_hw.cpp', 'gpio_hw.cpp', 'i2c_hw.cpp', 'pin.cpp'],
+                    sources = ['tbi_wrap.cxx', 'tbi_core.cpp', 'tbi_device.cpp', 'tbi_device_manager.cpp', 'tbi_service.cpp', 'attribute.cpp', 'tbit.cpp', 'hid.c', 'basicdemo.cpp', 'chopper.cpp', 'dmm.cpp', 'adc.cpp', 'adc_hw.cpp', 'gpio_hw.cpp', 'i2c_hw.cpp', 'pin.cpp'],
                     include_dirs=[],
                     libraries=['udev'],
                     extra_compile_args=["-std=gnu++11"],

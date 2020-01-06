@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "getopt.h"
-#include "luke.h"
+#include "dmm.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -14,18 +14,18 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    Luke *luke = new Luke();
+    Dmm *dmm = new Dmm();
 /*
-	if (!luke->isConnected()) {
-		cout << "Fail to connect to Luke " << endl;
+	if (!dmm->isConnected()) {
+		cout << "Fail to connect to dmm " << endl;
 		return 1;
 	}
 	*/
 
-	cout << "ProductName: " << luke->getProductName() << endl;
-	cout << "ProductRevision: " << luke->getProductRevision() << endl;
-	cout << "ProductSerial: " << luke->getProductSerial() << endl;
-	cout << "ProductVersion: " << luke->getFirmVersion() << endl;
+	cout << "ProductName: " << dmm->getProductName() << endl;
+	cout << "ProductRevision: " << dmm->getProductRevision() << endl;
+	cout << "ProductSerial: " << dmm->getProductSerial() << endl;
+	cout << "ProductVersion: " << dmm->getFirmVersion() << endl;
 
 	/*
     getoption go(argc, argv);
@@ -61,17 +61,17 @@ int main(int argc, char* argv[])
     cout << endl;
 	*/
 
-	//luke->setCurrentRange(CURRENT_RANGE_HIGH);
+	//dmm->setCurrentRange(CURRENT_RANGE_HIGH);
 	//cout << "Set Current Range High" << endl;
-	cout << "Current: " << luke->getCurrent() * 1000.0  << "mA" << endl;
+	cout << "Current: " << dmm->getCurrent() * 1000.0  << "mA" << endl;
 
-	//luke->setVoltageRange(VOLTAGE_RANGE_HIGH);
+	//dmm->setVoltageRange(VOLTAGE_RANGE_HIGH);
 	//cout << "Set Voltage Range High" << endl;
-	cout << "Voltage: " << luke->getVoltage() << "V" << endl;
+	cout << "Voltage: " << dmm->getVoltage() << "V" << endl;
 
 	cout << endl;
-	cout << luke->showReg() << endl;
-	cout << hex << "DieID: 0x" << luke->getDieID() << endl;
+	cout << dmm->showReg() << endl;
+	cout << hex << "DieID: 0x" << dmm->getDieID() << endl;
 
 #ifdef WIN32
 	system("pause");

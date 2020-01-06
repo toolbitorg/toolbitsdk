@@ -1,5 +1,5 @@
-#ifndef TOOLBITSDK_LUKE_H_
-#define TOOLBITSDK_LUKE_H_
+#ifndef TOOLBITSDK_DMM_H_
+#define TOOLBITSDK_DMM_H_
 
 #include <stdint.h>
 #include "i2c_hw.h"
@@ -31,11 +31,11 @@ typedef enum
 } CurrentRange;
 
 
-class Luke : public TbiCore
+class Dmm : public TbiCore
 {
 public:
-	Luke();
-	~Luke();
+	Dmm();
+	~Dmm();
 
 	// Hardware module
 	I2cHw  i2chw;
@@ -61,4 +61,4 @@ private:
 	CurrentRange crange;
 };
 
-#endif /* TOOLBITSDK_LUKE_H_ */
+#endif /* TOOLBITSDK_DMM_H_ */

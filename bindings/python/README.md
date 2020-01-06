@@ -36,7 +36,7 @@ Note:
 
     cd ../samples
     python chopper_test.py
-    python luke_test.py
+    python dmm_test.py
 
 
 ## Reference

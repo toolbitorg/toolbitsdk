@@ -33,9 +33,6 @@
     <ClInclude Include="..\include\hidapi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\luke.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\tbi_core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -66,6 +63,9 @@
     <ClInclude Include="..\include\module\adc.h">
       <Filter>Header Files\module</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\dmm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\attribute.cpp">
@@ -75,9 +75,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\chopper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\luke.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\tbi_core.cpp">
@@ -112,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="..\src\module\adc.cpp">
       <Filter>Source Files\module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dmm.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

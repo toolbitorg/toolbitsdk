@@ -4,7 +4,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include "tbi_device_manager.h"
-#include "luke.h"
+#include "dmm.h"
 
 #define REG_CONFIG 0x00
 #define REG_SHUNTV_1 0x01
@@ -27,7 +27,7 @@
 #define REG_MANUFACTURER_ID 0xFE
 #define REG_DIE_ID 0xFF
 
-Luke::Luke() :
+Dmm::Dmm() :
 	i2chw(mTbiService, ATT_IC20_BASE)
 {
 	mAttVoltageRange = new Attribute(ATT_VOLTAGE_RANGE, 0x00, 0x00);
@@ -36,7 +36,7 @@ Luke::Luke() :
 	mAttCurrent = new Attribute(ATT_CURRENT, 0x00, 0x00);
 }
 
-Luke::~Luke()
+Dmm::~Dmm()
 {
 	close();
 
@@ -46,11 +46,11 @@ Luke::~Luke()
 	delete mAttCurrent;
 }
 
-bool Luke::open()
+bool Dmm::open()
 {
 	TbiDeviceManager devm;
 
-	if (openPath(devm.getPath("Luke"))) {
+	if (openPath(devm.getPath("Dmm"))) {
 		setVoltageRange(VOLTAGE_RANGE_AUTO);
 		setCurrentRange(CURRENT_RANGE_AUTO);
 	}
@@ -61,7 +61,7 @@ bool Luke::open()
 	return true;
 }
 
-float Luke::getVoltage()
+float Dmm::getVoltage()
 {
 	bool status = mTbiService->readAttribute(mAttVoltage);
 	if (!status) {
@@ -71,7 +71,7 @@ float Luke::getVoltage()
 	return mAttVoltage->getValueFloat();
 }
 
-float Luke::getCurrent()
+float Dmm::getCurrent()
 {
 	bool status = mTbiService->readAttribute(mAttCurrent);
 	if (!status) {
@@ -81,7 +81,7 @@ float Luke::getCurrent()
 	return mAttCurrent->getValueFloat();
 }
 
-void Luke::setVoltageRange(VoltageRange r)
+void Dmm::setVoltageRange(VoltageRange r)
 {
 	mAttVoltageRange->setValue(r);
 	bool status = mTbiService->writeAttribute(*mAttVoltageRange);
@@ -91,7 +91,7 @@ void Luke::setVoltageRange(VoltageRange r)
 	}
 }
 
-void Luke::setCurrentRange(CurrentRange r)
+void Dmm::setCurrentRange(CurrentRange r)
 {
 	mAttCurrentRange->setValue(r);
 	bool status = mTbiService->writeAttribute(*mAttCurrentRange);
@@ -101,16 +101,16 @@ void Luke::setCurrentRange(CurrentRange r)
 	}
 }
 
-string Luke::showReg()
+string Dmm::showReg()
 {
 	stringstream ss;
-	for (int addr = 0; addr <= REG_POWER_VALID_LOWER_LIMIT; addr++) {	
+	for (int addr = 0; addr <= REG_POWER_VALID_LOWER_LIMIT; addr++) {
 		ss << hex << addr << ": 0x" << i2chw.read(addr) << endl;
 	}
 	return ss.str();
 }
 
-uint16_t Luke::getDieID()
+uint16_t Dmm::getDieID()
 {
 	return i2chw.read(REG_DIE_ID);
 }

@@ -7,7 +7,7 @@ tbi_module = Extension('_tbi',
                         # Cannot mix .c and .cpp files because of -std=c++11 option
                         # 'hid.c',
                         'basicdemo.cpp', 'chopper.cpp',
-                        'luke.cpp', 'adc.cpp', 'adc_hw.cpp', 'gpio_hw.cpp',
+                        'dmm.cpp', 'adc.cpp', 'adc_hw.cpp', 'gpio_hw.cpp',
                         'i2c_hw.cpp', 'pin.cpp'],
                     include_dirs=[],
 #                    libraries=['stdc++ -framework IOKit -framework Carbon'],
