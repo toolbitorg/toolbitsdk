@@ -18,7 +18,7 @@ $(TARGET):
 	cd build; swig -c++ -ruby tbi.i
 	cd build; ruby extconf.rb
 	cd build; make
-	cp -u build/tbi.bundle samples
+	cp -f build/tbi.bundle samples
 
 clean:
 	rm -fr build

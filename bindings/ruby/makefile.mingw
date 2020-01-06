@@ -18,7 +18,7 @@ $(TARGET):
 	cd build; swig -c++ -ruby tbi.i
 	cd build; /mingw64/bin/ruby extconf.rb
 	cd build; make
-	cp -u build/tbi.so samples
+	cp -f build/tbi.so samples
 
 clean:
 	rm -fr build

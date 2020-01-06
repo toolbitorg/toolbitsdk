@@ -17,7 +17,7 @@ $(TARGET):
 	cp setup_linux.py build
 	cd build; swig -c++ -python tbi.i
 	cd build; python setup_linux.py build_ext --inplace
-	cp -u build/tbi.py build/_tbi.so samples
+	cp -f build/tbi.py build/_tbi.so samples
 
 clean:
 	rm -fr build
