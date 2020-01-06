@@ -4,11 +4,12 @@ $:.unshift File.join(File.dirname(__FILE__), ".")
 require 'tbi'
 
 tbit = Tbi::Tbit.new
+tbit.open()
 
-tbit.gpiohw.digitalWrite(15, 1);
+tbit.gpiohw.digitalWrite(15, 1)
 puts sprintf("%.32b ", tbit.gpiohw.read())
 sleep(0.5)
-tbit.gpiohw.digitalWrite(15, 0);
+tbit.gpiohw.digitalWrite(15, 0)
 puts sprintf("%.32b ", tbit.gpiohw.read())
 
 puts sprintf("%.32b ", tbit.adchw.analogRead(0))
@@ -29,4 +30,3 @@ led.off()
 outpin.off()
 puts inpin.value()
 puts adcpin.value()
-

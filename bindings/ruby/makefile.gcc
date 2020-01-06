@@ -18,7 +18,7 @@ $(TARGET):
 	cd build; swig -c++ -ruby tbi.i
 	cd build; ruby extconf.rb --with-opt-include=/usr/include/libusb-1.0
 	cd build; make
-	cp build/tbi.so samples
+	cp -u build/tbi.so samples
 
 clean:
 	rm -fr build
