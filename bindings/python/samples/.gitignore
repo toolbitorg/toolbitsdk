@@ -1,3 +1,4 @@
 _tbi.so
-tbi.pyc
+_tbi-*.dll
 tbi.py
+__pycache__

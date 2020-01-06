@@ -14,11 +14,10 @@ $(TARGET):
 	cp ../../src/module/*.cpp build
 	cp ../../src/HIDAPI/windows/hid.c build
 	cp tbi.i build
-	cp extconf.rb build
-	cd build; swig -c++ -ruby tbi.i
-	cd build; /mingw64/bin/ruby extconf.rb
-	cd build; make
-	cp build/tbi.so samples
+	cp setup_mingw.py build
+	cd build; swig -c++ -python tbi.i
+	cd build; CC=gcc python setup_mingw.py build_ext --inplace
+	cp -u build/tbi.py build/_tbi-*.dll samples
 
 clean:
 	rm -fr build
