@@ -7,6 +7,7 @@
 
 
 Chopper::Chopper() :
+	gpiohw(mTbiService, ATT_GPIO0_BASE),
 	mAttUsbPortCtrl(ATT_USB_PORT_CTRL, 0x00, 0x00)
 {
 }
@@ -84,4 +85,3 @@ uint32_t Chopper::getUsbPortStatus()
 		return false;   // error
 	return mAttUsbPortCtrl.getValueUint32();
 }
-

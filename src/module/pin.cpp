@@ -1,14 +1,14 @@
 #include "pin.h"
 
 
-Pin::Pin(Tbit *p, uint8_t pinnum)
+Pin::Pin(Tbit* p, uint8_t pinnum)
 {
 	mTbit = p;
 	mPinNum = pinnum;
 	val = false;
 }
 
-Pin::Pin(Tbit *p, uint8_t pinnum, PinMode m)
+Pin::Pin(Tbit* p, uint8_t pinnum, PinMode m)
 {
 	mTbit = p;
 	mPinNum = pinnum;

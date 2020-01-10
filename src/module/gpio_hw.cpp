@@ -25,10 +25,19 @@ bool GpioHw::pinMode(uint8_t pin, PinMode mode)
 	if (pin > 32)
 		return false;
 
+	status = mTbiSrv->readAttribute(mAttGpioInoutMode);
+	if (!status)
+		return false;   // error
+
 	if (mode == OUTPUT_PIN) {
-		mAttGpioInoutMode->setValue(mAttGpioInoutMode->getValueUint32() | (1 << pin));
+		// clear bit to change output pin
+		mAttGpioInoutMode->setValue(mAttGpioInoutMode->getValueUint32() & ~(1 << pin));
 	}
 	else {
+		status = mTbiSrv->readAttribute(mAttGpioPullUp);
+		if (!status)
+			return false;   // error
+
 		if (mode == INPUT_PIN)
 			mAttGpioPullUp->setValue(mAttGpioPullUp->getValueUint32() & ~(1 << pin));
 		else if (mode == INPUT_PULLUP_PIN)
@@ -40,7 +49,8 @@ bool GpioHw::pinMode(uint8_t pin, PinMode mode)
 		if (!status)
 			return false;  // error
 
-		mAttGpioPullUp->setValue(mAttGpioInoutMode->getValueUint32() & ~(1 << pin));
+		// set bit to change input pin
+		mAttGpioInoutMode->setValue(mAttGpioInoutMode->getValueUint32() | (1 << pin));
 	}
 
 	status = mTbiSrv->writeAttribute(*mAttGpioInoutMode);
