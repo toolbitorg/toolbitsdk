@@ -58,6 +58,20 @@ bool Attvalue::setValue(int32_t i)
 	return true;
 }
 
+bool Attvalue::setValue(uint64_t i)
+{
+	dat.uint64 = i;
+	datlen = 8;
+	return true;
+}
+
+bool Attvalue::setValue(int64_t i)
+{
+	dat.int64 = i;
+	datlen = 8;
+	return true;
+}
+
 bool Attvalue::setValue(char *str)
 {
 	if (strlen(str) < VALUE_LEN) {
@@ -128,10 +142,26 @@ int32_t Attvalue::getValueInt32()
 	return dat.int32;
 }
 
+uint64_t Attvalue::getValueUint64()
+{
+	return dat.uint64;
+}
+
+int64_t Attvalue::getValueInt64()
+{
+	return dat.int64;
+}
+
 char* Attvalue::getValueStr()
 {
 	dat.str[VALUE_LEN] = '\0';  // Add NULL at the end of data just in case
 	return dat.str;
+}
+
+wchar_t* Attvalue::getValueU8str()
+{
+	dat.u8str[VALUE_LEN] = '\0';  // Add NULL at the end of data just in case
+	return dat.u8str;
 }
 
 float Attvalue::getValueFloat()

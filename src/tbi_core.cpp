@@ -2,12 +2,14 @@
 #include <wchar.h>
 #include <string.h>
 #include <stdlib.h>
+#include <codecvt> 
 #include "tbi_core.h"
 
 
 TbiCore::TbiCore() :
+	mAttVendorName(ATT_VENDOR_NAME, 0x00, 0x00),
 	mAttProductName(ATT_PRODUCT_NAME, 0x00, 0x00),
-    mAttProductRevision(ATT_PRODUCT_REVISION, 0x00, 0x00),
+	mAttProductRevision(ATT_PRODUCT_REVISION, 0x00, 0x00),
     mAttProductSerial(ATT_PRODUCT_SERIAL, 0x00, 0x00),
     mAttFirmVersion(ATT_FIRM_VERSION, 0x00, 0x00)
 {
@@ -33,6 +35,7 @@ bool TbiCore::openPath(const char *path)
 		return false;
 
 	// Read product data from device
+	mTbiService->readAttribute(&mAttVendorName);
 	mTbiService->readAttribute(&mAttProductName);
 	mTbiService->readAttribute(&mAttProductRevision);
 	mTbiService->readAttribute(&mAttProductSerial);
@@ -58,6 +61,11 @@ bool TbiCore::isConnected()
 	return mTbiDevice->isOpen();
 }
 
+string TbiCore::getVendorName()
+{
+	return mAttVendorName.getValueStr();
+}
+
 string TbiCore::getProductName()
 {
 	return mAttProductName.getValueStr();
@@ -70,7 +78,8 @@ string TbiCore::getProductRevision()
 
 string TbiCore::getProductSerial()
 {
-	return mAttProductSerial.getValueStr();
+	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+	return converter.to_bytes(mAttProductSerial.getValueU8str());		
 }
 
 string TbiCore::getFirmVersion()

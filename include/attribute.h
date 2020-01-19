@@ -15,10 +15,11 @@ using namespace std;
 
 // Toolbit common attribute ID
 #define ToolbitAttributionID int
-#define ATT_PRODUCT_NAME     0x0000
-#define ATT_PRODUCT_REVISION 0x0001
-#define ATT_PRODUCT_SERIAL   0x0002
-#define ATT_FIRM_VERSION     0x0003
+#define ATT_VENDOR_NAME      0x0000
+#define ATT_PRODUCT_NAME     0x0001
+#define ATT_PRODUCT_REVISION 0x0002
+#define ATT_PRODUCT_SERIAL   0x0003
+#define ATT_FIRM_VERSION     0x0004
 
 typedef enum
 {
@@ -49,6 +50,8 @@ public:
 	bool setValue(int16_t i);
 	bool setValue(uint32_t i);
 	bool setValue(int32_t i);
+	bool setValue(uint64_t i);
+	bool setValue(int64_t i);
 	bool setValue(char *str);
 	bool setValue(float f);
 	bool setValue(double d);
@@ -56,11 +59,14 @@ public:
 
 	uint8_t  getValueUint8();
 	int8_t   getValueInt8();
-	uint16_t  getValueUint16();
-	int16_t   getValueInt16();
+	uint16_t getValueUint16();
+	int16_t  getValueInt16();
 	uint32_t getValueUint32();
 	int32_t  getValueInt32();
-	char     *getValueStr();
+	uint64_t getValueUint64();
+	int64_t  getValueInt64();
+	char*    getValueStr();
+	wchar_t* getValueU8str();
 	float    getValueFloat();
 	double   getValueDouble();
 	uint8_t  getValueLength();
@@ -74,7 +80,10 @@ private:
 		int16_t  int16;
 		uint32_t uint32;
 		int32_t  int32;
+		uint64_t uint64;
+		int64_t  int64;
 		char     str[VALUE_LEN + 1];
+		wchar_t u8str[VALUE_LEN/2 + 1];
 		float    f;
 		double   d;
 	} dat;

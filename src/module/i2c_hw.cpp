@@ -22,7 +22,23 @@ I2cHw::~I2cHw()
 	delete mAttI2cRw4Byte;
 }
 
-bool I2cHw::write(uint8_t reg_addr, uint16_t val)
+
+bool I2cHw::setI2cDeviceAddr(uint8_t dev_addr)
+{
+	bool status;
+
+	mAttI2cDeviceAddr->setValue(dev_addr);
+	status = mTbiSrv->writeAttribute(*mAttI2cDeviceAddr);
+	if (!status) {
+		// error
+		return false;
+	}
+
+	return true;
+}
+
+
+bool I2cHw::write2byte(uint8_t reg_addr, uint16_t val)
 {
 	bool status;
 
@@ -43,7 +59,7 @@ bool I2cHw::write(uint8_t reg_addr, uint16_t val)
 	return true;
 }
 
-uint16_t I2cHw::read(uint8_t reg_addr)
+uint16_t I2cHw::read2byte(uint8_t reg_addr)
 {
 	bool status;
 

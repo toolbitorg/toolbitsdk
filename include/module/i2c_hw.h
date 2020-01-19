@@ -19,8 +19,9 @@ class I2cHw
 public:
 	I2cHw(TbiService *tbisrv, ToolbitAttributionID base);
 	~I2cHw();
-	bool write(uint8_t addr, uint16_t val);
-	uint16_t read(uint8_t addr);
+	bool setI2cDeviceAddr(uint8_t dev_addr);
+	bool write2byte(uint8_t addr, uint16_t val);
+	uint16_t read2byte(uint8_t addr);
 
 protected:
 	TbiService *mTbiSrv;

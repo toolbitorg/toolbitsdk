@@ -50,7 +50,7 @@ bool Dmm::open()
 {
 	TbiDeviceManager devm;
 
-	if (openPath(devm.getPath("Dmm"))) {
+	if (openPath(devm.getPath("DMM"))) {
 		setVoltageRange(VOLTAGE_RANGE_AUTO);
 		setCurrentRange(CURRENT_RANGE_AUTO);
 	}
@@ -105,12 +105,12 @@ string Dmm::showReg()
 {
 	stringstream ss;
 	for (int addr = 0; addr <= REG_POWER_VALID_LOWER_LIMIT; addr++) {
-		ss << hex << addr << ": 0x" << i2chw.read(addr) << endl;
+		ss << hex << addr << ": 0x" << i2chw.read2byte(addr) << endl;
 	}
 	return ss.str();
 }
 
 uint16_t Dmm::getDieID()
 {
-	return i2chw.read(REG_DIE_ID);
+	return i2chw.read2byte(REG_DIE_ID);
 }
