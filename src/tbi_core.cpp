@@ -2,7 +2,6 @@
 #include <wchar.h>
 #include <string.h>
 #include <stdlib.h>
-#include <codecvt> 
 #include "tbi_core.h"
 
 
@@ -78,8 +77,15 @@ string TbiCore::getProductRevision()
 
 string TbiCore::getProductSerial()
 {
-	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-	return converter.to_bytes(mAttProductSerial.getValueU8str());		
+	char str[VALUE_LEN];
+	char* dst = str;
+	wchar_t* p = mAttProductSerial.getValueU8str();
+
+	while (*p != NULL) {
+		*dst++ = (char)*p++;
+	}
+	*dst = NULL;
+	return str;
 }
 
 string TbiCore::getFirmVersion()
