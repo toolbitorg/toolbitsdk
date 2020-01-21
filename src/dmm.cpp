@@ -30,9 +30,8 @@
 Dmm::Dmm() :
 	i2chw(mTbiService, ATT_IC20_BASE)
 {
-	mAttVoltageRange = new Attribute(ATT_VOLTAGE_RANGE, 0x00, 0x00);
+	mAttCalibration = new Attribute(ATT_CALIBRATION, 0x00, 0x00);
 	mAttVoltage = new Attribute(ATT_VOLTAGE, 0x00, 0x00);
-	mAttCurrentRange = new Attribute(ATT_CURRENT_RANGE, 0x00, 0x00);
 	mAttCurrent = new Attribute(ATT_CURRENT, 0x00, 0x00);
 }
 
@@ -40,9 +39,8 @@ Dmm::~Dmm()
 {
 	close();
 
-	delete mAttVoltageRange;
+	delete mAttCalibration;
 	delete mAttVoltage;
-	delete mAttCurrentRange;
 	delete mAttCurrent;
 }
 
@@ -50,11 +48,22 @@ bool Dmm::open()
 {
 	TbiDeviceManager devm;
 
-	if (openPath(devm.getPath("DMM"))) {
-		setVoltageRange(VOLTAGE_RANGE_AUTO);
-		setCurrentRange(CURRENT_RANGE_AUTO);
+	if (!openPath(devm.getPath("DMM"))) {
+		return false;
 	}
-	else {
+
+	return true;
+}
+
+bool Dmm::calibration()
+{
+	bool status;
+
+	// Triger calibration by writting any value on mAttCalibration attribute
+	mAttCalibration->setValue(0x00);
+	status = mTbiService->writeAttribute(*mAttCalibration);
+	if (!status) {
+		// error
 		return false;
 	}
 
@@ -79,26 +88,6 @@ float Dmm::getCurrent()
 		return 0.0;
 	}
 	return mAttCurrent->getValueFloat();
-}
-
-void Dmm::setVoltageRange(VoltageRange r)
-{
-	mAttVoltageRange->setValue(r);
-	bool status = mTbiService->writeAttribute(*mAttVoltageRange);
-	if (!status) {
-		// error
-		return;
-	}
-}
-
-void Dmm::setCurrentRange(CurrentRange r)
-{
-	mAttCurrentRange->setValue(r);
-	bool status = mTbiService->writeAttribute(*mAttCurrentRange);
-	if (!status) {
-		// error
-		return;
-	}
 }
 
 string Dmm::showReg()
