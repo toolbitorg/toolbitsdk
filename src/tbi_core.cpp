@@ -77,18 +77,23 @@ string TbiCore::getProductRevision()
 
 string TbiCore::getProductSerial()
 {
-	char str[VALUE_LEN];
-	char* dst = str;
-	wchar_t* p = mAttProductSerial.getValueU8str();
-
-	while (*p != NULL) {
-		*dst++ = (char)*p++;
-	}
-	*dst = NULL;
-	return str;
+	return convertWcharToString(mAttProductSerial.getValueU8str());
 }
 
 string TbiCore::getFirmVersion()
 {
 	return mAttFirmVersion.getValueStr();
+}
+
+string convertWcharToString(wchar_t* p)
+{
+	char str[VALUE_LEN];
+	char* dst = str;
+
+	while (*p != NULL) {
+		*dst++ = (char)* p++;
+	}
+	*dst = NULL;
+
+	return str;
 }

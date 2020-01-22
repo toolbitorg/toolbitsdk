@@ -48,7 +48,18 @@ bool Dmm::open()
 {
 	TbiDeviceManager devm;
 
-	if (!openPath(devm.getPath("DMM"))) {
+	if (!openPath(devm.getPathByName("DMM"))) {
+		return false;
+	}
+
+	return true;
+}
+
+bool Dmm::open(string serial)
+{
+	TbiDeviceManager devm;
+
+	if (!openPath(devm.getPathByNameAndSerial("DMM", serial))) {
 		return false;
 	}
 

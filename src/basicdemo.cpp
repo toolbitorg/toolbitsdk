@@ -10,7 +10,7 @@ BasicDemo::BasicDemo() :
 {
 	TbiDeviceManager devm;
 
-	if (openPath(devm.getPath("Luke"))) {
+	if (openPath(devm.getPathByName("Luke"))) {
 
 		// Read value from device
 		mTbiService->readAttribute(&mAttCount);
@@ -40,4 +40,3 @@ uint8_t BasicDemo::GetCount()
 	}
 	return mAttCount.getValueInt8();
 }
-

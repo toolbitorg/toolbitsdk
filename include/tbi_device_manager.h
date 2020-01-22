@@ -28,7 +28,8 @@ public:
 
 	void updateDeviceList();
 	void showDeviceList();
-	const char* getPath(string name);
+	const char* getPathByName(string name);
+	const char* getPathByNameAndSerial(string name, string serial);
 	int getDeviceNum();
 
 protected:

@@ -21,7 +21,7 @@ bool Chopper::open()
 {
 	TbiDeviceManager devm;
 
-	if (openPath(devm.getPath("CHOPPER HUB"))) {
+	if (openPath(devm.getPathByName("CHOPPER HUB"))) {
 		mTbiService->readAttribute(&mAttUsbPortCtrl);
 	}
 	else {
@@ -31,6 +31,19 @@ bool Chopper::open()
 	return true;
 }
 
+bool Chopper::open(string serial)
+{
+	TbiDeviceManager devm;
+
+	if (openPath(devm.getPathByNameAndSerial("CHOPPER HUB", serial))) {
+		mTbiService->readAttribute(&mAttUsbPortCtrl);
+	}
+	else {
+		return false;
+	}
+
+	return true;
+}
 
 bool Chopper::enableAllUsbPort()
 {

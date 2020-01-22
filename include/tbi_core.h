@@ -37,4 +37,6 @@ private:
 	
 };
 
+string convertWcharToString(wchar_t* p);
+
 #endif /* TOOLBITSDK_TBI_CORE_H_ */

@@ -19,6 +19,7 @@ public:
     ~Chopper();
 
 	bool open();
+  bool open(string serial);
 	bool enableAllUsbPort();
 	bool enableUsbPort(uint32_t p);
 	bool disableAllUsbPort();

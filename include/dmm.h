@@ -25,6 +25,7 @@ public:
 	I2cHw  i2chw;
 
 	bool open();
+	bool open(string serial);
 	bool calibration();
 	float getVoltage();
 	float getCurrent();

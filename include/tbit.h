@@ -24,6 +24,7 @@ public:
 	~Tbit();
 
 	bool open();
+	bool open(string serial);
 
 	// Hardware module
 	GpioHw gpiohw;

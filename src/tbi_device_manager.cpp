@@ -22,26 +22,27 @@ void TbiDeviceManager::updateDeviceList()
 	for (int i = 0; i < USB_VID_NUM_MAX; i++)
 		hid_free_enumeration(devs[i]);
 
-	// Enumerate and print the HID devices on the system
 	devs[0] = hid_enumerate(USB_VID_PIC, USB_PID_PIC);
-	devs[1] = hid_enumerate(USB_VID_ARDUINO, USB_PID_ARDUINO);
 }
 
 void TbiDeviceManager::showDeviceList()
 {
-	struct hid_device_info *cur_dev;
+	struct hid_device_info* cur_dev;
 	TbiCore cur_obj;
-	
+
 	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
 		cur_dev = devs[i];
 		while (cur_dev) {
-
-			printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls",
-				cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
-			printf("\n");
+			printf("Devicce found\n");
+			printf("  VID: %04hx\n", cur_dev->vendor_id);
+			printf("  PID: %04hx\n", cur_dev->product_id);
+			printf("  Path: %s\n", cur_dev->path);
 			printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
-			printf("  Product:      %ls\n", cur_dev->product_string);
+			printf("  Product     : %ls\n", cur_dev->product_string);
+			printf("  Serial      : %ls\n", cur_dev->serial_number);
+			printf("\n");
 
+			/*
 			if (cur_obj.openPath(cur_dev->path)) {
 				cout << "  Attribute " << endl;
 				cout << "    Product Name: " << cur_obj.getProductName() << endl;
@@ -50,36 +51,47 @@ void TbiDeviceManager::showDeviceList()
 				cout << "    Firm Version: " << cur_obj.getFirmVersion() << endl;
 				cur_obj.close();
 			}
-
-			printf("\n");
-			printf("\n");
+			*/
 
 			cur_dev = cur_dev->next;
 		}
 	}
 }
 
-const char* TbiDeviceManager::getPath(string name)
+const char* TbiDeviceManager::getPathByName(string name)
 {
-	struct hid_device_info *cur_dev;
+	struct hid_device_info* cur_dev;
 	TbiCore cur_obj;
-	const char *path = NULL;
+	const char* path = NULL;
 
 	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
 
 		cur_dev = devs[i];
 		while (cur_dev && !path) {
+			if (name==convertWcharToString(cur_dev->product_string)) {
+				path = cur_dev->path;
+			}
+			cur_dev = cur_dev->next;
+		}
+	}
 
-			printf("Device Found\n  type: %04hx %04hx\n  path: %s\n  serial_number: %ls",
-				cur_dev->vendor_id, cur_dev->product_id, cur_dev->path, cur_dev->serial_number);
-			printf("\n");
-			printf("  Manufacturer: %ls\n", cur_dev->manufacturer_string);
-			printf("  Product:      %ls\n", cur_dev->product_string);
+	return path;
+}
 
-			if (cur_obj.openPath(cur_dev->path)) {
-				if (!name.compare(cur_obj.getProductName()))
-					path = cur_dev->path;
-				cur_obj.close();
+const char* TbiDeviceManager::getPathByNameAndSerial(string name, string serial)
+{
+	struct hid_device_info* cur_dev;
+	TbiCore cur_obj;
+	const char* path = NULL;
+
+	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
+
+		cur_dev = devs[i];
+		while (cur_dev && !path) {
+			if (name==convertWcharToString(cur_dev->product_string)
+				&& serial==convertWcharToString(cur_dev->serial_number))
+			{
+				path = cur_dev->path;
 			}
 			cur_dev = cur_dev->next;
 		}
