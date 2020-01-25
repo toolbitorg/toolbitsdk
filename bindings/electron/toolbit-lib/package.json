@@ -1,6 +1,6 @@
 {
   "name": "toolbit-lib",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Toolbit library",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,9 @@
   "files": [
     "index.js",
     "package.json",
-    "lib/tbi-mswin.node"
+    "lib/toolbit-linux.node",
+    "lib/toolbit-macos.node",
+    "lib/toolbit-mswin.node"
   ],
   "repository": {
     "type": "git",
