@@ -14,11 +14,11 @@ $(TARGET):
 	cp ../../src/module/*.cpp build
 	cp ../../src/HIDAPI/mac/hid.c build
 	cp ../tbi.i build
-	cp setup_macos.py build
+	cp setup.py build
 	cd build; swig -c++ -python tbi.i
 	@[ -d build/build/temp.macosx-10.12-intel-2.7 ] || mkdir -p build/build/temp.macosx-10.12-intel-2.7
 	cd build; cc -fno-strict-aliasing -fno-common -dynamic -arch i386 -arch x86_64 -g -Os -pipe -fno-common -fno-strict-aliasing -fwrapv -DENABLE_DTRACE -DMACOSX -DNDEBUG -Wall -Wstrict-prototypes -Wshorten-64-to-32 -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -arch i386 -arch x86_64 -pipe -I/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7 -c hid.c -o build/temp.macosx-10.12-intel-2.7/hid.o
-	cd build; python setup_macos.py build_ext --inplace
+	cd build; python setup.py build_ext --inplace
 	cd build; g++ -bundle -undefined dynamic_lookup -arch i386 -arch x86_64 -Wl,-F. build/temp.macosx-10.12-intel-2.7/tbi_wrap.o build/temp.macosx-10.12-intel-2.7/tbi_core.o build/temp.macosx-10.12-intel-2.7/tbi_device.o build/temp.macosx-10.12-intel-2.7/tbi_device_manager.o build/temp.macosx-10.12-intel-2.7/tbi_service.o build/temp.macosx-10.12-intel-2.7/attribute.o build/temp.macosx-10.12-intel-2.7/tbit.o build/temp.macosx-10.12-intel-2.7/basicdemo.o build/temp.macosx-10.12-intel-2.7/chopper.o build/temp.macosx-10.12-intel-2.7/dmm.o build/temp.macosx-10.12-intel-2.7/adc.o build/temp.macosx-10.12-intel-2.7/adc_hw.o build/temp.macosx-10.12-intel-2.7/gpio_hw.o build/temp.macosx-10.12-intel-2.7/i2c_hw.o build/temp.macosx-10.12-intel-2.7/pin.o build/temp.macosx-10.12-intel-2.7/hid.o -framework IOKit -framework Carbon -o /Users/junji/Toolbit/software/workspace/ToolbitSDK/bindings/python/build/_tbi.so
 	cp -f build/tbi.py build/_tbi.so samples
 

@@ -1,4 +1,4 @@
-%module tbi
+%module toolbit
 %{
 #include "tbi_core.h"
 #include "tbi_device.h"

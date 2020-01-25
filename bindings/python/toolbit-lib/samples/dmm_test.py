@@ -1,6 +1,7 @@
-import tbi
+#from toolbit import Dmm
+import toolbit
 
-dmm = tbi.Dmm()
+dmm = toolbit.Dmm()
 dmm.open()
 
 print(str('%03.3f' % round(dmm.getVoltage(),3)) + " [V]")

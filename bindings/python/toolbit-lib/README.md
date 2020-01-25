@@ -3,7 +3,7 @@ Python bindings
 
 ## Descripton
 
-Build library of Toolbit Interface for Python.
+Toolbit library for Python.
 
 
 ## Require
