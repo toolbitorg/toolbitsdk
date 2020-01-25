@@ -7,6 +7,7 @@ https://github.com/toolbitorg/ToolbitSDK
 from distutils.core import setup, Extension
 import platform
 from os import path
+from io import open
 
 # Get the long description from the README file
 here = path.abspath(path.dirname(__file__))
