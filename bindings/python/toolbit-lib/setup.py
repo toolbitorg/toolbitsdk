@@ -30,10 +30,11 @@ if osname == 'Linux':
         extra_compile_args=["-std=gnu++11"],
     )
 elif osname == 'Darwin':
-# Cannot mix .c and .cpp files because of -std=c++11 option
-# 'hid.c',
     toolbit_module = Extension('toolbit._toolbit',
-        sources + ['toolbit/macos/hid.c'],
+# Cannot mix .c and .cpp files because of -std=c++11 option
+# 'hid.c' will be compiled by make instead of setup.py
+#       sources + ['toolbit/macos/hid.c'],
+        sources,
         include_dirs=['toolbit'],
 #       libraries=['stdc++ -framework IOKit -framework Carbon'],
         extra_compile_args=['-std=c++11'],
