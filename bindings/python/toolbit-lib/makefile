@@ -1,4 +1,15 @@
-TARGET = build/*/*/_toolbit*.*
+ifeq ($(OS), Windows_NT)
+	TARGET = toolbit/_toolbit*.dll
+else
+	UNAME := $(shell uname)
+	ifeq ($(UNAME), Linux)
+		TARGET = toolbit/_toolbit.so
+	endif
+	ifeq ($(UNAME), Darwin)
+		TARGET = toolbit/_toolbit.so
+	endif
+endif
+
 
 # implementation
 
@@ -20,7 +31,7 @@ $(TARGET):
 	cp -f ../../toolbit.i toolbit
 	cd toolbit; swig -c++ -python toolbit.i
 	mv -f toolbit/toolbit.py toolbit/__init__.py
-	python setup.py build_ext
+	python setup.py build_ext --inplace
 
 install: $(TARGET)
 	python setup.py install
@@ -32,6 +43,6 @@ clean:
 	rm -fr toolbit/*.cxx
 	rm -fr toolbit/*.c
 	rm -fr toolbit/*.i
-	rm -fr toolbit/*.py
+	rm -fr toolbit/_*.*
 
 .PHONY: all clean
