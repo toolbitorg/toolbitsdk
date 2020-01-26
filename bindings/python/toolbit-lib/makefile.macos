@@ -16,12 +16,7 @@ $(TARGET):
 	cp -f ../../toolbit.i toolbit
 	cd toolbit; swig -c++ -python toolbit.i
 	mv -f toolbit/toolbit.py toolbit/__init__.py
-	@[ -d build/temp.macosx-10.14-intel-2.7/toolbit ] || mkdir -p build/temp.macosx-10.14-intel-2.7/toolbit
-	cc -fno-strict-aliasing -fno-common -dynamic -arch i386 -arch x86_64 -g -Os -pipe -fno-common -fno-strict-aliasing -fwrapv -DENABLE_DTRACE -DMACOSX -DNDEBUG -Wall -Wstrict-prototypes -Wshorten-64-to-32 -DNDEBUG -g -fwrapv -Os -Wall -Wstrict-prototypes -DENABLE_DTRACE -arch i386 -arch x86_64 -pipe -I/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7 -I./toolbit -c toolbit/macos/hid.c -o build/temp.macosx-10.14-intel-2.7/toolbit/hid.o
 	python setup.py build_ext
-	c++ -bundle -undefined dynamic_lookup -Wl,-F. build/temp.macosx-10.14-intel-2.7/toolbit/toolbit_wrap.o build/temp.macosx-10.14-intel-2.7/toolbit/tbi_core.o build/temp.macosx-10.14-intel-2.7/toolbit/tbi_device.o build/temp.macosx-10.14-intel-2.7/toolbit/tbi_service.o build/temp.macosx-10.14-intel-2.7/toolbit/attribute.o build/temp.macosx-10.14-intel-2.7/toolbit/tbit.o build/temp.macosx-10.14-intel-2.7/toolbit/basicdemo.o build/temp.macosx-10.14-intel-2.7/toolbit/chopper.o build/temp.macosx-10.14-intel-2.7/toolbit/dmm.o build/temp.macosx-10.14-intel-2.7/toolbit/tbi_device_manager.o build/temp.macosx-10.14-intel-2.7/toolbit/adc.o build/temp.macosx-10.14-intel-2.7/toolbit/adc_hw.o build/temp.macosx-10.14-intel-2.7/toolbit/gpio_hw.o build/temp.macosx-10.14-intel-2.7/toolbit/i2c_hw.o build/temp.macosx-10.14-intel-2.7/toolbit/pin.o build/temp.macosx-10.14-intel-2.7/toolbit/hid.o -o build/lib.macosx-10.14-intel-2.7/toolbit/_toolbit.so
-# Workaround to avoid compile error is implemented for now
-# This is because python cannot mix .c and .cpp files because of -std=c++11 option
 
 install: $(TARGET)
 	python setup.py install

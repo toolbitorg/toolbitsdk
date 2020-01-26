@@ -23,28 +23,37 @@ sources = ['toolbit/toolbit_wrap.cxx','toolbit/tbi_core.cpp',
 
 osname = platform.system()
 if osname == 'Linux':
-    toolbit_module = Extension('toolbit._toolbit',
-        sources + ['toolbit/linux/hid.c'],
-        include_dirs=['toolbit'],
-        libraries=['udev'],
-        extra_compile_args=["-std=gnu++11"],
-    )
+    toolbit_module = [
+        Extension('toolbit._toolbit',
+            sources + ['toolbit/linux/hid.c'],
+            include_dirs=['toolbit'],
+            libraries=['udev'],
+            extra_compile_args=["-std=gnu++11"],
+    )]
 elif osname == 'Darwin':
-    toolbit_module = Extension('toolbit._toolbit',
-# Cannot mix .c and .cpp files because of -std=c++11 option
-# 'hid.c' will be compiled by make instead of setup.py
-#       sources + ['toolbit/macos/hid.c'],
-        sources,
-        include_dirs=['toolbit'],
-#       libraries=['stdc++ -framework IOKit -framework Carbon'],
-        extra_compile_args=['-std=c++11'],
-    )
+# Cannot mix .c and .cpp files in one module
+# Because clang doesn't allow to compile .c file with -std=c++11 option
+# Threfore, compile hid.c first and then build toolbit extension with hid.o
+    toolbit_module = [
+        Extension('toolbit._hidapi',
+            ['toolbit/macos/hid.c'],
+            include_dirs=['toolbit']
+        ),
+        Extension('toolbit._toolbit',
+            sources,
+            include_dirs=['toolbit'],
+            extra_compile_args=['-std=c++11'],
+            extra_objects=['build/temp.macosx-10.14-intel-2.7/toolbit/macos/hid.o'],
+#            libraries=['stdc++ -framework IOKit -framework Carbon'],
+        )
+    ]
 elif osname == 'Windows':
-    toolbit_module = Extension('toolbit._toolbit',
-        sources + ['toolbit/mswin/hid.c'],
-        include_dirs=['toolbit'],
-        libraries=['setupapi'],
-    )
+    toolbit_module = [
+        Extension('toolbit._toolbit',
+            sources + ['toolbit/mswin/hid.c'],
+            include_dirs=['toolbit'],
+            libraries=['setupapi'],
+    )]
 
 setup (
     name = 'toolbit-lib',
@@ -80,7 +89,7 @@ setup (
     #        'sample=sample:main',
     #    ],
     #},
-    ext_modules = [toolbit_module],
+    ext_modules = toolbit_module,
     project_urls={
         'Bug Reports': 'https://github.com/toolbitorg/ToolbitSDK/issues',
         'Source': 'https://github.com/toolbitorg/ToolbitSDK',
