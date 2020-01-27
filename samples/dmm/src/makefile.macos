@@ -14,7 +14,7 @@ INCLUDE = $(INCDIR)
 LIBOBJS = $(LIBDIR)/libtbi.a
 LIBS = $(LIBOBJS)
 
-TARGET = $(BINDIR)/luke
+TARGET = $(BINDIR)/dmm
 CPP_SOURCES = $(wildcard *.cpp)
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))

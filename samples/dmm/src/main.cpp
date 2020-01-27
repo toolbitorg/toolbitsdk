@@ -14,18 +14,18 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    Dmm *dmm = new Dmm();
-/*
+  Dmm *dmm = new Dmm();
+	dmm->open();
+
 	if (!dmm->isConnected()) {
 		cout << "Fail to connect to dmm " << endl;
 		return 1;
 	}
-	*/
 
 	cout << "ProductName: " << dmm->getProductName() << endl;
 	cout << "ProductRevision: " << dmm->getProductRevision() << endl;
 	cout << "ProductSerial: " << dmm->getProductSerial() << endl;
-	cout << "ProductVersion: " << dmm->getFirmVersion() << endl;
+	cout << "FirmVersion: " << dmm->getFirmVersion() << endl;
 
 	/*
     getoption go(argc, argv);
@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
             break;
         }
 
-        switch (c) {			
+        switch (c) {
 			case 'l':
                 //hidchopper->ShowDeviceList();
                 break;

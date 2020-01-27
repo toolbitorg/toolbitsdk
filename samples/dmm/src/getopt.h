@@ -8,7 +8,7 @@
 
 
 #define ERR(szz,czz) if(m_opterr){fprintf(stderr,"%s%s%c\n",m_argv[0],szz,czz);}
- 
+
 class getoption {
 public:
     explicit getoption( int argc, char* argv[] ) :
@@ -20,11 +20,11 @@ public:
     m_optopt( 0 ),
     m_optarg( 0 ) {
     }
- 
+
     int get( char* opts ) {
         register int c;
         register char *cp;
- 
+
         if (m_sp == 1) {
             if (m_optind >= m_argc || m_argv[m_optind][0] != '-' || m_argv[m_optind][1] == '\0')
                 return (EOF);
@@ -65,20 +65,20 @@ public:
         }
         return (c);
     }
- 
+
     char* argument() {
         return m_optarg;
     }
- 
+
     int optind() {
         return m_optind;
     }
- 
+
 private:
     int     m_argc;
     char**  m_argv;
     int     m_sp;
- 
+
     int     m_opterr;
     int     m_optind;
     int     m_optopt;

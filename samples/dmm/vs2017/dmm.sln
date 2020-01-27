@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LukeCUI", "LukeCUI.vcxproj", "{87AD143E-2619-48BD-80A8-8BB22B3BA4D9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dmm", "dmm.vcxproj", "{87AD143E-2619-48BD-80A8-8BB22B3BA4D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

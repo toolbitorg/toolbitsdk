@@ -1,19 +1,19 @@
 BINDIR = ../bin
 OBJDIR = ../build
 INCDIR = -I../../../include -I../../../include/module
-LIBDIR = ../../../lib/gcc
+LIBDIR = ../../../lib/mingw
 LIBSRCDIR = ../../../src
 
 CC  = gcc
 CXX = g++
-CFLAGS  = -g -MMD -MP -std=c++11
+CXXFLAGS  = -g -MMD -MP -std=c++11
 LDFLAGS =
 INCLUDE = $(INCDIR)
 
 LIBOBJS = $(LIBDIR)/libtbi.a
-LIBS = $(LIBOBJS) `pkg-config libusb-1.0 libudev --libs` -lpthread
+LIBS = $(LIBOBJS) -lsetupapi
 
-TARGET = $(BINDIR)/luke
+TARGET = $(BINDIR)/dmm.exe
 CPP_SOURCES = $(wildcard *.cpp)
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
@@ -25,7 +25,7 @@ DEPENDS = $(OBJECTS:.o=.d)
 all: $(TARGET)
 
 $(LIBOBJS): FORCE
-	cd $(LIBSRCDIR); $(MAKE) -f makefile.gcc
+	cd $(LIBSRCDIR); make -f makefile.mingw
 
 FORCE:
 
@@ -35,11 +35,11 @@ $(TARGET): $(OBJECTS) $(LIBOBJS)
 
 $(OBJDIR)/%.o : %.cpp
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
-	$(CXX) $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
 	$(RM) $(OBJECTS) $(TARGET) $(DEPENDS)
-	cd $(LIBSRCDIR); make -f makefile.gcc clean
+	cd $(LIBSRCDIR); make -f makefile.mingw clean
 
 
 -include $(DEPENDS)
