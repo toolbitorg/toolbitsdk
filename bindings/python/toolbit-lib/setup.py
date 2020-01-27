@@ -32,7 +32,7 @@ if osname == 'Linux':
     )]
 elif osname == 'Darwin':
     import os
-    os.environ['LDFLAGS'] = '-framework IOKit -framework CoreFoundation'
+    os.environ['LDFLAGS'] = '-framework IOKit -framework Carbon'
     # Cannot mix .c and .cpp files in one module
     # Because clang doesn't allow to compile .c file with -std=c++11 option
     # Threfore, compile hid.c first and then build toolbit extension with hid.o
@@ -45,7 +45,7 @@ elif osname == 'Darwin':
             sources,
             include_dirs=['toolbit'],
             extra_compile_args=['-std=c++11'],
-            extra_objects=['build/temp.macosx-10.14-intel-2.7/toolbit/macos/hid.o'],
+            extra_objects=['build/temp/toolbit/macos/hid.o'],
             libraries=['stdc++'],
         )
     ]

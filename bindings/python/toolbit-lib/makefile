@@ -1,12 +1,16 @@
 ifeq ($(OS), Windows_NT)
 	TARGET = toolbit/_toolbit*.dll
+	PYTHON = python
 else
 	UNAME := $(shell uname)
 	ifeq ($(UNAME), Linux)
 		TARGET = toolbit/_toolbit.so
+		PYTHON = python
 	endif
 	ifeq ($(UNAME), Darwin)
-		TARGET = toolbit/_toolbit.so
+		TARGET = toolbit/_toolbit*.so
+		PYTHON = python3
+		BUILD_EXT_EXTRA_OPTIONS = --build-temp build/temp
 	endif
 endif
 
@@ -18,6 +22,7 @@ all: $(TARGET)
 FORCE:
 
 $(TARGET):
+	@[ -d toolbit ] || mkdir -p toolbit
 	cp -f ../../../include/*.h toolbit
 	cp -f ../../../include/module/*.h toolbit
 	cp -f ../../../src/module/*.cpp toolbit
@@ -31,18 +36,13 @@ $(TARGET):
 	cp -f ../../toolbit.i toolbit
 	cd toolbit; swig -c++ -python toolbit.i
 	mv -f toolbit/toolbit.py toolbit/__init__.py
-	python setup.py build_ext --inplace
+	$(PYTHON) setup.py build_ext --inplace $(BUILD_EXT_EXTRA_OPTIONS)
 
 install: $(TARGET)
-	python setup.py install
+	$(PYTHON) setup.py install
 
 clean:
 	rm -fr build
-	rm -fr toolbit/*.h
-	rm -fr toolbit/*.cpp
-	rm -fr toolbit/*.cxx
-	rm -fr toolbit/*.c
-	rm -fr toolbit/*.i
-	rm -fr toolbit/_*.*
+	rm -fr toolbit
 
 .PHONY: all clean
