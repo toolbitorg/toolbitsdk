@@ -24,6 +24,14 @@ sources = ['toolbit/toolbit_wrap.cxx','toolbit/tbi_core.cpp',
     'toolbit/adc_hw.cpp', 'toolbit/gpio_hw.cpp', 'toolbit/i2c_hw.cpp',
     'toolbit/pin.cpp']
 
+headers = ['toolbit/tbi_core.h',
+    'toolbit/tbi_device.h', 'toolbit/tbi_service.h', 'toolbit/attribute.h',
+    'toolbit/tbit.h', 'toolbit/basicdemo.h', 'toolbit/chopper.h',
+    'toolbit/dmm.h', 'toolbit/tbi_device_manager.h', 'toolbit/adc.h',
+    'toolbit/adc_hw.h', 'toolbit/gpio_hw.h', 'toolbit/i2c_hw.h',
+    'toolbit/pin.h']
+
+
 osname = platform.system()
 if osname == 'Linux':
     toolbit_module = [
@@ -95,6 +103,10 @@ setup (
     #    ],
     #},
     ext_modules = toolbit_module,
+    data_files = [
+        ('header', headers),
+        ('source', ['toolbit/linux/hid.c', 'toolbit/macos/hid.c', 'toolbit/mswin/hid.c'])
+    ],
     project_urls={
         'Bug Reports': 'https://github.com/toolbitorg/ToolbitSDK/issues',
         'Source': 'https://github.com/toolbitorg/ToolbitSDK',
