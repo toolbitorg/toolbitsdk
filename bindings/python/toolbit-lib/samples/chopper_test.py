@@ -1,7 +1,7 @@
-import tbi
+from toolbit import Chopper
 import time
 
-chopper = tbi.Chopper()
+chopper = Chopper()
 chopper.open()
 
 chopper.enableAllUsbPort()

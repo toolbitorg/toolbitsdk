@@ -17,6 +17,7 @@
 #include "pin.h"
 %}
 %include <stdint.i>
+%include <std_string.i>
 %include "tbi_core.h"
 %include "tbi_device.h"
 %include "tbi_device_manager.h"
