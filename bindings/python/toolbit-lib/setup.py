@@ -24,7 +24,7 @@ sources = ['toolbit/toolbit_wrap.cxx','toolbit/tbi_core.cpp',
     'toolbit/adc_hw.cpp', 'toolbit/gpio_hw.cpp', 'toolbit/i2c_hw.cpp',
     'toolbit/pin.cpp']
 
-headers = ['toolbit/tbi_core.h',
+headers = ['toolbit/hidapi.h', 'toolbit/tbi_core.h',
     'toolbit/tbi_device.h', 'toolbit/tbi_service.h', 'toolbit/attribute.h',
     'toolbit/tbit.h', 'toolbit/basicdemo.h', 'toolbit/chopper.h',
     'toolbit/dmm.h', 'toolbit/tbi_device_manager.h', 'toolbit/adc.h',
@@ -70,7 +70,7 @@ elif osname == 'Windows':
 
 setup (
     name = 'toolbit-lib',
-    version = '0.0.1',
+    version = '0.0.3',
     description = 'Toolbit library',
     long_description = long_description,
     long_description_content_type='text/markdown',

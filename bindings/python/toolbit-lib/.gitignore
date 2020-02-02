@@ -2,3 +2,4 @@ build/
 dist/
 toolbit/
 _*.*
+toolbit_lib.egg-info/
