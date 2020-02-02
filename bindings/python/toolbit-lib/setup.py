@@ -4,7 +4,10 @@ Toolbit Library
 https://github.com/toolbitorg/ToolbitSDK
 """
 
-from distutils.core import setup, Extension
+try:
+    from setuptools import setup, Extension
+except ImportError:
+    from distutils.core import setup, Extension
 import platform
 from os import path
 from io import open
