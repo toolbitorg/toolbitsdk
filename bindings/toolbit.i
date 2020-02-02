@@ -18,6 +18,9 @@
 %}
 %include <stdint.i>
 %include <std_string.i>
+%inline %{
+using namespace std;
+%}
 %include "tbi_core.h"
 %include "tbi_device.h"
 %include "tbi_device_manager.h"
