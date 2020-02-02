@@ -29,7 +29,7 @@ bool TbiCore::openPath(const char *path)
 		return false;
   	if (!path)
 		return false;
-  	
+
 	if (!mTbiDevice->open(path))
 		return false;
 
@@ -47,7 +47,7 @@ bool TbiCore::close()
 {
 	if (!mTbiDevice->isOpen())
 		return false;
-	
+
 	mTbiDevice->close();
 	return true;
 }
@@ -77,7 +77,7 @@ string TbiCore::getProductRevision()
 
 string TbiCore::getProductSerial()
 {
-	return convertWcharToString(mAttProductSerial.getValueU8str());
+	return mAttProductSerial.getValueStr();
 }
 
 string TbiCore::getFirmVersion()

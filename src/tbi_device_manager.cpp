@@ -33,7 +33,7 @@ void TbiDeviceManager::showDeviceList()
 	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
 		cur_dev = devs[i];
 		while (cur_dev) {
-			printf("Devicce found\n");
+			printf("Device found\n");
 			printf("  VID: %04hx\n", cur_dev->vendor_id);
 			printf("  PID: %04hx\n", cur_dev->product_id);
 			printf("  Path: %s\n", cur_dev->path);
