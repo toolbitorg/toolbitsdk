@@ -42,7 +42,9 @@ if osname == 'Linux':
             extra_compile_args=["-std=gnu++11"],
     )]
 elif osname == 'Darwin':
-    import os
+    import sys, os
+    from distutils.util import get_platform
+    temp_dir = "temp.%s-%d.%d" % (get_platform(), *sys.version_info[:2])
     os.environ['LDFLAGS'] = '-framework IOKit -framework Carbon'
     # Cannot mix .c and .cpp files in one module
     # Because clang doesn't allow to compile .c file with -std=c++11 option
@@ -56,7 +58,7 @@ elif osname == 'Darwin':
             sources,
             include_dirs=['toolbit'],
             extra_compile_args=['-std=c++11'],
-            extra_objects=['build/temp/toolbit/macos/hid.o'],
+            extra_objects=['build/' + temp_dir + '/toolbit/macos/hid.o'],
             libraries=['stdc++'],
         )
     ]

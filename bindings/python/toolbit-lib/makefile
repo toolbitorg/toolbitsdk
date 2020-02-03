@@ -10,7 +10,6 @@ else
 	ifeq ($(UNAME), Darwin)
 		TARGET = toolbit/_toolbit*.so
 		PYTHON = python3
-		BUILD_EXT_EXTRA_OPTIONS = --build-temp build/temp
 	endif
 endif
 
@@ -36,7 +35,7 @@ $(TARGET):
 	cp -f ../../toolbit.i toolbit
 	cd toolbit; swig -c++ -python toolbit.i
 	mv -f toolbit/toolbit.py toolbit/__init__.py
-	$(PYTHON) setup.py build_ext --inplace $(BUILD_EXT_EXTRA_OPTIONS)
+	$(PYTHON) setup.py build_ext --inplace
 
 install: $(TARGET)
 	$(PYTHON) setup.py install
