@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\attribute.h" />
-    <ClInclude Include="..\include\basicdemo.h" />
     <ClInclude Include="..\include\chopper.h" />
     <ClInclude Include="..\include\dmm.h" />
     <ClInclude Include="..\include\hidapi.h" />
@@ -29,7 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\attribute.cpp" />
-    <ClCompile Include="..\src\basicdemo.cpp" />
     <ClCompile Include="..\src\chopper.cpp" />
     <ClCompile Include="..\src\dmm.cpp" />
     <ClCompile Include="..\src\HIDAPI\windows\hid.c" />

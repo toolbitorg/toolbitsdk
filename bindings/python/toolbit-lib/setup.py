@@ -19,14 +19,14 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 sources = ['toolbit/toolbit_wrap.cxx','toolbit/tbi_core.cpp',
     'toolbit/tbi_device.cpp', 'toolbit/tbi_service.cpp', 'toolbit/attribute.cpp',
-    'toolbit/tbit.cpp', 'toolbit/basicdemo.cpp', 'toolbit/chopper.cpp',
+    'toolbit/tbit.cpp', 'toolbit/chopper.cpp',
     'toolbit/dmm.cpp', 'toolbit/tbi_device_manager.cpp', 'toolbit/adc.cpp',
     'toolbit/adc_hw.cpp', 'toolbit/gpio_hw.cpp', 'toolbit/i2c_hw.cpp',
     'toolbit/pin.cpp']
 
 headers = ['toolbit/hidapi.h', 'toolbit/tbi_core.h',
     'toolbit/tbi_device.h', 'toolbit/tbi_service.h', 'toolbit/attribute.h',
-    'toolbit/tbit.h', 'toolbit/basicdemo.h', 'toolbit/chopper.h',
+    'toolbit/tbit.h', 'toolbit/chopper.h',
     'toolbit/dmm.h', 'toolbit/tbi_device_manager.h', 'toolbit/adc.h',
     'toolbit/adc_hw.h', 'toolbit/gpio_hw.h', 'toolbit/i2c_hw.h',
     'toolbit/pin.h']
