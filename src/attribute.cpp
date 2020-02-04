@@ -20,56 +20,56 @@ bool Attvalue::setValue(int8_t i)
 {
 	dat.int8 = i;
 	datlen = 1;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(uint8_t i)
 {
 	dat.uint8 = i;
 	datlen = 1;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(uint16_t i)
 {
 	dat.uint16 = i;
 	datlen = 2;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(int16_t i)
 {
 	dat.int16 = i;
 	datlen = 2;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(uint32_t i)
 {
 	dat.uint32 = i;
 	datlen = 4;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(int32_t i)
 {
 	dat.int32 = i;
 	datlen = 4;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(uint64_t i)
 {
 	dat.uint64 = i;
 	datlen = 8;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(int64_t i)
 {
 	dat.int64 = i;
 	datlen = 8;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(char *str)
@@ -81,10 +81,10 @@ bool Attvalue::setValue(char *str)
 #else
 		strcpy(dat.str, str);
 #endif
-		return true;
+		return false;
 	}
 	else {
-		return false;
+		return true;
 	}
 }
 
@@ -92,14 +92,14 @@ bool Attvalue::setValue(float f)
 {
 	dat.f = f;
 	datlen = 4;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(double d)
 {
 	dat.d = d;
 	datlen = 8;
-	return true;
+	return false;
 }
 
 bool Attvalue::setValue(byte *p, uint8_t len)
@@ -107,9 +107,9 @@ bool Attvalue::setValue(byte *p, uint8_t len)
 	if (len <= VALUE_LEN) {
 		memcpy(dat.str, p, len);
 		datlen = len;
-		return true;
+		return false;
 	}
-	return false;
+	return true;
 }
 
 uint8_t Attvalue::getValueUint8()
@@ -196,4 +196,3 @@ ATTID Attribute::getAttid()
 {
 	return attid;
 }
-

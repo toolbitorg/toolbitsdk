@@ -22,13 +22,11 @@ bool Chopper::open()
 	TbiDeviceManager devm;
 
 	if (openPath(devm.getPathByName("Chopper HUB"))) {
-		mTbiService->readAttribute(&mAttUsbPortCtrl);
+		// error
+		return true;
 	}
-	else {
-		return false;
-	}
-
-	return true;
+	mTbiService->readAttribute(&mAttUsbPortCtrl);
+	return false;
 }
 
 bool Chopper::open(string serial)
@@ -36,65 +34,48 @@ bool Chopper::open(string serial)
 	TbiDeviceManager devm;
 
 	if (openPath(devm.getPathByNameAndSerial("Chopper HUB", serial))) {
-		mTbiService->readAttribute(&mAttUsbPortCtrl);
+		//error
+		return true;
 	}
-	else {
-		return false;
-	}
-
-	return true;
+	mTbiService->readAttribute(&mAttUsbPortCtrl);
+	return false;
 }
 
 bool Chopper::enableAllUsbPort()
 {
 	uint32_t val = 0xFFFFFFFF;
 	mAttUsbPortCtrl.setValue(val);
-	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
-	if (!status)
-		return false;   // error
-	return true;
+	return mTbiService->writeAttribute(mAttUsbPortCtrl);
 }
 
 bool Chopper::enableUsbPort(uint32_t p)
 {
 	if (p == 0 || p > 32)
-		return false;
+		return true;
 
 	uint32_t val = mAttUsbPortCtrl.getValueUint32() | (1 << p - 1);
 	mAttUsbPortCtrl.setValue(val);
-	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
-	if (!status)
-		return false;   // error
-	return true;
+	return mTbiService->writeAttribute(mAttUsbPortCtrl);
 }
 
 bool Chopper::disableAllUsbPort()
 {
 	uint32_t val = 0x00000000;
 	mAttUsbPortCtrl.setValue(val);
-	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
-	if (!status)
-		return false;   // error
-	return true;
+	return mTbiService->writeAttribute(mAttUsbPortCtrl);
 }
 
 bool Chopper::disableUsbPort(uint32_t p)
 {
 	if (p == 0 || p > 32)
-		return false;
+		return true;
 
 	uint32_t val = mAttUsbPortCtrl.getValueUint32() & ~(1 << p - 1);
 	mAttUsbPortCtrl.setValue(val);
-	bool status = mTbiService->writeAttribute(mAttUsbPortCtrl);
-	if (!status)
-		return false;   // error
-	return true;
+	return mTbiService->writeAttribute(mAttUsbPortCtrl);
 }
 
 uint32_t Chopper::getUsbPortStatus()
 {
-	bool status = mTbiService->readAttribute(&mAttUsbPortCtrl);
-	if (!status)
-		return false;   // error
-	return mAttUsbPortCtrl.getValueUint32();
+	return mTbiService->readAttribute(&mAttUsbPortCtrl);
 }

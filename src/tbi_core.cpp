@@ -25,13 +25,11 @@ TbiCore::~TbiCore()
 
 bool TbiCore::openPath(const char *path)
 {
-	if (mTbiDevice->isOpen())
-		return false;
-  	if (!path)
-		return false;
+	if (mTbiDevice->isOpen() || !path)
+		return true;
 
-	if (!mTbiDevice->open(path))
-		return false;
+	if (mTbiDevice->open(path))
+		return true;
 
 	// Read product data from device
 	mTbiService->readAttribute(&mAttVendorName);
@@ -40,16 +38,16 @@ bool TbiCore::openPath(const char *path)
 	mTbiService->readAttribute(&mAttProductSerial);
 	mTbiService->readAttribute(&mAttFirmVersion);
 
-	return true;
+	return false;
 }
 
 bool TbiCore::close()
 {
 	if (!mTbiDevice->isOpen())
-		return false;
+		return true;
 
 	mTbiDevice->close();
-	return true;
+	return false;
 }
 
 bool TbiCore::isConnected()

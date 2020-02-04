@@ -47,56 +47,36 @@ Dmm::~Dmm()
 bool Dmm::open()
 {
 	TbiDeviceManager devm;
-
-	if (!openPath(devm.getPathByName("DMM"))) {
-		return false;
-	}
-
-	return true;
+	return openPath(devm.getPathByName("DMM"));
 }
 
 bool Dmm::open(string serial)
 {
 	TbiDeviceManager devm;
-
-	if (!openPath(devm.getPathByNameAndSerial("DMM", serial))) {
-		return false;
-	}
-
-	return true;
+	return openPath(devm.getPathByNameAndSerial("DMM", serial));
 }
 
 bool Dmm::calibration()
 {
-	bool status;
-
 	// Triger calibration by writting any value on mAttCalibration attribute
 	mAttCalibration->setValue(0x00);
-	status = mTbiService->writeAttribute(*mAttCalibration);
-	if (!status) {
-		// error
-		return false;
-	}
-
-	return true;
+	return mTbiService->writeAttribute(*mAttCalibration);
 }
 
 float Dmm::getVoltage()
 {
-	bool status = mTbiService->readAttribute(mAttVoltage);
-	if (!status) {
+	if (mTbiService->readAttribute(mAttVoltage)) {
 		// error
-		return 0.0;
+		return -999.9;
 	}
 	return mAttVoltage->getValueFloat();
 }
 
 float Dmm::getCurrent()
 {
-	bool status = mTbiService->readAttribute(mAttCurrent);
-	if (!status) {
+	if (mTbiService->readAttribute(mAttCurrent)) {
 		// error
-		return 0.0;
+		return -999.9;
 	}
 	return mAttCurrent->getValueFloat();
 }

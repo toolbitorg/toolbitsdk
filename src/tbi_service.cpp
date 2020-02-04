@@ -33,7 +33,7 @@ bool TbiService::readAttribute(Attribute *att)
 		tdev->write(pckt.dat, 4);
 	}
 	else {
-		return false;
+		return true;
 	}
 
 	pckt = resque.dequeue();
@@ -44,7 +44,7 @@ bool TbiService::readAttribute(Attribute *att)
 		int len = (pckt.dat[0] & 0x3F) - 3;
 		return att->setValue(&pckt.dat[3], len);
 	}
-	return false;
+	return true;
 }
 
 bool TbiService::writeAttribute(Attribute att)
@@ -65,16 +65,16 @@ bool TbiService::writeAttribute(Attribute att)
 		tdev->write(pckt.dat, 4+len);
 	}
 	else {
-		return false;
+		return true;
 	}
 
 	tbiPacket rcvp = resque.dequeue();
 	if (rcvp.dat[0] == PROTOCOL_VERSION + 3  // Check received packet
 		&& rcvp.dat[1] == OP_ATT_VALUE_SET
 		&& rcvp.dat[2] == RC_OK)
-		return true;
+		return false;
 
-	return false;
+	return true;
 }
 
 struct thread_aborted {};
