@@ -88,6 +88,9 @@ string convertWcharToString(wchar_t* p)
 	char str[VALUE_LEN];
 	char* dst = str;
 
+	if (!p)
+		return "";
+
 	while (*p != NULL) {
 		*dst++ = (char)* p++;
 	}

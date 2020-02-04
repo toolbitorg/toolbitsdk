@@ -2,11 +2,11 @@
 
 %include <stdint.i>
 %include <std_string.i>
-%include <std_vector.i>
+%include <std_list.i>
 %inline %{
 using namespace std;
 %}
-%template(StringVector) std::vector<string>;
+%template(StringList) std::list<string>;
 
 %{
 #include "tbi_core.h"

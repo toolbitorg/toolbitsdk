@@ -25,20 +25,6 @@ void TbiDeviceManager::updateDeviceList()
 	devs[0] = hid_enumerate(USB_VID_PIC, USB_PID_PIC);
 }
 
-void TbiDeviceManager::showDeviceList()
-{
-	struct hid_device_info* cur_dev;
-
-	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
-		cur_dev = devs[i];
-		printf("Manufacturer | Product        | Serial   | Path\n");
-		while (cur_dev) {
-			printf("%-12ls | %-14ls | %-8ls | %.6s.. \n", cur_dev->manufacturer_string, cur_dev->product_string, cur_dev->serial_number, cur_dev->path);
-			cur_dev = cur_dev->next;
-		}
-	}
-}
-
 int TbiDeviceManager::getDeviceNum()
 {
 	struct hid_device_info *cur_dev;
@@ -71,15 +57,31 @@ int TbiDeviceManager::getDeviceNum(string name)
 	return num;
 }
 
-vector<string> TbiDeviceManager::getSerialList(string name)
+list<string> TbiDeviceManager::getDeviceList()
 {
 	struct hid_device_info* cur_dev;
-	vector<string> list;
+	list<string> list;
 
 	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
 		cur_dev = devs[i];
 		while (cur_dev) {
-			if (name==convertWcharToString(cur_dev->product_string))
+			list.push_back(convertWcharToString(cur_dev->product_string));
+			cur_dev = cur_dev->next;
+		}
+	}
+
+	return list;
+}
+
+list<string> TbiDeviceManager::getSerialList(string name)
+{
+	struct hid_device_info* cur_dev;
+	list<string> list;
+
+	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
+		cur_dev = devs[i];
+		while (cur_dev) {
+			if (name == convertWcharToString(cur_dev->product_string))
 			{
 				list.push_back(convertWcharToString(cur_dev->serial_number));
 			}

@@ -15,10 +15,19 @@ int main(int argc, char *argv[])
 {
 	
     TbiDeviceManager *devm = new TbiDeviceManager();
-	devm->showDeviceList();
+	list<string> devs = devm->getDeviceList();
 
-#ifdef WIN32
-	system("pause");
-#endif
+	devs.unique();
+
+	cout << "Product : Serial" << endl;
+	
+	for (list<string>::iterator itr = devs.begin(); itr != devs.end(); itr++) {
+		list<string> serials = devm->getSerialList(*itr);
+
+		for (list<string>::iterator itr2 = serials.begin(); itr2 != serials.end(); itr2++) {
+			cout << *itr << " : " << *itr2 << endl;
+		}
+	}
+
 	return 0;
 }
