@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string>
+#include <vector>
 #include "hidapi.h"
 
 using namespace std;
@@ -18,7 +19,7 @@ using namespace std;
 #define USB_VID_ARDUINO 0x2341
 #define USB_PID_ARDUINO 0x8036
 
-#define USB_VID_NUM_MAX 2
+#define USB_VID_NUM_MAX 1
 
 class TbiDeviceManager
 {
@@ -28,9 +29,11 @@ public:
 
 	void updateDeviceList();
 	void showDeviceList();
+	int getDeviceNum();
+	int getDeviceNum(string name);
+	vector<string> getSerialList(string name);
 	const char* getPathByName(string name);
 	const char* getPathByNameAndSerial(string name, string serial);
-	int getDeviceNum();
 
 protected:
 
