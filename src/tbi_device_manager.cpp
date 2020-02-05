@@ -60,7 +60,7 @@ int TbiDeviceManager::getDeviceNum(string name)
 vector<string> TbiDeviceManager::getDeviceList()
 {
 	struct hid_device_info* cur_dev;
-	list<string> list;
+	vector<string> list;
 
 	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
 		cur_dev = devs[i];
@@ -76,7 +76,7 @@ vector<string> TbiDeviceManager::getDeviceList()
 vector<string> TbiDeviceManager::getSerialList(string name)
 {
 	struct hid_device_info* cur_dev;
-	list<string> list;
+	vector<string> list;
 
 	for (int i = 0; i < USB_VID_NUM_MAX; i++) {
 		cur_dev = devs[i];
