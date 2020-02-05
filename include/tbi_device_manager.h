@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string>
-#include <list>
+#include <vector>
 #include "hidapi.h"
 
 using namespace std;
@@ -30,8 +30,8 @@ public:
 	void updateDeviceList();
 	int getDeviceNum();
 	int getDeviceNum(string name);
-	list<string> getDeviceList();
-	list<string> getSerialList(string name);
+	vector<string> getDeviceList();
+	vector<string> getSerialList(string name);
 	const char* getPathByName(string name);
 	const char* getPathByNameAndSerial(string name, string serial);
 

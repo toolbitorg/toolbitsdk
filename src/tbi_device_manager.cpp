@@ -57,7 +57,7 @@ int TbiDeviceManager::getDeviceNum(string name)
 	return num;
 }
 
-list<string> TbiDeviceManager::getDeviceList()
+vector<string> TbiDeviceManager::getDeviceList()
 {
 	struct hid_device_info* cur_dev;
 	list<string> list;
@@ -73,7 +73,7 @@ list<string> TbiDeviceManager::getDeviceList()
 	return list;
 }
 
-list<string> TbiDeviceManager::getSerialList(string name)
+vector<string> TbiDeviceManager::getSerialList(string name)
 {
 	struct hid_device_info* cur_dev;
 	list<string> list;

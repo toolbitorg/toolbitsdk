@@ -5,7 +5,7 @@ else
 	UNAME := $(shell uname)
 	ifeq ($(UNAME), Linux)
 		TARGET = toolbit/_toolbit.so
-		PYTHON = python
+		PYTHON = python3
 	endif
 	ifeq ($(UNAME), Darwin)
 		TARGET = toolbit/_toolbit*.so

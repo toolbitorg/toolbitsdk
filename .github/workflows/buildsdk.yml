@@ -11,13 +11,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-            
+
     - name: Install dependencies for ubuntu
       if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt install libudev-dev
         sudo apt install libusb-1.0-0-dev
-        
+
     - name: Install dependencies for macos
       if: matrix.os == 'macos-latest'
       run: brew install pcre           # for swig
@@ -54,11 +54,11 @@ jobs:
       run: |
         curl -LO "http://prdownloads.sourceforge.net/swig/swigwin-4.0.1.zip"
         unzip swigwin-4.0.1.zip
-        
+
     - name: Add swig path for windows
-      if: matrix.os == 'windows-latest'      
+      if: matrix.os == 'windows-latest'
       run: echo "::add-path::D:\a\ToolbitSDK\ToolbitSDK\swigwin-4.0.1"
-      
+
     - uses: actions/setup-node@v1
       with:
         node-version: '8.x'
@@ -68,6 +68,11 @@ jobs:
         npm install -g node-gyp
         cd bindings/electron
         make
+
+    - name: Build python binding
+      run: |
+        cd bindings/python/toolbit-lib
+        make     
 
     - name: Archive artifacts
       uses: actions/upload-artifact@v1
