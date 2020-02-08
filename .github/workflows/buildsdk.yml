@@ -15,8 +15,9 @@ jobs:
     - name: Install dependencies for ubuntu
       if: matrix.os == 'ubuntu-latest'
       run: |
+        sudo apt update
         sudo apt install libudev-dev
-        sudo apt install libusb-1.0-0-dev
+#        sudo apt install libusb-1.0-0-dev
 
     - name: Install dependencies for macos
       if: matrix.os == 'macos-latest'
