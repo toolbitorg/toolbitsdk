@@ -97,7 +97,7 @@ setup (
     ],
     keywords = 'toolbit sdk library',
     packages=['toolbit'],
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     #install_requires = [''],
     #entry_points={  # Optional
     #    'console_scripts': [
