@@ -38,7 +38,6 @@ Download the latest source from [GitHub repository](https://github.com/toolbitor
 
 The following command/software is required to build toolbit-lib:
   * make
-    * For Windows, MinGW is highly recommended   
   * node-gyp
   * swig: http://www.swig.org/
   * Ubuntu linux / Raspberry Pi

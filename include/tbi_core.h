@@ -1,3 +1,11 @@
+/*  Toolbit SDK
+ *  Copyright (C) 2020 Junji Ohama <junji.ohama@toolbit.org>
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ */
 #ifndef TOOLBITSDK_TBI_CORE_H_
 #define TOOLBITSDK_TBI_CORE_H_
 
@@ -6,7 +14,6 @@
 #include "tbi_device.h"
 #include "tbi_service.h"
 #include "attribute.h"
-
 
 class TbiCore
 {
@@ -34,7 +41,7 @@ protected:
 	Attribute mAttFirmVersion;
 
 private:
-	
+
 };
 
 string convertWcharToString(wchar_t* p);

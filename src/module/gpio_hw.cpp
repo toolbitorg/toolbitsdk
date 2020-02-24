@@ -1,5 +1,12 @@
+/*  Toolbit SDK
+ *  Copyright (C) 2020 Junji Ohama <junji.ohama@toolbit.org>
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ */
 #include "gpio_hw.h"
-
 
 GpioHw::GpioHw(TbiService *tbisrv, ToolbitAttributionID base)
 {
@@ -15,7 +22,7 @@ GpioHw::~GpioHw()
 	delete mAttGpioInoutMode;
 	delete mAttGpioPullUp;
 	delete mAttGpioPullDown;
-	delete mAttGpioRw;	
+	delete mAttGpioRw;
 }
 
 bool GpioHw::pinMode(uint8_t pin, PinMode mode)
@@ -26,8 +33,8 @@ bool GpioHw::pinMode(uint8_t pin, PinMode mode)
 		return false;
 
 	status = mTbiSrv->readAttribute(mAttGpioInoutMode);
-	if (!status)
-		return false;   // error
+	if (status)
+		return true;   // error
 
 	if (mode == OUTPUT_PIN) {
 		// clear bit to change output pin
@@ -35,45 +42,45 @@ bool GpioHw::pinMode(uint8_t pin, PinMode mode)
 	}
 	else {
 		status = mTbiSrv->readAttribute(mAttGpioPullUp);
-		if (!status)
-			return false;   // error
+		if (status)
+			return true;   // error
 
 		if (mode == INPUT_PIN)
 			mAttGpioPullUp->setValue(mAttGpioPullUp->getValueUint32() & ~(1 << pin));
 		else if (mode == INPUT_PULLUP_PIN)
 			mAttGpioPullUp->setValue(mAttGpioPullUp->getValueUint32() | (1 << pin));
 		else
-			return false;  // error because INPUT_PULLDOWN_PIN is not supported yet
+			return true;  // error because INPUT_PULLDOWN_PIN is not supported yet
 
 		status = mTbiSrv->writeAttribute(*mAttGpioPullUp);
-		if (!status)
-			return false;  // error
+		if (status)
+			return true;  // error
 
 		// set bit to change input pin
 		mAttGpioInoutMode->setValue(mAttGpioInoutMode->getValueUint32() | (1 << pin));
 	}
 
 	status = mTbiSrv->writeAttribute(*mAttGpioInoutMode);
-	if (!status)
-		return false;  // error
+	if (status)
+		return true;  // error
 
-	return true;
+	return false;
 }
 
 bool GpioHw::write(uint32_t dat)
 {
 	mAttGpioRw->setValue(dat);
 	bool status = mTbiSrv->writeAttribute(*mAttGpioRw);
-	if (!status)
-		return false;   // error
-	return true;
+	if (status)
+		return true;   // error
+	return false;
 }
 
 uint32_t GpioHw::read()
 {
 	bool status = mTbiSrv->readAttribute(mAttGpioRw);
-	if (!status)
-		return false;   // error
+	if (status)
+		return 0xFFFFFFFF;   // error
 	return mAttGpioRw->getValueUint32();
 }
 
@@ -86,9 +93,9 @@ bool GpioHw::digitalWrite(uint8_t pin, bool val)
 		mAttGpioRw->setValue(mAttGpioRw->getValueUint32() & ~(1 << pin));
 
 	bool status = mTbiSrv->writeAttribute(*mAttGpioRw);
-	if (!status)
-		return false;   // error
-	return true;
+	if (status)
+		return true;   // error
+	return false;
 }
 
 bool GpioHw::digitalRead(uint8_t pin)

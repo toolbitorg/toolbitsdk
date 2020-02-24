@@ -1,3 +1,11 @@
+/*  Toolbit SDK
+ *  Copyright (C) 2020 Junji Ohama <junji.ohama@toolbit.org>
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ */
 #include <stdio.h>
 #include <wchar.h>
 #include <string>
@@ -61,6 +69,32 @@ bool Dmm::calibration()
 	// Triger calibration by writting any value on mAttCalibration attribute
 	mAttCalibration->setValue(0x00);
 	return mTbiService->writeAttribute(*mAttCalibration);
+}
+
+string Dmm::getCalibrationData()
+{
+	stringstream ss;
+	if (mTbiService->readAttribute(mAttCalibration)) {
+		// error
+	}
+	else {
+		uint32_t dat = mAttCalibration->getValueUint32();
+		uint8_t u8;
+		int8_t  i8;
+
+		u8 = dat & 0xFF;
+		ss << "LOW_CURRENT_OFFSET: " << int(*(int8_t*)& u8)  << endl;
+		dat = dat >> 8;
+		u8 = dat & 0xFF;
+		ss << "HIGH_CURRENT_OFFSET: " << int(*(int8_t*)& u8) << endl;
+		dat = dat >> 8;
+		u8 = dat & 0xFF;
+		ss << "LOW_VOLTAGE_OFFSET: " << int(*(int8_t*)& u8) << endl;
+		dat = dat >> 8;
+		u8 = dat & 0xFF;
+		ss << "HIGH_VOLTAGE_OFFSET: " << int(*(int8_t*)& u8) << endl;
+	}
+	return ss.str();
 }
 
 float Dmm::getVoltage()

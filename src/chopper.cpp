@@ -1,10 +1,17 @@
+/*  Toolbit SDK
+ *  Copyright (C) 2020 Junji Ohama <junji.ohama@toolbit.org>
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ *  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ *  more details.
+ */
 #include <stdio.h>
 #include <wchar.h>
 #include <string>
 #include <stdlib.h>
 #include "tbi_device_manager.h"
 #include "chopper.h"
-
 
 Chopper::Chopper() :
 	gpiohw(mTbiService, ATT_GPIO0_BASE),
