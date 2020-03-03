@@ -77,7 +77,7 @@ elif osname == 'Windows':
 
 setup (
     name = 'toolbit-lib',
-    version = '0.0.6',
+    version = '1.0.0',
     description = 'Toolbit library',
     long_description = long_description,
     long_description_content_type='text/markdown',
