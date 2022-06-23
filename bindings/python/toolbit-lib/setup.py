@@ -73,6 +73,7 @@ elif osname == 'Windows':
             sources + ['toolbit/mswin/hid.c'],
             include_dirs=['toolbit'],
             libraries=['setupapi'],
+            extra_compile_args=["-std=gnu++11"],
     )]
 
 setup (
