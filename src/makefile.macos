@@ -6,11 +6,11 @@ CXX = g++ -mmacosx-version-min=10.12
 CFLAGS  = -g -MMD -MP
 CXXFLAGS = -g -MMD -MP -std=c++11
 LDFLAGS =
-INCLUDE = -I./HIDAPI/hidapi -I../include -I../include/module
+INCLUDE = -I./hidapi/hidapi -I../include -I../include/module
 LIBS =
 
 TARGET = $(BINDIR)/libtbi.a
-C_SOURCES   = HIDAPI/mac/hid.c
+C_SOURCES   = hidapi/mac/hid.c
 CPP_SOURCES = $(wildcard *.cpp) $(wildcard module/*.cpp)
 
 OBJECTS	= $(addprefix $(OBJDIR)/, $(CPP_SOURCES:.cpp=.o)) $(addprefix $(OBJDIR)/, $(C_SOURCES:.c=.o))
@@ -24,7 +24,7 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	@[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
 	ar r $@ $(OBJECTS)
-	cp -fp ./HIDAPI/hidapi/hidapi.h ../include
+	cp -fp ./hidapi/hidapi/hidapi.h ../include
 
 $(OBJDIR)/%.o : %.cpp
 	@[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
@@ -32,7 +32,7 @@ $(OBJDIR)/%.o : %.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ -c $<
 
 $(OBJDIR)/%.o : %.c
-	@[ -d $(OBJDIR)/HIDAPI/mac/ ] || mkdir -p $(OBJDIR)/HIDAPI/mac/
+	@[ -d $(OBJDIR)/hidapi/mac/ ] || mkdir -p $(OBJDIR)/hidapi/mac/
 	$(CC) $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean:
