@@ -29,9 +29,9 @@ $(TARGET):
 	@[ -d toolbit/macos ] || mkdir -p toolbit/macos
 	@[ -d toolbit/linux ] || mkdir -p toolbit/linux
 	@[ -d toolbit/mswin ] || mkdir -p toolbit/mswin
-	cp -f ../../../src/HIDAPI/linux/hid.c toolbit/linux
-	cp -f ../../../src/HIDAPI/mac/hid.c toolbit/macos
-	cp -f ../../../src/HIDAPI/windows/hid.c toolbit/mswin
+	cp -f ../../../src/hidapi/linux/hid.c toolbit/linux
+	cp -f ../../../src/hidapi/mac/hid.c toolbit/macos
+	cp -f ../../../src/hidapi/windows/hid.c toolbit/mswin
 	cp -f ../../toolbit.i toolbit
 	cd toolbit; swig -c++ -python toolbit.i
 	mv -f toolbit/toolbit.py toolbit/__init__.py

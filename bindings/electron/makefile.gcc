@@ -12,7 +12,7 @@ $(TARGET):
 	cp -f ../../include/module/*.h build
 	cp -f ../../src/*.cpp build
 	cp -f ../../src/module/*.cpp build
-	cp -f ../../src/HIDAPI/linux/hid.c build
+	cp -f ../../src/hidapi/linux/hid.c build
 	cp -f ../toolbit.i build
 	cp -f binding_linux.gyp build/binding.gyp
 	cd build; swig -c++ -javascript -node toolbit.i
